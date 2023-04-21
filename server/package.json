@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node app.js"
   },
-  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/el-hadji-mamadou-sarr/gesta.git"
@@ -21,7 +20,9 @@
   },
   "homepage": "https://github.com/el-hadji-mamadou-sarr/gesta#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2",
+    "helmet": "^6.1.5",
     "mongoose": "^7.0.4"
   }
 }
