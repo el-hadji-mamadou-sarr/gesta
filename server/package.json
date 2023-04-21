@@ -4,8 +4,9 @@
   "description": "gesta node server",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
+  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/el-hadji-mamadou-sarr/gesta.git"
@@ -20,6 +21,7 @@
   },
   "homepage": "https://github.com/el-hadji-mamadou-sarr/gesta#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mongoose": "^7.0.4"
   }
 }
