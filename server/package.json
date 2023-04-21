@@ -1,0 +1,25 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "gesta node server",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/el-hadji-mamadou-sarr/gesta.git"
+  },
+  "keywords": [
+    "gesta"
+  ],
+  "author": "el-hadji-mamadou-sarr && christian-mbappe && marie-cisse && emanuelle-de-palmes && romuald",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/el-hadji-mamadou-sarr/gesta/issues"
+  },
+  "homepage": "https://github.com/el-hadji-mamadou-sarr/gesta#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
