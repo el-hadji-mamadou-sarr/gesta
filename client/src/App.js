@@ -1,11 +1,11 @@
 import * as React from "react";
-import {Register} from "./Pages/Register/Register";
+import {Login} from "./Pages/login/Login";
 
 
 function App() {
   return (
     <div className="App">
-      <Register/>
+      <Login/>
     </div>
   );
 }
