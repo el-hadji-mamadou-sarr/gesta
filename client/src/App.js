@@ -1,12 +1,18 @@
 import * as React from "react";
-import {Register} from "./Pages/Register/Register";
+import { Register } from "./Pages/Register/Register";
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import MenuAppBar from "./Pages/dashboard/dashboard";
 
 
 function App() {
   return (
-    <div className="App">
-      <Register/>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Register />} />
+        <Route path="/dashboard" element={<MenuAppBar />} />
+      </Routes>
+    </BrowserRouter>
+
   );
 }
 

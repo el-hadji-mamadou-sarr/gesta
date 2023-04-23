@@ -9,13 +9,13 @@ import {
     ThemeProvider,
     Divider, Grid, Link
 } from "@mui/material";
-import {theme} from "../../Assets/theme/theme";
+import { theme } from "../../Assets/theme/theme";
 import Logo from "../../Assets/images/login-removebg-preview.png";
 
 
-export const Register=()=>{
+export const Register = () => {
     // variable pour styliser le paper
-    const paperStyle={padding:'30px 20px',width:"387px", margin:"20px auto"}
+    const paperStyle = { padding: '30px 20px', width: "387px", margin: "20px auto" }
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -26,7 +26,7 @@ export const Register=()=>{
     };
 
     return (
-        <div style={{backgroundImage: `url(${Logo})`,backgroundRepeat:"no-repeat", width: '100%', height:'100%'}}>
+        <div style={{ backgroundImage: `url(${Logo})`, backgroundRepeat: "no-repeat", width: '100%', height: '100%' }}>
             <Box sx={{}}>
                 <Paper elevation={20} style={paperStyle}>
                     <Box align="center">
@@ -70,7 +70,7 @@ export const Register=()=>{
                             </Button>
                         </ThemeProvider>
 
-                        <Divider variant="middle" sx={{ mt: 7}} />
+                        <Divider variant="middle" sx={{ mt: 7 }} />
 
                         <Grid align="center">
                             <Typography variant='caption'>Vous avez déja un compte?</Typography>
