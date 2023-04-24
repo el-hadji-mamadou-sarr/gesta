@@ -86,6 +86,3 @@ export const Register = () => {
         </div>
 
 
-
-    )
-}
