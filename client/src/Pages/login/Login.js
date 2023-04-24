@@ -13,7 +13,7 @@ import { theme } from "../../Assets/theme/theme";
 import Logo from "../../Assets/images/login-removebg-preview.png";
 
 
-export const Register = () => {
+export const Login = () => {
     // variable pour styliser le paper
     const paperStyle = { padding: '30px 20px', width: "387px", margin: "20px auto" }
     const handleSubmit = (event) => {
@@ -83,6 +83,5 @@ export const Register = () => {
                 </Paper>
             </Box>
 
-        </div>
-
-
+        </div>)
+}
