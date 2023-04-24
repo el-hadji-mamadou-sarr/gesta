@@ -8,18 +8,6 @@ const userController = require("../controllers/userController");
 // Créer un nouveau routeur Express
 const router = express.Router();
 
-// Créer une route pour créer un nouveau profil utilisateur
-router.post('/create', async (req, res) => {
-    try {
-        // Appeler la fonction createUser du contrôleur pour créer un nouvel utilisateur
-        const NewUser = await userController.createUser(req.body);
-        // Renvoyer une réponse 201 avec les données de l'utilisateur nouvellement créé
-        res.status(201).json(NewUser);
-    } catch (error) {
-        // En cas d'erreur, renvoyer une réponse 500 avec un message d'erreur générique
-        res.status(500).json({ message: error.message });
-    }
-});
 
 // Créer une route pour lire un profil d'utilisateur spécifique
 router.get('/:userId', async (req, res) => {
@@ -47,7 +35,8 @@ router.put('/:userId/update', async (req, res) => {
     }
 });
 
-// Créer une route pour supprimer un profil d'utilisateur spécifique
+
+/* // Créer une route pour supprimer un profil d'utilisateur spécifique
 router.delete('/:userId/delete', async (req, res) => {
     try {
         // Appeler la fonction deleteUserProfile du contrôleur pour supprimer un utilisateur par ID
@@ -58,7 +47,7 @@ router.delete('/:userId/delete', async (req, res) => {
         // En cas d'erreur, renvoyer une réponse 500 avec un message d'erreur générique
         res.status(500).json({ message: error.message })
     }
-})
+}) */
 
 // Exporter le routeur pour pouvoir l'utiliser dans d'autres fichiers de l'application
 module.exports = router;
