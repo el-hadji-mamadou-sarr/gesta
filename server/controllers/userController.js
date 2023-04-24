@@ -1,20 +1,7 @@
 // Importer le modèle User pour pouvoir l'utiliser dans le contrôleur
 const User = require("../models/User");
 
-// Créer un nouveau profil utilisateur
-exports.createUser = async (data) => {
-    try {
-        // Créer un nouvel objet User à partir des données de la requête
-        const newUserProfile = new User(data);
-        // Enregistrer le nouvel utilisateur dans la base de données
-        await newUserProfile.save();
-        // Renvoyer les données de l'utilisateur nouvellement créé
-        return newUserProfile;
-    } catch (error) {
-        // En cas d'erreur, renvoyer une erreur pour être capturée par l'appelant
-        throw error;
-    }
-};
+
 
 // Lire un profil utilisateur spécifique
 exports.getUserProfile = async (userId) => {
@@ -54,7 +41,7 @@ exports.updateUserProfile = async (userId, data) => {
     }
 };
 
-// Supprimer un profil utilisateur spécifique
+/* // Supprimer un profil utilisateur spécifique
 exports.deleteUserProfile = async (userId) => {
     try {
         // Supprimer un utilisateur par son ID
@@ -67,4 +54,4 @@ exports.deleteUserProfile = async (userId) => {
         // En cas d'erreur, renvoyer une erreur pour être capturée par l'appelant
         throw error;
     }
-};
+}; */
