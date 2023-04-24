@@ -14,9 +14,9 @@ const userRoutes = require('./routes/userRoutes')
 const app = express();
 
 
-// Utilisez Helmet pour la sécurité HTTP de base
+// Utilise Helmet pour la sécurité HTTP de base
 app.use(helmet());
-// Utilisez CORS pour contrôler l'accès entre les domaines
+// Utilise CORS pour contrôler l'accès entre les domaines
 app.use(cors());
 
 
