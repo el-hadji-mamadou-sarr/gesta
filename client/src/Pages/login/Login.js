@@ -9,13 +9,14 @@ import {
     ThemeProvider,
     Divider, Grid, CssBaseline, Container
 } from "@mui/material";
+
 import {fontTheme, theme} from "../../Assets/theme/theme";
 import { Link } from "react-router-dom"
 import Logo from "../../Assets/images/login-removebg-preview.png";
 
-export const Login=()=>{
+export const Login = () => {
     // variable pour styliser le paper
-    const paperStyle={padding:'30px 20px',width:"387px", margin:"20px auto"}
+    const paperStyle = { padding: '30px 20px', width: "387px", margin: "20px auto" }
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -34,7 +35,6 @@ export const Login=()=>{
                      <Paper elevation={20} style={paperStyle}>
                          <Box align="center">
                              <Avatar>
-
                              </Avatar>
                              <Typography variant='caption'>Connectez-vous pour continuer</Typography>
                          </Box>
@@ -92,9 +92,5 @@ export const Login=()=>{
             </Container>
         </React.Fragment>
 
+    )}
 
-
-
-
-    )
-}
