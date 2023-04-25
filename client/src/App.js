@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Register} from "./Pages/Register/Register";
+import { Register } from "./Pages/Register/Register";
 import { Login } from "./Pages/login/Login";
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Dashboard from "./Pages/dashboard/dashboard";
@@ -10,7 +10,6 @@ import Home from "./Pages/home/Home";
 
 function App() {
   return (
-
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />

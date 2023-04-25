@@ -9,31 +9,28 @@ import {
     ThemeProvider,
     Divider, Grid, Link, CssBaseline, Container, Checkbox
 } from "@mui/material";
-import {theme} from "../../Assets/theme/theme";
-import Logo from "../../Assets/images/login-removebg-preview.png";
-import {useState} from "react";
-import {initialValues} from "../../Services/Constant/Register/Constant";
+import { theme } from "../../Assets/theme/theme";
+import { useState } from "react";
+import { initialValues } from "../../Services/Constant/Register/Constant";
 import axios from "axios";
 
-export const Register=()=>{
-    const[uservalues, setUserValues] = useState(initialValues)
+export const Register = () => {
+    const [uservalues, setUserValues] = useState(initialValues)
     const [formError, setFormError] = useState({})
     // variable pour styliser le paper
-    const paperStyle={padding:'30px 20px',width:"387px", margin:"20px auto"}
+    const paperStyle = { padding: '30px 20px', width: "387px", margin: "20px auto" }
     const handleChange = (event) => {
-        const {name, value} = event.target
-        setUserValues({...uservalues, [name]: value})
+        const { name, value } = event.target
+        setUserValues({ ...uservalues, [name]: value })
     }
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (Object.keys(formError).length === 0){
-            axios.post('')
-        }
-
+        // if (Object.keys(formError).length === 0){
+        //     axios.post('')
+        // }
     };
 
     return (
-
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth="sm">
@@ -41,7 +38,6 @@ export const Register=()=>{
                     <Paper elevation={20} style={paperStyle}>
                         <Box align="center">
                             <Avatar>
-
                             </Avatar>
                             <Typography variant='caption'>Inscrivez-vous pour continuer</Typography>
                         </Box>
@@ -70,16 +66,13 @@ export const Register=()=>{
                                 autoComplete="current-password"
                                 handleChange={handleChange}
                             />
-                            <Grid sx={{display: 'flex', ml: 2}}>
+                            <Grid sx={{ display: 'flex', ml: 2 }}>
                                 <Typography variant='caption'>Le mot de passe doit comporter au moins 8 caractères.</Typography>
                             </Grid>
-                            <Grid sx={{display: 'flex', mt: 2}}>
-                                <Checkbox  />
+                            <Grid sx={{ display: 'flex', mt: 2 }}>
+                                <Checkbox />
                                 <Typography variant='caption'>Oui, envoyez-moi les actus et offres Atlassian sur les produits, évènements et bien plus encore.</Typography>
                             </Grid>
-
-
-
                             <ThemeProvider theme={theme}>
                                 <Button
                                     type="submit"
@@ -92,7 +85,7 @@ export const Register=()=>{
                                 </Button>
                             </ThemeProvider>
 
-                            <Divider variant="middle" sx={{ mt: 3}} />
+                            <Divider variant="middle" sx={{ mt: 3 }} />
 
                             <Grid align="center">
                                 <Typography variant='caption'>Cette page est protégée par le service reCAPTCHA. La Politique de confidentialité et les Conditions d'utilisation de Google s'appliquent.</Typography>
@@ -103,10 +96,5 @@ export const Register=()=>{
                 </Box>
             </Container>
         </React.Fragment>
-
-
-
-
-
     )
 }
