@@ -6,7 +6,7 @@ import homeHero from "./../../Assets/images/home-hero.svg";
 export default function Home() {
   return (<>
     <ResponsiveAppBar />
-    <Grid container spacing={6}>
+    <Grid container spacing={6} sx={{ display: 'flex' }}>
       <Grid item xs={6}>
         colonne 1
       </Grid>
