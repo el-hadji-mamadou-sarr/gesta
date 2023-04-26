@@ -10,6 +10,7 @@ Pour lancer le server aller dans la racine du projet:
 
 ```shell
 cd server
+npm install
 npm run dev
 ```
 
