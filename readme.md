@@ -14,6 +14,8 @@ npm install
 npm run dev
 ```
 
+**Mettre les variables d'environnement dans .env oubien crée ton .env.local
+
 ## Systéme d'authentification
 
 * `http://localhost:5000/api/auth/login` 
