@@ -9,7 +9,7 @@ import {
     ThemeProvider,
     Divider, Grid, Link, CssBaseline, Container, Checkbox
 } from "@mui/material";
- HEAD
+
 import {theme} from "../../Assets/theme/theme";
 import Logo from "../../Assets/images/logo.png";
 import downicone from "../../Assets/images/login-removebg-preview.png";
