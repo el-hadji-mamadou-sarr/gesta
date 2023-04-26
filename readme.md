@@ -10,8 +10,11 @@ Pour lancer le server aller dans la racine du projet:
 
 ```shell
 cd server
+npm install
 npm run dev
 ```
+
+**Mettre les variables d'environnement dans .env oubien crée ton .env.local
 
 ## Systéme d'authentification
 
