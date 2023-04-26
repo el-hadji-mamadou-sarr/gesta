@@ -25,7 +25,7 @@ app.use(cors());
 //url de connectioin pour MongoDB
 const mongoDBURL = process.env.DB_URL;
 // Connectez-vous à MongoDB
-mongoose.connect(mongoDBURL, {
+mongoose.connect("mongoDBURL", {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
