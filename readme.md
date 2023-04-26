@@ -6,8 +6,25 @@ Une plateforme en ligne permettant aux utilisateurs de gérer des projets collab
 
 ## Systéme d'authentification
 
-- `http://localhost:5000/api/auth/login` 
+* `http://localhost:5000/api/auth/login` 
 
+Dans la corps de la requéte envoyer :
 
+```javascript 
+body: JSON.stringify({
+        email: userValue.email,
+        password: userValue.password
+})       
+```
 
-- `http://localhost:5000/api/auth/register` 
+* `http://localhost:5000/api/auth/register`
+
+Dans le corps de la requéte
+
+```javascript 
+body: JSON.stringify({
+        fullname : userValue.fullname,
+        email: userValue.email,
+        password: userValue.password
+})
+```
