@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 // Créer un nouveau schéma pour représenter les données de l'utilisateur
 const UserSchema = new mongoose.Schema({
     // champ "username" de type chaîne de caractères, requis et unique
-    username: { type: String, required: true, unique: true },
+    fullname: { type: String, required: true},
 
     // champ "email" de type chaîne de caractères, requis et unique
     email: { type: String, required: true, unique: true },
@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema({
 })
 
 // Créer un modèle d'utilisateur basé sur le schéma défini ci-dessus
-const User = mongoose.model("User", UserSchema);
+const User = mongoose.model("users", UserSchema);
 
 // Exporter le modèle pour pouvoir l'utiliser dans d'autres fichiers
 module.exports = User;
