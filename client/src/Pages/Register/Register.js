@@ -14,10 +14,13 @@ import Logo from "../../Assets/images/login-removebg-preview.png";
 import {useState} from "react";
 import {initialValues} from "../../Services/Constant/Register/Constant";
 import axios from "axios";
+import {useNavigate} from "react-router";
 
 export const Register=()=>{
     const[uservalues, setUserValues] = useState(initialValues)
     const [formError, setFormError] = useState({})
+    const navigate = useNavigate()
+
     // variable pour styliser le paper
     const paperStyle={padding:'30px 20px',width:"387px", margin:"20px auto"}
     const handleChange = (event) => {
@@ -27,7 +30,11 @@ export const Register=()=>{
     const handleSubmit = (event) => {
         event.preventDefault();
         if (Object.keys(formError).length === 0){
-            axios.post('')
+            axios.post('', uservalues)
+                .then(res => {
+                    navigate('/login');
+                })
+                .catch(err => console.log(err));
         }
 
     };
