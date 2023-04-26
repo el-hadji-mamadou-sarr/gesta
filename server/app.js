@@ -3,7 +3,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const helmet = require("helmet");
 const cors = require("cors");
-require('dotenv').config();
+dotenv = require('dotenv');
+dotenv.config();
+dotenv.config({ path: `.env.local`, override: true });
 const bcrypt = require('bcrypt');
 
 
