@@ -11,7 +11,7 @@ const bcrypt = require('bcrypt');
 const userRoutes = require('./routes/userRoutes');
 
 //import login route
-const loginRoute = require('./routes/login');
+const authRoutes = require('./routes/auth');
 
 // Créez une nouvelle application Express
 const app = express();
@@ -49,9 +49,11 @@ app.use(express.urlencoded({ extended: true }));
 // Utilisez l'app avec Express
 app.use('/api/users', userRoutes);
 
-//authentification
+//auth
+
 require('./middlewares/auth');
-app.use('/api/login', loginRoute);
+app.use('/api/auth', authRoutes);
+
 
 
 // Définissez le port d'écoute du serveur

@@ -2,11 +2,24 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const userModel = require('../models/User');
+const bcrypt = require('bcrypt');
 
-router.post('/', async(req, res, next)=>{
+router.post('/login', async(req, res, next)=>{
         //then we need to call the self invoking function with the req, res, next params.
         authentification(req, res, next)
 })
+
+router.post('/register', async(req, res, next)=>{
+        const user = await userModel.findOne({email:req.body.email});
+        if(user){
+                res.status(409)
+                .json({message:"this user already exist"});
+        }
+        const newUser = await userModel.create({fullname: req.body.fullname, email:req.body.email, password: await bcrypt.hash(req.body.password,10)});
+        authentification(req, res, next);
+})
+
 
 const authentification = (req, res, next)=>{
         //authenticate the user using the local strategy
@@ -15,7 +28,7 @@ const authentification = (req, res, next)=>{
                 //if the last middleware generate an error or the email or password is invalid
                 if(err || !user){
                         return res.status(403)
-                                .json({message:"invallid email or password"})
+                                .json({message:"invalid email or password"})
                 }
 
                 //if the authentification succeed we need to logged the user. the req.login establish
@@ -42,7 +55,7 @@ const authentification = (req, res, next)=>{
                         /* .set('Content-Type:', 'text/html; charset=utf-8') */
                         .status(200)
                         .json({_id:user.id, email:user.email})
-                        
+
                 });
 
         })(req, res, next)
