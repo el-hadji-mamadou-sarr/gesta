@@ -28,3 +28,15 @@ body: JSON.stringify({
         password: userValue.password
 })
 ```
+
+* A la réception vous pouvez utilisez cet exemple pour rediriger l'utilisateur:
+
+```javascript
+.then((res)=>{
+        if(res.status === 200){
+                res.json().then((res)=>{
+                        navigate('/home');
+                })
+        }
+})
+```
