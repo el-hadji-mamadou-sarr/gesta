@@ -4,6 +4,15 @@
 
 Une plateforme en ligne permettant aux utilisateurs de gérer des projets collaboratifs. 
 
+# Server
+
+Pour lancer le server aller dans la racine du projet:
+
+```shell
+cd server
+npm run dev
+```
+
 ## Systéme d'authentification
 
 * `http://localhost:5000/api/auth/login` 
