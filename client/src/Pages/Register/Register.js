@@ -9,6 +9,7 @@ import {
     ThemeProvider,
     Divider, Grid, Link, CssBaseline, Container, Checkbox
 } from "@mui/material";
+ HEAD
 import {theme} from "../../Assets/theme/theme";
 import Logo from "../../Assets/images/logo.png";
 import downicone from "../../Assets/images/login-removebg-preview.png";
@@ -16,25 +17,23 @@ import {useState} from "react";
 import {initialValues} from "../../Services/Constant/Register/Constant";
 import axios from "axios";
 
-export const Register=()=>{
-    const[uservalues, setUserValues] = useState(initialValues)
+export const Register = () => {
+    const [uservalues, setUserValues] = useState(initialValues)
     const [formError, setFormError] = useState({})
     // variable pour styliser le paper
-    const paperStyle={padding:'30px 20px',width:"387px", margin:"20px auto"}
+    const paperStyle = { padding: '30px 20px', width: "387px", margin: "20px auto" }
     const handleChange = (event) => {
-        const {name, value} = event.target
-        setUserValues({...uservalues, [name]: value})
+        const { name, value } = event.target
+        setUserValues({ ...uservalues, [name]: value })
     }
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (Object.keys(formError).length === 0){
-            axios.post('')
-        }
-
+        // if (Object.keys(formError).length === 0){
+        //     axios.post('')
+        // }
     };
 
     return (
-
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth="sm">
@@ -43,6 +42,7 @@ export const Register=()=>{
                         <Box align="center" color="#000066" fontSize="x-large">
                             <Avatar>
                                 <img src={Logo} alt="logo" width="50px" height="50px"/>
+
                             </Avatar>
                             <Typography variant='caption'>Inscrivez-vous pour continuer</Typography>
                         </Box>
@@ -121,10 +121,8 @@ export const Register=()=>{
                             <Grid sx={{display: 'flex', mt: 2}}>
                                 <Checkbox  />
                                 <Typography variant='caption'>  En m'inscrivant j'accepte les conditions d'utilisation cloud de gesta et je pris avoir pris connaissance de sa politique de confidentialité</Typography>
+
                             </Grid>
-
-
-
                             <ThemeProvider theme={theme}>
                                 <Button
                                     type="submit"
@@ -137,7 +135,7 @@ export const Register=()=>{
                                 </Button>
                             </ThemeProvider>
 
-                            <Divider variant="middle" sx={{ mt: 3}} />
+                            <Divider variant="middle" sx={{ mt: 3 }} />
 
                             
 
@@ -150,10 +148,5 @@ export const Register=()=>{
                         <img width="100%" src={downicone} alt="downicone" />
             </Box>
         </React.Fragment>
-
-
-
-
-
     )
 }
