@@ -15,14 +15,14 @@ Pour lancer le server construissez et éxecuter les deux services séparément �
 coté client : 
 
 ```docker build -t gesta-client
-   docker run -p localhost:5000 gesta-client
+   docker run -p 3000:5000 gesta-client
 
 ```
 
 coté serveur
 
 ```docker build -t gesta-server
-    docker run -p localhost:5000 gesta-server
+    docker run -p 3000:5000 gesta-server
 ```
 
 **Mettre les variables d'environnement dans .env oubien crée ton .env.local
