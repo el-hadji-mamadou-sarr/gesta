@@ -8,16 +8,17 @@ dotenv.config();
 dotenv.config({ path: `.env.local`, override: true });
 const bcrypt = require('bcrypt');
 
-
 //import le userProfile
 const userRoutes = require('./routes/userRoutes');
 
 //import login route
 const authRoutes = require('./routes/auth');
 
+//import project route 
+const projectsRoutes = require('./routes/projectsRoutes')
+
 // Créez une nouvelle application Express
 const app = express();
-
 
 // Utilise Helmet pour la sécurité HTTP de base
 app.use(helmet());
@@ -47,16 +48,13 @@ app.use(express.json());
 // Utilisez le middleware pour analyser les données de formulaire
 app.use(express.urlencoded({ extended: true }));
 
-
-// Utilisez l'app avec Express
-app.use('/api/users', userRoutes);
-
-//auth
-
+//auth routes
 require('./middlewares/auth');
 app.use('/api/auth', authRoutes);
 
-
+// setups routes
+app.use('/api/users', userRoutes);
+app.use('/api/projects', projectsRoutes);
 
 // Définissez le port d'écoute du serveur
 const PORT = process.env.SERVER_PORT || 5000;
@@ -64,9 +62,3 @@ const PORT = process.env.SERVER_PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-
-
-
-
-
-

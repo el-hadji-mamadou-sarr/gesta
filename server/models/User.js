@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 // Créer un nouveau schéma pour représenter les données de l'utilisateur
 const UserSchema = new mongoose.Schema({
     // champ "username" de type chaîne de caractères, requis et unique
-    fullname: { type: String, required: true},
+    fullname: { type: String, required: true },
 
     // champ "email" de type chaîne de caractères, requis et unique
     email: { type: String, required: true, unique: true },
