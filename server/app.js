@@ -15,6 +15,9 @@ const userRoutes = require('./routes/userRoutes');
 //import login route
 const authRoutes = require('./routes/auth');
 
+//import project route 
+const projectController = require('./routes/projectsRoutes');
+
 // Créez une nouvelle application Express
 const app = express();
 
@@ -47,14 +50,17 @@ app.use(express.json());
 // Utilisez le middleware pour analyser les données de formulaire
 app.use(express.urlencoded({ extended: true }));
 
+//Utilise les routes  de projects avec Express
+app.use('/api/projects', projectRoutes);
+
+//auth
+require('./middlewares/auth');
+app.use('/api/auth', authRoutes);
+
 
 // Utilisez l'app avec Express
 app.use('/api/users', userRoutes);
 
-//auth
-
-require('./middlewares/auth');
-app.use('/api/auth', authRoutes);
 
 
 

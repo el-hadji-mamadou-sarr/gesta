@@ -2,6 +2,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const userModel = require('../models/User');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 //the local strategy to use to authenticate the user
 const authenticateUser = async(email, password, done)=>{
@@ -27,5 +28,35 @@ const authenticateUser = async(email, password, done)=>{
         }
         
 }
+
+
+//stratgie d'authetifcation local, vérifie si le user est connecter
+
+const jwtAuthMiddleware = (req, res, next) => {
+        try {
+                //Recupère le token Jwt du cookie
+                const token  = req.cookies.jwtToken;
+
+                //verifie si le token existe
+                if(!token) {
+                        return res.status(401).json({message: 'Authentification requise'});
+                }
+
+                //Vérifie la validité du token 
+                const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+                //Ajoute  les données à la requête  pour une utilisation ultèrieure
+                req.userData = decoded;
+
+                //passer au prochaine middleware ou route
+                next();
+        } catch (error) {
+                return res.status(401).json({message: 'Authentification échouée'});
+        }
+};
+
+
+
+module.exports.jwtAuthMiddleware = jwtAuthMiddleware;
 
 passport.use( new LocalStrategy( {usernameField: 'email'}, authenticateUser))
