@@ -16,6 +16,8 @@ import downicone from "../../Assets/images/login-removebg-preview.png";
 import {useState} from "react";
 import {initialValues} from "../../Services/Constant/Register/Constant";
 import axios from "axios";
+import ResponsiveAppBar from "../layout/ResponsiveAppBar";
+
 
 export const Register = () => {
     const [uservalues, setUserValues] = useState(initialValues)
@@ -35,6 +37,7 @@ export const Register = () => {
 
     return (
         <React.Fragment>
+         <ResponsiveAppBar />
             <CssBaseline />
             <Container maxWidth="sm">
                 <Box sx={{}}>
