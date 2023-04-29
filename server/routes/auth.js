@@ -12,11 +12,17 @@ router.post('/login', async(req, res, next)=>{
 
 router.post('/register', async(req, res, next)=>{
         const user = await userModel.findOne({email:req.body.email});
+        
         if(user){
-                res.status(409)
+                return res.status(409)
                 .json({message:"this user already exist"});
         }
+
+        if(!req.body.email || !req.body.password){
+                return res.status(400).json({message:"vous devez rentrer de bonnes informations"});
+        }
         const newUser = await userModel.create({fullname: req.body.fullname, email:req.body.email, password: await bcrypt.hash(req.body.password,10)});
+        
         authentification(req, res, next);
 })
 
