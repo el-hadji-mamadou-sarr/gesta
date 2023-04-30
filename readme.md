@@ -4,14 +4,25 @@
 
 Une plateforme en ligne permettant aux utilisateurs de gérer des projets collaboratifs. 
 
-# Server
 
-Pour lancer le server aller dans la racine du projet:
 
-```shell
-cd server
-npm install
-npm run dev
+
+# Docker services 
+# Server & Client
+
+Pour lancer le server construissez et éxecuter les deux services séparément à l'aide de Docker. :
+
+coté client : 
+
+```docker build -t gesta-client
+   docker run -p 3000:5000 gesta-client
+
+```
+
+coté serveur
+
+```docker build -t gesta-server
+    docker run -p 3000:5000 gesta-server
 ```
 
 **Mettre les variables d'environnement dans .env oubien crée ton .env.local

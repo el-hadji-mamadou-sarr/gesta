@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import ResponsiveAppBar from "../layout/home/ResponsiveAppBar";
+import ResponsiveAppBar from "../layout/ResponsiveAppBar";
 import homeHero from "./../../Assets/images/home-hero.svg";
 
 

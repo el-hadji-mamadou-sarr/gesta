@@ -11,7 +11,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import logo from "./../../../Assets/images/gesta.png";
+import logo from "./../../Assets/images/gesta.png";
 import { Link } from 'react-router-dom';
 
 const pages = [
@@ -21,7 +21,7 @@ const pages = [
   },
   {
     label: 'Developpeurs',
-    url: '#developpers'
+    url: '#developpers' 
   },
   {
     label: 'A propos',

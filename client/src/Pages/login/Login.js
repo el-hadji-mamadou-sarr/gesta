@@ -9,13 +9,16 @@ import {
     ThemeProvider,
     Divider, Grid, CssBaseline, Container
 } from "@mui/material";
-
 import {fontTheme, theme} from "../../Assets/theme/theme";
 import { Link } from "react-router-dom"
-import Logo from "../../Assets/images/login-removebg-preview.png";
 import {useNavigate} from "react-router";
 import {useEffect, useState} from "react";
 import validation from "../../Services/Constant/Login/Constant";
+import ResponsiveAppBar from "../layout/ResponsiveAppBar";
+import Logo from "../../Assets/images/logo.png";
+import downicone from "../../Assets/images/login-removebg-preview.png";
+
+
 
 
 
@@ -100,12 +103,14 @@ export const Login = () => {
     return (
 
         <React.Fragment>
+        <ResponsiveAppBar />
             <CssBaseline />
             <Container maxWidth="sm">
                  <Box sx={{}}>
                      <Paper elevation={20} style={paperStyle}>
                          <Box align="center">
                              <Avatar>
+                             <img src={Logo} alt="logo" width="50px" height="50px"/>
                              </Avatar>
                              <Typography variant='caption'>Connectez-vous pour continuer</Typography>
                          </Box>
@@ -144,7 +149,7 @@ export const Login = () => {
                              <ThemeProvider theme={theme}>
                                  <Button
                                      type="submit"
-                                     color="primary"
+                                     color="registeBtnTheme"
                                      fullWidth
                                      variant="contained"
                                      sx={{ mt: 3, mb: 2 }}
@@ -170,6 +175,9 @@ export const Login = () => {
                     </Paper>
                 </Box>
             </Container>
+            <Box  marginTop="-58%" marginBottom="70px">
+                    <img width="100%" src={downicone} alt="downicone" />
+            </Box>
         </React.Fragment>
 
     )}
