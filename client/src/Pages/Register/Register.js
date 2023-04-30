@@ -14,30 +14,48 @@ import {theme} from "../../Assets/theme/theme";
 import Logo from "../../Assets/images/logo.png";
 import downicone from "../../Assets/images/login-removebg-preview.png";
 import {useState} from "react";
-import {initialValues} from "../../Services/Constant/Register/Constant";
-import axios from "axios";
 import {useNavigate} from "react-router";
 
 export const Register = () => {
-    const [uservalues, setUserValues] = useState(initialValues)
-    const [formError, setFormError] = useState({})
+
+    const [fullname, setFullname] = useState('')
+    const [email, setEmail]= useState('')
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('')
     const navigate = useNavigate()
 
     // variable pour styliser le paper
     const paperStyle = { padding: '30px 20px', width: "387px", margin: "20px auto" }
-    const handleChange = (event) => {
-        const { name, value } = event.target
-        setUserValues({ ...uservalues, [name]: value })
-    }
+
     const handleSubmit = (event) => {
-        event.preventDefault();
-        if (Object.keys(formError).length === 0){
-            axios.post('', uservalues)
-                .then(res => {
-                    navigate('/login');
+        event.preventDefault()
+       console.log(fullname,email,password,confirmPassword)
+
+            const requestBody = {
+                method: "POST",
+                headers : {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+
+                },
+                body: JSON.stringify({
+                    fullname: fullname,
+                    email: email,
+                    password: password,
+                    confirmPassword: confirmPassword
                 })
-                .catch(err => console.log(err));
-        }
+            }
+
+            fetch("http://localhost:5000/api/auth/register", requestBody)
+                .then((res)=>{
+                    if(res.status === 200){
+                        res.json().then((res)=>{
+                            navigate('/');
+                        })
+                    }
+
+                })
+
     };
 
     return (
@@ -54,35 +72,20 @@ export const Register = () => {
                             <Typography variant='caption'>Inscrivez-vous pour continuer</Typography>
                         </Box>
                         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 4 }}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={6}>
-                            <TextField
-                                margin="normal"
-                                size="small"
-                                required
-                                fullWidth
-                                id="Prénom"
-                                label="Prénom"
-                                name="Nom"
-                                autoComplete="Prénom"
-                                autoFocus
-                                handleChange={handleChange}
-                            />                            </Grid>
-                            <Grid item xs={6}>
 
                             <TextField
                                 margin="normal"
                                 size="small"
                                 required
                                 fullWidth
-                                id="nom"
-                                label="Nom"
-                                name="Nom"
-                                autoComplete="Nom"
+                                id="fullname"
+                                label="Fullname"
+                                name={fullname}
+                                value={fullname}
+                                onChange={(event)=>{setFullname(event.target.value)}}
+                                autoComplete="email"
                                 autoFocus
-                                handleChange={handleChange}
-                            />                            </Grid>
-                            </Grid>
+                            />
                         
                             <TextField
                                 margin="normal"
@@ -91,10 +94,12 @@ export const Register = () => {
                                 fullWidth
                                 id="email"
                                 label="Email Address"
-                                name="email"
+                                name={email}
+                                value={email}
+                                onChange={(event)=>{setEmail(event.target.value)}}
                                 autoComplete="email"
                                 autoFocus
-                                handleChange={handleChange}
+
                             />
                            
                             <TextField
@@ -102,12 +107,14 @@ export const Register = () => {
                                 size="small"
                                 required
                                 fullWidth
-                                name="password"
+                                name={password}
                                 label="Password"
                                 type="password"
                                 id="password"
+                                value={password}
+                                onChange={(event)=>{setPassword(event.target.value)}}
                                 autoComplete="current-password"
-                                handleChange={handleChange}
+
                             />
 
                             <TextField
@@ -115,12 +122,14 @@ export const Register = () => {
                                 size="small"
                                 required
                                 fullWidth
-                                name="Confirm Password"
+                                name={confirmPassword}
+                                value={confirmPassword}
+                                onChange={(event)=>{setConfirmPassword(event.target.value)}}
                                 label="Confirm Password"
                                 type="Confirm Password"
                                 id="Confirm Password"
                                 autoComplete="current-password"
-                                handleChange={handleChange}
+
                             />
                             <Grid sx={{display: 'flex', ml: 2}}>
                                 <Typography variant='caption'>Le mot de passe doit comporter au moins 8 caractères.</Typography>

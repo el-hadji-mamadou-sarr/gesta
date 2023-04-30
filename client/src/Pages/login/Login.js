@@ -13,18 +13,89 @@ import {
 import {fontTheme, theme} from "../../Assets/theme/theme";
 import { Link } from "react-router-dom"
 import Logo from "../../Assets/images/login-removebg-preview.png";
+import {useNavigate} from "react-router";
+import {useEffect, useState} from "react";
+import validation from "../../Services/Constant/Login/Constant";
+
+
 
 export const Login = () => {
+    // declarate variable
+    const navigate = useNavigate()
+    const [values, setValues] = useState({
+        email: '',
+        password: ''
+    })
+    const [error, setErrors] = useState({})
+
+
     // variable pour styliser le paper
     const paperStyle = { padding: '30px 20px', width: "387px", margin: "20px auto" }
+
+    // get value from the form
+    const handleChange = (event) => {
+        const { name , value } = event.target;
+
+        setValues((prevState)=>({
+            ...prevState,
+            [name]: value,
+        }));
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-    };
+        // show errors
+        setErrors(validation(values));
+        // if error is empty call api
+        if(error.email === "" && error.password === ""){
+            const requestBody = {
+                method: "POST",
+                headers : {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+
+                },
+                body: JSON.stringify({
+                    email: values.email,
+                    password: values.password
+                })
+            }
+
+            fetch("http://localhost:5000/api/auth/login", requestBody)
+                .then((res)=>{
+                    if(res.status === 200){
+                        res.json().then((res)=>{
+                            navigate('/');
+                        })
+                    }
+                })
+        }
+
+        const requestBody = {
+            method: "POST",
+            headers : {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+
+            },
+            body: JSON.stringify({
+                email: values.email,
+                password: values.password
+            })
+        }
+
+        fetch("http://localhost:5000/api/auth/login", requestBody)
+            .then((res)=>{
+                if(res.status === 200){
+                    res.json().then((res)=>{
+                        navigate('/');
+                    })
+                }
+            })
+
+
+    }
+
 
     return (
 
@@ -48,6 +119,11 @@ export const Login = () => {
                                  label="Email Address"
                                  name="email"
                                  autoComplete="email"
+                                 type="email"
+                                 value={values.email}
+                                 onChange={handleChange}
+                                 helperText={error.email}
+                                 error={error.email}
                                  autoFocus
                              />
                              <TextField
@@ -56,9 +132,13 @@ export const Login = () => {
                                  required
                                  fullWidth
                                  name="password"
-                                label="Password"
-                                type="password"
+                                 label="Password"
+                                 type="password"
                                  id="password"
+                                 value={values.password}
+                                 onChange={handleChange}
+                                 error={error.password}
+                                 helperText={error.password}
                                  autoComplete="current-password"
                              />
                              <ThemeProvider theme={theme}>
