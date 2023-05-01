@@ -50,7 +50,7 @@ export const Login = () => {
         // show errors
         setErrors(validation(values));
         // if error is empty call api
-        if(error.email === "" && error.password === ""){
+
             const requestBody = {
                 method: "POST",
                 headers : {
@@ -72,29 +72,6 @@ export const Login = () => {
                         })
                     }
                 })
-        }
-
-        const requestBody = {
-            method: "POST",
-            headers : {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-
-            },
-            body: JSON.stringify({
-                email: values.email,
-                password: values.password
-            })
-        }
-
-        fetch("http://localhost:5000/api/auth/login", requestBody)
-            .then((res)=>{
-                if(res.status === 200){
-                    res.json().then((res)=>{
-                        navigate('/');
-                    })
-                }
-            })
 
 
     }
