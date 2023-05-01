@@ -7,7 +7,7 @@ import {
     Typography,
     Box,
     ThemeProvider,
-    Divider, Grid, Link, CssBaseline, Container, Checkbox
+    Divider, Grid, Link, CssBaseline, Container, Checkbox, Alert, FormHelperText
 } from "@mui/material";
 
 import {theme} from "../../Assets/theme/theme";
@@ -16,47 +16,75 @@ import downicone from "../../Assets/images/login-removebg-preview.png";
 import {useState} from "react";
 import {useNavigate} from "react-router";
 import ResponsiveAppBar from "../layout/ResponsiveAppBar";
+import validation from "../../Services/Constant/Register/Constant";
 
 
 export const Register = () => {
-
-    const [fullname, setFullname] = useState('')
-    const [email, setEmail]= useState('')
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('')
+    // variable déclaration
+    const [values, setValues] = useState({
+        fullname: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        agree_Terms: ''
+    })
+    const [error, setErrors] = useState({})
+    const [agreeTerms, setAgreeTerm] = useState(false)
     const navigate = useNavigate()
+
+
 
     // variable pour styliser le paper
     const paperStyle = { padding: '30px 20px', width: "387px", margin: "20px auto" }
 
+    // verify if user checked the checkbox
+    const handleChecked = (event)=> {
+        setAgreeTerm(event.target.checked)
+    }
+
+    const handleChange = (event) => {
+        const { name , value } = event.target;
+
+        setValues({...values,[name]:value})
+
+        //  both are working
+        // setValues((prevState)=>({
+        //     ...prevState,
+        //     [name]: value,
+        // }));
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault()
-       console.log(fullname,email,password,confirmPassword)
+        setErrors(validation(values, agreeTerms))
 
-            const requestBody = {
+
+             const requestBody = {
                 method: "POST",
-                headers : {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json'
+                 headers : {
+                     Accept: 'application/json',
+                     'Content-Type': 'application/json'
 
-                },
-                body: JSON.stringify({
-                    fullname: fullname,
-                    email: email,
-                    password: password,
-                    confirmPassword: confirmPassword
-                })
-            }
+                 },
+                 body: JSON.stringify({
+                     fullname: values.fullname,
+                     email: values.email,
+                     password: values.password
 
-            fetch("http://localhost:5000/api/auth/register", requestBody)
-                .then((res)=>{
-                    if(res.status === 200){
-                        res.json().then((res)=>{
-                            navigate('/');
-                        })
-                    }
+                 })
+             }
 
-                })
+             fetch("http://localhost:5000/api/auth/register", requestBody)
+                 .then((res)=>{
+                     if(res.status === 200){
+                         res.json().then((res)=>{
+                             navigate('/');
+                         })
+                     }
+
+                 })
+
+
 
     };
 
@@ -74,8 +102,10 @@ export const Register = () => {
                             </Avatar>
                             <Typography variant='caption'>Inscrivez-vous pour continuer</Typography>
                         </Box>
-                        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 4 }}>
 
+                        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 4 }}>
+                            {/*checkbox error message*/}
+                            <FormHelperText error={error}>{error.agreeTerms}</FormHelperText>
                             <TextField
                                 margin="normal"
                                 size="small"
@@ -83,10 +113,12 @@ export const Register = () => {
                                 fullWidth
                                 id="fullname"
                                 label="Fullname"
-                                name={fullname}
-                                value={fullname}
-                                onChange={(event)=>{setFullname(event.target.value)}}
+                                name="fullname"
+                                value={values.fullname}
+                                onChange={handleChange}
                                 autoComplete="email"
+                                error={error.fullname}
+                                helperText={error.fullname}
                                 autoFocus
                             />
                         
@@ -97,10 +129,12 @@ export const Register = () => {
                                 fullWidth
                                 id="email"
                                 label="Email Address"
-                                name={email}
-                                value={email}
-                                onChange={(event)=>{setEmail(event.target.value)}}
+                                name="email"
+                                value={values.email}
+                                onChange={handleChange}
                                 autoComplete="email"
+                                error={error.email}
+                                helperText={error.email}
                                 autoFocus
 
                             />
@@ -110,12 +144,14 @@ export const Register = () => {
                                 size="small"
                                 required
                                 fullWidth
-                                name={password}
+                                name="password"
                                 label="Password"
                                 type="password"
                                 id="password"
-                                value={password}
-                                onChange={(event)=>{setPassword(event.target.value)}}
+                                value={values.password}
+                                onChange={handleChange}
+                                error={error.password}
+                                helperText={error.password}
                                 autoComplete="current-password"
 
                             />
@@ -125,12 +161,14 @@ export const Register = () => {
                                 size="small"
                                 required
                                 fullWidth
-                                name={confirmPassword}
-                                value={confirmPassword}
-                                onChange={(event)=>{setConfirmPassword(event.target.value)}}
+                                name="confirmPassword"
+                                value={values.confirmPassword}
+                                onChange={handleChange}
                                 label="Confirm Password"
-                                type="Confirm Password"
+                                type="password"
                                 id="Confirm Password"
+                                error={error.confirmPassword}
+                                helperText={error.confirmPassword}
                                 autoComplete="current-password"
 
                             />
@@ -138,10 +176,14 @@ export const Register = () => {
                                 <Typography variant='caption'>Le mot de passe doit comporter au moins 8 caractères.</Typography>
                             </Grid>
                             <Grid sx={{display: 'flex', mt: 2}}>
-                                <Checkbox  />
+                                <Checkbox
+                                    checked={agreeTerms}
+                                    onChange={handleChecked}
+                                />
                                 <Typography variant='caption'>  En m'inscrivant j'accepte les conditions d'utilisation cloud de gesta et je pris avoir pris connaissance de sa politique de confidentialité</Typography>
 
                             </Grid>
+
                             <ThemeProvider theme={theme}>
                                 <Button
                                     type="submit"
@@ -155,8 +197,6 @@ export const Register = () => {
                             </ThemeProvider>
 
                             <Divider variant="middle" sx={{ mt: 3 }} />
-
-                            
 
                         </Box>
                     </Paper>
