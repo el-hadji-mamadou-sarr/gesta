@@ -4,48 +4,37 @@ function validation(values, agreeTerms){
     const regex_password = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&])(?=.*[a-zA-Z]).{8,}$/;
 
     // fullname verification
-    if(values.fullname === ""){
+    if(!values.fullname){
         error.fullname = "Fullname should not be empty"
+    }else{
+        delete error.fullname
     }
 
     // email verification
-    if(values.email === ""){
-        error.email = "Email should not be empty"
-    }
-    else if(!regex_email.test(values.email)){
-        error.email="Email Didn't match"
+    if(!regex_email.test(values.email) || !values.email){
+        error.email="Email has some error"
     }else {
-        error.email = ""
+       delete error.email
     }
 
     //password verification
-    if(values.password === "") {
-        error.password = "Password should not be empty"
-    }
-    else if(!regex_password.test(values.password)){
-        error.password = "Password didn't match"
+    if(!regex_password.test(values.password) || !values.password){
+        error.password = "This password has some error"
     }else{
-        error.password = ""
+        delete error.password
     }
 
     // password confirm verification
-
-    if(values.confirmPassword === ""){
-        error.confirmPassword = "Confirm password should not be empty"
-    }else{
-        error.confirmPassword = ""
-    }
-
-    if(values.password !== values.confirmPassword){
+    if(values.password !== values.confirmPassword || !values.confirmPassword){
         error.confirmPassword = "This confirm password didn't match the password"
     }else{
-        error.confirmPassword = ""
+        delete error.confirmPassword
     }
 
     if(!agreeTerms){
         error.agreeTerms = "You need to check the checkbox"
     }else{
-        error.agreeTerms = ""
+        delete error.agreeTerms
     }
 
     return error;

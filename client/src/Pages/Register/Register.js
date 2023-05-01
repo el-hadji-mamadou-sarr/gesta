@@ -13,7 +13,7 @@ import {
 import {theme} from "../../Assets/theme/theme";
 import Logo from "../../Assets/images/logo.png";
 import downicone from "../../Assets/images/login-removebg-preview.png";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router";
 import ResponsiveAppBar from "../layout/ResponsiveAppBar";
 import validation from "../../Services/Constant/Register/Constant";
@@ -21,17 +21,20 @@ import validation from "../../Services/Constant/Register/Constant";
 
 export const Register = () => {
     // variable déclaration
-    const [values, setValues] = useState({
-        fullname: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        agree_Terms: ''
-    })
+    const [values, setValues] = useState({})
     const [error, setErrors] = useState({})
     const [agreeTerms, setAgreeTerm] = useState(false)
     const navigate = useNavigate()
+    const [message, setMessage] = useState('')
+    const [isSubmit, setIsSubmit] = useState(false)
 
+     // useEffect(()=>{
+     //     setErrors(validation(values, agreeTerms))
+     // }, [])
+
+    useEffect(()=>{
+        setErrors(validation(values, agreeTerms))
+    }, [values, agreeTerms])
 
 
     // variable pour styliser le paper
@@ -46,6 +49,7 @@ export const Register = () => {
         const { name , value } = event.target;
 
         setValues({...values,[name]:value})
+        setErrors(validation(values, agreeTerms))
 
         //  both are working
         // setValues((prevState)=>({
@@ -55,38 +59,49 @@ export const Register = () => {
     };
 
     const handleSubmit = (event) => {
+
         event.preventDefault()
-        setErrors(validation(values, agreeTerms))
+        setIsSubmit(true)
+        if(Object.keys(error).length === 0 && Object.keys(values).length === 4){
 
-
-             const requestBody = {
+            const requestBody = {
                 method: "POST",
-                 headers : {
-                     Accept: 'application/json',
-                     'Content-Type': 'application/json'
+                headers : {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
 
-                 },
-                 body: JSON.stringify({
-                     fullname: values.fullname,
-                     email: values.email,
-                     password: values.password
+                },
+                body: JSON.stringify({
+                    fullname: values.fullname,
+                    email: values.email,
+                    password: values.password
 
-                 })
-             }
+                })
+            }
 
-             fetch("http://localhost:5000/api/auth/register", requestBody)
-                 .then((res)=>{
-                     if(res.status === 200){
-                         res.json().then((res)=>{
-                             navigate('/');
-                         })
-                     }
+            fetch("http://localhost:5000/api/auth/register", requestBody)
+                .then((res)=>{
+                    console.log(res)
+                    if(res.status === 200){
+                        res.json().then((res)=>{
+                            navigate('/');
+                        })
+                    }else if(res.status === 409){
+                        setMessage('cette utilisateur existe déja')
+                    }else{
+                        setMessage('Vous avez commis des erreurs de saisi')
+                    }
 
-                 })
-
+                })
+        }else{
+            console.log("Ce formulaire contient des erreurs")
+        }
 
 
     };
+
+
+
 
     return (
         <React.Fragment>
@@ -103,9 +118,11 @@ export const Register = () => {
                             <Typography variant='caption'>Inscrivez-vous pour continuer</Typography>
                         </Box>
 
-                        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 4 }}>
+                        <Box component="form" onSubmit={(event)=> handleSubmit(event)} noValidate sx={{ mt: 4 }}>
+                            {/*if message empty render nothing*/}
+                            {message && <FormHelperText error={error}>{message}</FormHelperText>}
                             {/*checkbox error message*/}
-                            <FormHelperText error={error}>{error.agreeTerms}</FormHelperText>
+                            <FormHelperText error={error}>{isSubmit && error.agreeTerms}</FormHelperText>
                             <TextField
                                 margin="normal"
                                 size="small"
@@ -117,8 +134,8 @@ export const Register = () => {
                                 value={values.fullname}
                                 onChange={handleChange}
                                 autoComplete="email"
-                                error={error.fullname}
-                                helperText={error.fullname}
+                                error={isSubmit && error.fullname}
+                                helperText={isSubmit && error.fullname}
                                 autoFocus
                             />
                         
@@ -133,8 +150,8 @@ export const Register = () => {
                                 value={values.email}
                                 onChange={handleChange}
                                 autoComplete="email"
-                                error={error.email}
-                                helperText={error.email}
+                                error={isSubmit && error.email}
+                                helperText={isSubmit && error.email}
                                 autoFocus
 
                             />
@@ -150,8 +167,8 @@ export const Register = () => {
                                 id="password"
                                 value={values.password}
                                 onChange={handleChange}
-                                error={error.password}
-                                helperText={error.password}
+                                error={isSubmit && error.password}
+                                helperText={isSubmit && error.password}
                                 autoComplete="current-password"
 
                             />
@@ -167,8 +184,8 @@ export const Register = () => {
                                 label="Confirm Password"
                                 type="password"
                                 id="Confirm Password"
-                                error={error.confirmPassword}
-                                helperText={error.confirmPassword}
+                                error={isSubmit && error.confirmPassword}
+                                helperText={isSubmit && error.confirmPassword}
                                 autoComplete="current-password"
 
                             />
