@@ -1,3 +1,6 @@
 /node_modules
 .env.local
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5b9eaa9 (✨ added automated test)
