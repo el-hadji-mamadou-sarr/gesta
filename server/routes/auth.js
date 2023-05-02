@@ -36,7 +36,7 @@ const authentification = (req, res, next)=>{
                         return res.status(403)
                                 .json({message:"invalid email or password"})
                 }
-
+                
                 //if the authentification succeed we need to logged the user. the req.login establish
                 //a session for the user. So here we use a jwt token so the the session is false
                 req.login(user, {session:false}, (err)=>{
@@ -61,9 +61,7 @@ const authentification = (req, res, next)=>{
                         /* .set('Content-Type:', 'text/html; charset=utf-8') */
                         .status(200)
                         .json({_id:user.id, email:user.email})
-
                 });
-
         })(req, res, next)
 }
 
