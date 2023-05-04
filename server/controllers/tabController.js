@@ -8,6 +8,7 @@ exports.createTab = async function (req) {
 
     const { projectId, name } = req.body;
 
+
     // Trouve le projet lié à l'ID du projet
     const project = await Project.findById(projectId);
 
