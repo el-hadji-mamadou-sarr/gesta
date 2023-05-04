@@ -58,7 +58,7 @@ app.use('/api/auth', authRoutes);
 // setups routes
 
 const passport = require('passport');
-app.use('/api/users', userRoutes);
+app.use('/api/users',passport.authenticate('jwt',{session:false}), userRoutes);
 app.use('/api/projects',passport.authenticate('jwt', {session:false}) , projectsRoutes);
 
 // Définissez le port d'écoute du serveur

@@ -1,21 +1,17 @@
 const express = require("express");
 const projectController = require("../controllers/projectController");
 const router = express.Router();
-const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
+const getIdFromToken = require('../utils/getIdFromToken');
 
-
-function getIdFromToken(req){
-  const decoded = jwt.verify(req.cookies['jwtToken'], process.env.JWT_SECRET);
-  return decoded._id;
-}
 
 router.post("/create", async (req, res) => {
 
+    const id = getIdFromToken(req);
     const data = {
       name:req.body.name,
       description:req.body.description,
-      owner: new mongoose.Types.ObjectId(getIdFromToken(req))
+      owner: new mongoose.Types.ObjectId(id)
     }
 
     try {

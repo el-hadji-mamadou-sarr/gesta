@@ -27,14 +27,11 @@ exports.updateUserProfile = async (userId, data) => {
         const updatedUserProfile = await User.findByIdAndUpdate(
             userId, // L'ID de l'utilisateur à mettre à jour
             data, // Les nouvelles données de l'utilisateur
-            { new: true } // Options pour retourner la nouvelle version de l'utilisateur
         );
         // Si aucun utilisateur n'est trouvé, renvoyer une erreur pour être capturée par l'appelant
         if (!updatedUserProfile) {
             throw new Error('User profile not found');
         }
-        // Si l'utilisateur est mis à jour, renvoyer les données mises à jour de l'utilisateur
-        return updatedUserProfile;
     } catch (error) {
         // En cas d'erreur, renvoyer une erreur pour être capturée par l'appelant
         throw error;
