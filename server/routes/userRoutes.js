@@ -68,5 +68,24 @@ router.post('/profile/update/resetPassword', async(req, res)=>{
 })
 
 
+router.post('/profile/update/password', async(req, res)=>{
+    const secure = true;
+    const id = getId(req);
+    try{
+        const verifyToken = await resetTokenManager.verifyResetToken(req.body.token);
+
+        if(verifyToken){
+            await userController.updateUserProfile(id, {password: req.body.password}, secure);
+            res.status(200).json({message:"le mot de passe a bien été mis à jour"});
+        }else{
+            res.status(498).json({message:"le token est invalide"});
+        }
+       
+    }catch(error){
+        res.status(500).json({message:"le serveur a rencontré un probléme"});
+    }
+})
+
+
 module.exports = router;
 
