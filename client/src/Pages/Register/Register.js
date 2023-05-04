@@ -134,7 +134,9 @@ export const Register = () => {
                                     variant="contained"
                                     sx={{ mt: 3, mb: 2 }}
                                 >
-                                S'inscrire
+                                    <Box color="white">
+                                    S'inscrire
+                                    </Box>                                
                                 </Button>
                             </ThemeProvider>
 
