@@ -131,7 +131,10 @@ export const Login = () => {
                                      variant="contained"
                                      sx={{ mt: 3, mb: 2 }}
                                  >
-                                     Sign In
+                                    <Box
+                                    color="white">
+                                        Sign In
+                                    </Box> 
                                  </Button>
                              </ThemeProvider>
 
