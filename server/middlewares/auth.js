@@ -33,37 +33,36 @@ const authenticateUser = async (email, password, done) => {
 }
 
 // verify the token
-const authenticatedRequest = async (jwtPayload, done)=>{
-        
+const authenticatedRequest = async (jwtPayload, done) => {
+
         try {
-                const user = await userModel.findOne({email: jwtPayload.email})
-                if(!user){
-                        return done(null, false, {message:"cet utilisateur n'est pas connecté"});
+                const user = await userModel.findOne({ email: jwtPayload.email })
+                if (!user) {
+                        return done(null, false, { message: "cet utilisateur n'est pas connecté" });
                 }
-               
+
                 return done(null, user);
         } catch (error) {
                 return done(err);
-        }       
+        }
 }
 
 // cookie extractor function from www.passportjs.org
 
-var cookieExtractor = function(req) {
-    var token = null;
-    if (req && req.cookies)
-    {
-        token = req.cookies['jwtToken'];
-    }
-    return token;
+var cookieExtractor = function (req) {
+        var token = null;
+        if (req && req.cookies) {
+                token = req.cookies['jwtToken'];
+        }
+        return token;
 };
 
 passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
 
 passport.use(new JWTStrategy({
-                jwtFromRequest: ExtractJWT.fromExtractors([req=>cookieExtractor(req)]),
-                secretOrKey: process.env.JWT_SECRET
-        },
+        jwtFromRequest: ExtractJWT.fromExtractors([req => cookieExtractor(req)]),
+        secretOrKey: process.env.JWT_SECRET
+},
         authenticatedRequest
 ));
 
