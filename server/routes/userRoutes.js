@@ -1,13 +1,9 @@
-// Importer le module express pour créer des routes
 const express = require("express");
-
-// Importer le contrôleur userController pour gérer les requêtes de profil utilisateur
 const userController = require("../controllers/userController");
-
 const getId = require('../utils/getIdFromToken');
-
-// Créer un nouveau routeur Express
 const router = express.Router();
+const sendVerification = require('../utils/sendSecurityVerificationEmail')
+const resetTokenManager = require('../utils/SecurityResetTokenManager');
 
 router.get('/profile', async(req, res)=>{
 
@@ -42,11 +38,11 @@ router.get('/:userId', async (req, res) => {
 });
 
 // Créer une route pour mettre à jour un profil d'utilisateur
-router.put('/update', async (req, res) => {
+router.put('/profile/update', async (req, res) => {
     const id = getId(req);
+    const secure = false;
     try {
-        // Appeler la fonction updateUserProfile du contrôleur pour mettre à jour un utilisateur par ID
-        await userController.updateUserProfile(id, req.body);
+        await userController.updateUserProfile(id, req.body, secure);
         // Renvoyer une réponse 200 avec les données mises à jour de l'utilisateur
         res.status(200).json({message:"user is updated"});
     } catch (error) {
@@ -55,20 +51,22 @@ router.put('/update', async (req, res) => {
     }
 });
 
+router.post('/profile/update/resetPassword', async(req, res)=>{
 
-/* // Créer une route pour supprimer un profil d'utilisateur spécifique
-router.delete('/:userId/delete', async (req, res) => {
-    try {
-        // Appeler la fonction deleteUserProfile du contrôleur pour supprimer un utilisateur par ID
-        await userController.deleteUserProfile(req.params.userId);
-        // Renvoyer une réponse 200 avec un message de réussite
-        res.status(200).json({ message: 'Un message confirmant la suppression de l utilisateur' });
-    } catch (error) {
-        // En cas d'erreur, renvoyer une réponse 500 avec un message d'erreur générique
-        res.status(500).json({ message: error.message })
+    try{
+         const user = await userController.getUserByEmail(req.body.email);
+         
+         if(user){
+            const  resetToken = require('../utils/resetTokenGenerator');
+            await resetTokenManager.saveResetToken(user._id, resetToken, "password"); 
+            sendVerification(user.email, user.fullname, "password", resetToken);
+         }
+         res.status(200).json({message:"email has been sent"})
+    }catch(error){
+        res.status(500).json({message:"le serveur a rencontré un probléme"});
     }
-}) */
+})
 
-// Exporter le routeur pour pouvoir l'utiliser dans d'autres fichiers de l'application
+
 module.exports = router;
 
