@@ -1,7 +1,6 @@
 // Importez les dépendances nécessaires
 const express = require("express");
 const mongoose = require("mongoose");
-const helmet = require("helmet");
 const cors = require("cors");
 dotenv = require('dotenv');
 dotenv.config();
@@ -23,11 +22,18 @@ const projectsRoutes = require('./routes/projectsRoutes');
 const tabRoutes = require('./routes/tabRoutes');
 
 
-
-// Utilise Helmet pour la sécurité HTTP de base
-app.use(helmet());
 // Utilise CORS pour contrôler l'accès entre les domaines
-app.use(cors());
+app.use(cors({
+     
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
+
+app.use((req, res, next)=>{
+    res.header('Access-Control-Allow-Credentials', true);
+    next();
+})
+
 
 //useses cookies parser
 app.use(cookieParser());

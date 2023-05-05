@@ -174,7 +174,7 @@ router.get('/:userId', async (req, res) => {
         const user = await userController.getUserProfile(req.params.userId);
         res.status(200).json(user);
     } catch (error) {
-        res.status(500).json({ message: "le serveur a rencontré un probléme" });
+        res.status(500).json({ message: "le serveur a rencontré un probléme"});
     }
 });
 

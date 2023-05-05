@@ -1,6 +1,5 @@
-// Importer le modèle User pour pouvoir l'utiliser dans le contrôleur
 const User = require("../models/User");
-
+const bcrypt = require('bcrypt');
 
 
 // Lire un profil utilisateur spécifique
@@ -39,7 +38,7 @@ exports.updateUserProfile = async (userId, data, secure) => {
                 fullname: data.fullname,
                 profile_picture: data.profile_picture,
                 email: secure && data.email,
-                password: secure && data.password
+                password: secure && await bcrypt.hash(data.password, 10) 
             }
         );
         // Si aucun utilisateur n'est trouvé, renvoyer une erreur pour être capturée par l'appelant

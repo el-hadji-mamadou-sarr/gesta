@@ -34,7 +34,7 @@ const authenticateUser = async (email, password, done) => {
 
 // verify the token
 const authenticatedRequest = async (jwtPayload, done) => {
-
+       
         try {
                 const user = await userModel.findOne({ email: jwtPayload.email })
                 if (!user) {

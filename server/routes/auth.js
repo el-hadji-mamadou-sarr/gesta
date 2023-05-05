@@ -27,9 +27,7 @@ router.post('/register', async(req, res, next)=>{
                         email: req.body.email, 
                         password: await bcrypt.hash(req.body.password,10),
                         banner_color: random_color.generateRandomColor()
-        
                 });
-        
         authentification(req, res, next);
 })
 
@@ -60,6 +58,7 @@ const authentification = (req, res, next)=>{
                         
                         res.cookie('jwtToken', token, {
                                 httpOnly: true,
+                                sameSite: 'strict',
                                 secure: false, //we using http in our app (not recommanded)
                                 maxAge: 60*60*1000, //the expiration of the cookie (1h)
 
