@@ -48,7 +48,6 @@ const authenticatedRequest = async (jwtPayload, done) => {
 }
 
 // cookie extractor function from www.passportjs.org
-
 var cookieExtractor = function (req) {
         var token = null;
         if (req && req.cookies) {

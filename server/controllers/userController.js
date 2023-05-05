@@ -36,9 +36,9 @@ exports.updateUserProfile = async (userId, data, secure) => {
         const updatedUserProfile = await User.findByIdAndUpdate(
             userId,
             {
-                fullname:data.fullname,
-                profile_picture:data.profile_picture,
-                email:secure && data.email,
+                fullname: data.fullname,
+                profile_picture: data.profile_picture,
+                email: secure && data.email,
                 password: secure && data.password
             }
         );

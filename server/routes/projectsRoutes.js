@@ -5,15 +5,6 @@ const mongoose = require('mongoose');
 const getIdFromToken = require('../utils/getIdFromToken');
 
 
-function getIdFromToken(req) {
-  if (!req.cookies) {
-    throw new Error("Cookies not found");
-  }
-
-  const decoded = jwt.verify(req.cookies['jwtToken'], process.env.JWT_SECRET);
-  return decoded._id;
-}
-
 router.post("/create", async (req, res) => {
 
   const data = {
