@@ -1,11 +1,13 @@
 const mongoose = require ("mongoose");
+const SectionSchema = require('./Section').SectionSchema;
 
-
-//schema du nv tab
-const tabSchema = new mongoose.Schema({
-    name: String,
-    createdAt: {type: Date, default: Date.now},
-
+const TabSchema = new mongoose.Schema({
+    name: {type: String, required:true},
+    description: {type: String},
+    created_by: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required:true },
+    sections: [SectionSchema], 
+    created_at: {type: Date,  default:()=> new Date(Date.now()) },
 });
 
-module.exports = mongoose.model("Tab", tabSchema);
+const Tab = mongoose.model("Tab", TabSchema);
+module.exports = {TabSchema, Tab};

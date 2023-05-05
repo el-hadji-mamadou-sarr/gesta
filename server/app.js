@@ -70,7 +70,7 @@ app.use('/api/auth', authRoutes);
 const passport = require('passport');
 app.use('/api/users',passport.authenticate('jwt',{session:false}), userRoutes);
 app.use('/api/projects', passport.authenticate('jwt', { session: false }), projectsRoutes);
-app.use('/api/tabs',passport.authenticate('jwt', { session: false }), tabRoutes);
+app.use('/api/projects/tabs',passport.authenticate('jwt', { session: false }), tabRoutes);
 
 
 // Définissez le port d'écoute du serveur
