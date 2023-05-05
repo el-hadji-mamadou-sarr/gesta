@@ -63,3 +63,121 @@ body: JSON.stringify({
         }
 })
 ```
+## documentation api liés au profile de l'utilisateur
+
+### récupérer le profile de l'utilisateur
+
+```javascript
+ /**
+ * @api {get} /api/users/profile get user
+ * @apiName getUserProfile
+ * @apiGroup User
+ *
+ * @apiSuccess {String} fullname fullname of the user.
+ * @apiSuccess {String} email email of the user.
+ * @apiSuccess {String} banner_color banner_color in hexadecimal of the user profile.
+ * @apiSuccess {String} profile_picture profile picture of the user in base64.
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 user found
+ *     {
+ *       "fullname": el hadji mamadou,
+ *       "email": "elhadji.sarr@outlook.com",
+ *       "banner_color": "#FFA500",
+ *        "profile_picture" : "image in base64"
+ *     }
+ *
+ * @apiError InternalServer.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 500 Internal server error
+ *     {
+ *       "message": "le serveur a rencontré un probléme"
+ *     }
+ */
+```
+
+### changer les données publiques de l'utilisateur
+
+```javascript
+/**
+ * @api {put} /api/users/profile/update update user public data
+ * @apiName updateProfile
+ * @apiGroup User
+ *
+ * @apiParam {String} fullname
+ * @apiParam {String} profile_picture
+ *
+ * @apiSuccess NoContent
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 204 
+ *     {
+ *      "message":"user is updated"
+ *     }
+ *
+ * @apiError InternalServer.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 500 Internal server error
+ *     {
+ *       "message": "le serveur a rencontré un probléme"
+ *     }
+ */
+```
+
+### envoyer l'email de changement du mot de passe
+
+```javascript
+/**
+ * @api {post} /api/users/profile/update/resetPassword send Email to reset password
+ * @apiName SendEmailToResetPassword
+ * @apiGroup User
+ *
+ * @apiParam {String} email
+ *
+ * @apiSuccess Success-response
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 
+ *     {
+ *      "message":"email has been sent"
+ *     }
+ *
+ * @apiError InternalServer.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 500 Internal server error
+ *     {
+ *       "message": "le serveur a rencontré un probléme"
+ *     }
+ */
+```
+
+### changement du mot de passe
+
+```javascript
+/**
+ * @api {post} /api/users/profile/update/password reset Password
+ * @apiName resetpassword
+ * @apiGroup User
+ *
+ * @apiParam {String} token
+ * @apiParam {String} password
+ *
+ * @apiSuccess Success-response
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 
+ *     {
+ *      "message":"le mot de passe a bien été mis à jour"
+ *     }
+ *
+ * @apiError InternalServer.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 500 Internal server error
+ *     {
+ *       "message": "le serveur a rencontré un probléme"
+ *     }
+ * 
+ * @apiError InvalidToken.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 498 Invalid Token
+ *     {
+ *       "message": "le token est invalid"
+ *     }
+ */
+```
