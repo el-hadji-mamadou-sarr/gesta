@@ -1,30 +1,29 @@
-const Tab = require("../models/Tab");
 const Project = require("../models/Project");
+const TabModel = require('../models/Tab').Tab;
+const mongoose = require('mongoose');
 
+exports.createTab = async function (data, user_id) {
 
+    try {
+        const project = await Project.findById(data.project_id);
+        if (!project) {
+            throw new Error("Project not found");
+        }
 
-exports.createTab = async function (req, res) {
-    console.log("Request body in controller:", req.body);
-r
-    const { projectId, name } = req.body;
+        const tab = new TabModel({
+            name: data.name,
+            description: data.description,
+            created_by: new mongoose.Types.ObjectId(user_id)
+        });
 
+        project.tabs.push(tab);
+        project.update_at = Date.now();
+        project.save();
+        return tab;
 
-    // Trouve le projet lié à l'ID du projet
-    const project = await Project.findById(projectId);
-
-    if (!project) {
-        throw new Error("Project not found");
+    } catch (error) {
+        throw new Error("le serveur a rencontré un projet");
     }
 
-    // Crée un nouvel onglet
-    const newTab = new Tab({ name });
 
-    // ajoute l'onglet au projet
-    project.tabs.push(newTab);
-    await project.save();
-
-    // sauvegarde l'onglet
-    await newTab.save();
-
-    return newTab;
 }

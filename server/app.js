@@ -1,7 +1,6 @@
 // Importez les dépendances nécessaires
 const express = require("express");
 const mongoose = require("mongoose");
-const helmet = require("helmet");
 const cors = require("cors");
 dotenv = require('dotenv');
 dotenv.config();
@@ -22,13 +21,19 @@ const projectsRoutes = require('./routes/projectsRoutes');
 //import tabroutes 
 const tabRoutes = require('./routes/tabRoutes');
 
-//import taskroutes 
-const taskRoutes = require("./routes/taskRoutes");
 
-// Utilise Helmet pour la sécurité HTTP de base
-app.use(helmet());
 // Utilise CORS pour contrôler l'accès entre les domaines
-app.use(cors());
+app.use(cors({
+
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Credentials', true);
+    next();
+})
+
 
 //useses cookies parser
 app.use(cookieParser());
@@ -63,10 +68,9 @@ app.use('/api/auth', authRoutes);
 // setups routes
 
 const passport = require('passport');
-app.use('/api/users',passport.authenticate('jwt',{session:false}), userRoutes);
+app.use('/api/users', passport.authenticate('jwt', { session: false }), userRoutes);
 app.use('/api/projects', passport.authenticate('jwt', { session: false }), projectsRoutes);
-app.use('/api/tabs',passport.authenticate('jwt', { session: false }), tabRoutes);
-app.use('/api/tasks', passport.authenticate('jwt', { session: false }), taskRoutes);
+app.use('/api/projects/tabs', passport.authenticate('jwt', { session: false }), tabRoutes);
 
 
 // Définissez le port d'écoute du serveur

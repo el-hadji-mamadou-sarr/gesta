@@ -1,14 +1,14 @@
 const express = require("express");
 const tabController = require("../controllers/tabController");
 const router = express.Router();
+const getId = require('../utils/getIdFromToken');
 
 
-// gestionnaire de route
-router.post("/create", async (req, res) => {
-    console.log("Request body:", req.body); //verifie l'erreur
+router.post("/add", async (req, res) => {
+    const user_id = getId(req);
     try {
-        const newTab = await tabController.createTab(req.body);
-        res.status(201).json(newTab);
+        await tabController.createTab(req.body, user_id);
+        res.status(201).json({message:"tab created"});
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
