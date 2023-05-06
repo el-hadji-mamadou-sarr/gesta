@@ -15,7 +15,7 @@ import Logo from "../../Assets/images/logo.png";
 import downicone from "../../Assets/images/login-removebg-preview.png";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router";
-import ResponsiveAppBar from "../layout/ResponsiveAppBar";
+import NavigationNavBar from "../../Component/navbar/NavigationNavBar";
 import validation from "../../Services/Constant/Register/Constant";
 
 
@@ -105,7 +105,7 @@ export const Register = () => {
 
     return (
         <React.Fragment>
-         <ResponsiveAppBar />
+         <NavigationNavBar />
             <CssBaseline />
             <Container maxWidth="sm">
                 <Box sx={{}}>
