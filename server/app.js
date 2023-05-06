@@ -1,12 +1,13 @@
 // Importez les dépendances nécessaires
 const express = require("express");
 const mongoose = require("mongoose");
-const helmet = require("helmet");
 const cors = require("cors");
 dotenv = require('dotenv');
 dotenv.config();
 dotenv.config({ path: `.env.local`, override: true });
 const bcrypt = require('bcrypt');
+const cookieParser = require('cookie-parser');
+const app = express();
 
 //import le userProfile
 const userRoutes = require('./routes/userRoutes');
@@ -15,15 +16,27 @@ const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/auth');
 
 //import project route 
-const projectsRoutes = require('./routes/projectsRoutes')
+const projectsRoutes = require('./routes/projectsRoutes');
 
-// Créez une nouvelle application Express
-const app = express();
+//import tabroutes 
+const tabRoutes = require('./routes/tabRoutes');
 
-// Utilise Helmet pour la sécurité HTTP de base
-app.use(helmet());
+
 // Utilise CORS pour contrôler l'accès entre les domaines
-app.use(cors());
+app.use(cors({
+     
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
+
+app.use((req, res, next)=>{
+    res.header('Access-Control-Allow-Credentials', true);
+    next();
+})
+
+
+//useses cookies parser
+app.use(cookieParser());
 
 //url de connectioin pour MongoDB
 const mongoDBURL = process.env.DB_URL;
@@ -53,12 +66,16 @@ require('./middlewares/auth');
 app.use('/api/auth', authRoutes);
 
 // setups routes
-app.use('/api/users', userRoutes);
-app.use('/api/projects', projectsRoutes);
+
+const passport = require('passport');
+app.use('/api/users',passport.authenticate('jwt',{session:false}), userRoutes);
+app.use('/api/projects', passport.authenticate('jwt', { session: false }), projectsRoutes);
+app.use('/api/projects/tabs',passport.authenticate('jwt', { session: false }), tabRoutes);
+
 
 // Définissez le port d'écoute du serveur
 const PORT = process.env.SERVER_PORT || 5000;
 // Démarrez le serveur et écoutez les requêtes sur le port spécifié
-app.listen(PORT, () => {
+app.listen(5000, () => {
     console.log(`Server is running on port ${PORT}`);
 });

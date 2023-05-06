@@ -3,6 +3,9 @@ const LocalStrategy = require('passport-local').Strategy;
 const userModel = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const passportJWT = require('passport-jwt');
+const JWTStrategy = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
 
 //the local strategy to use to authenticate the user
 const authenticateUser = async (email, password, done) => {
@@ -29,34 +32,38 @@ const authenticateUser = async (email, password, done) => {
 
 }
 
-
-//stratgie d'authetifcation local, vérifie si le user est connecter
-
-const jwtAuthMiddleware = (req, res, next) => {
+// verify the token
+const authenticatedRequest = async (jwtPayload, done) => {
+       
         try {
-                //Recupère le token Jwt du cookie
-                const token = req.cookies.jwtToken;
-
-                //verifie si le token existe
-                if (!token) {
-                        return res.status(401).json({ message: 'Authentification requise' });
+                const user = await userModel.findOne({ email: jwtPayload.email })
+                if (!user) {
+                        return done(null, false, { message: "cet utilisateur n'est pas connecté" });
                 }
 
-                //Vérifie la validité du token 
-                const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-                //Ajoute  les données à la requête  pour une utilisation ultèrieure
-                req.userData = decoded;
-
-                //passer au prochaine middleware ou route
-                next();
+                return done(null, user);
         } catch (error) {
-                return res.status(401).json({ message: 'Authentification échouée' });
+                return done(err);
         }
+}
+
+// cookie extractor function from www.passportjs.org
+var cookieExtractor = function (req) {
+        var token = null;
+        if (req && req.cookies) {
+                token = req.cookies['jwtToken'];
+        }
+        return token;
 };
 
-
-
-module.exports.jwtAuthMiddleware = jwtAuthMiddleware;
-
 passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
+
+passport.use(new JWTStrategy({
+        jwtFromRequest: ExtractJWT.fromExtractors([req => cookieExtractor(req)]),
+        secretOrKey: process.env.JWT_SECRET
+},
+        authenticatedRequest
+));
+
+
+

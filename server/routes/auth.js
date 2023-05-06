@@ -21,11 +21,15 @@ router.post('/register', async(req, res, next)=>{
         if(!req.body.email || !req.body.password){
                 return res.status(400).json({message:"vous devez rentrer de bonnes informations"});
         }
-        const newUser = await userModel.create({fullname: req.body.fullname, email:req.body.email, password: await bcrypt.hash(req.body.password,10)});
-        
+        const random_color = require('../utils/generateRandomColor');
+        const newUser = await userModel.create({
+                        fullname: req.body.fullname, 
+                        email: req.body.email, 
+                        password: await bcrypt.hash(req.body.password,10),
+                        banner_color: random_color.generateRandomColor()
+                });
         authentification(req, res, next);
 })
-
 
 const authentification = (req, res, next)=>{
         //authenticate the user using the local strategy
@@ -36,7 +40,7 @@ const authentification = (req, res, next)=>{
                         return res.status(403)
                                 .json({message:"invalid email or password"})
                 }
-
+                
                 //if the authentification succeed we need to logged the user. the req.login establish
                 //a session for the user. So here we use a jwt token so the the session is false
                 req.login(user, {session:false}, (err)=>{
@@ -54,6 +58,7 @@ const authentification = (req, res, next)=>{
                         
                         res.cookie('jwtToken', token, {
                                 httpOnly: true,
+                                sameSite: 'strict',
                                 secure: false, //we using http in our app (not recommanded)
                                 maxAge: 60*60*1000, //the expiration of the cookie (1h)
 
@@ -61,9 +66,7 @@ const authentification = (req, res, next)=>{
                         /* .set('Content-Type:', 'text/html; charset=utf-8') */
                         .status(200)
                         .json({_id:user.id, email:user.email})
-
                 });
-
         })(req, res, next)
 }
 

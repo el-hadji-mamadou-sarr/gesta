@@ -1,6 +1,5 @@
-// Importer le modèle User pour pouvoir l'utiliser dans le contrôleur
 const User = require("../models/User");
-
+const bcrypt = require('bcrypt');
 
 
 // Lire un profil utilisateur spécifique
@@ -20,38 +19,35 @@ exports.getUserProfile = async (userId) => {
     }
 };
 
+exports.getUserByEmail = async(email) => {
+    try{
+        const user = await User.findOne({email:email})
+        return user;
+    }catch(error){
+        throw error;
+    }
+}
+
 // Mettre à jour un profil utilisateur spécifique
-exports.updateUserProfile = async (userId, data) => {
+exports.updateUserProfile = async (userId, data, secure) => {
     try {
         // Mettre à jour un utilisateur par son ID en utilisant les données de la requête
         const updatedUserProfile = await User.findByIdAndUpdate(
-            userId, // L'ID de l'utilisateur à mettre à jour
-            data, // Les nouvelles données de l'utilisateur
-            { new: true } // Options pour retourner la nouvelle version de l'utilisateur
+            userId,
+            {
+                fullname: data.fullname,
+                profile_picture: data.profile_picture,
+                email: secure && data.email,
+                password: secure && await bcrypt.hash(data.password, 10) 
+            }
         );
         // Si aucun utilisateur n'est trouvé, renvoyer une erreur pour être capturée par l'appelant
         if (!updatedUserProfile) {
             throw new Error('User profile not found');
         }
-        // Si l'utilisateur est mis à jour, renvoyer les données mises à jour de l'utilisateur
-        return updatedUserProfile;
     } catch (error) {
         // En cas d'erreur, renvoyer une erreur pour être capturée par l'appelant
         throw error;
     }
 };
 
-/* // Supprimer un profil utilisateur spécifique
-exports.deleteUserProfile = async (userId) => {
-    try {
-        // Supprimer un utilisateur par son ID
-        const deletedUserProfile = await User.findByIdAndDelete(userId);
-        // Si aucun utilisateur n'est trouvé, renvoyer une erreur pour être capturée par l'appelant
-        if (!deletedUserProfile) {
-            throw new Error('User profile not found');
-        }
-    } catch (error) {
-        // En cas d'erreur, renvoyer une erreur pour être capturée par l'appelant
-        throw error;
-    }
-}; */
