@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/create", async (req, res) => {
     console.log("Request body:", req.body); //verifie l'erreur
     try {
-        const newTab = await tabController.createTab(req);
+        const newTab = await tabController.createTab(req.body);
         res.status(201).json(newTab);
     } catch (error) {
         res.status(500).json({ message: error.message });

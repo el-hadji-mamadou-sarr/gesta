@@ -3,9 +3,9 @@ const Project = require("../models/Project");
 
 
 
-exports.createTab = async function (req) {
+exports.createTab = async function (req, res) {
     console.log("Request body in controller:", req.body);
-
+r
     const { projectId, name } = req.body;
 
 

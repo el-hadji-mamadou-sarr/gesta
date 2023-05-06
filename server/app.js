@@ -22,7 +22,8 @@ const projectsRoutes = require('./routes/projectsRoutes');
 //import tabroutes 
 const tabRoutes = require('./routes/tabRoutes');
 
-
+//import taskroutes 
+const taskRoutes = require("./routes/taskRoutes");
 
 // Utilise Helmet pour la sécurité HTTP de base
 app.use(helmet());
@@ -65,6 +66,7 @@ const passport = require('passport');
 app.use('/api/users',passport.authenticate('jwt',{session:false}), userRoutes);
 app.use('/api/projects', passport.authenticate('jwt', { session: false }), projectsRoutes);
 app.use('/api/tabs',passport.authenticate('jwt', { session: false }), tabRoutes);
+app.use('/api/tasks', passport.authenticate('jwt', { session: false }), taskRoutes);
 
 
 // Définissez le port d'écoute du serveur
