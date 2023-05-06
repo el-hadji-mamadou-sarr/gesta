@@ -11,7 +11,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import logo from "./../../Assets/images/gesta.png";
+import logo from "../../Assets/images/gesta.png";
 import { Link } from 'react-router-dom';
 
 const pages = [
@@ -43,7 +43,7 @@ const settings = [
   }
 ];
 
-function ResponsiveAppBar() {
+function NavigationNavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -167,4 +167,4 @@ function ResponsiveAppBar() {
     </AppBar>
   );
 }
-export default ResponsiveAppBar;
+export default NavigationNavBar;
