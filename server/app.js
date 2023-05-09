@@ -24,6 +24,9 @@ const tabRoutes = require('./routes/tabRoutes');
 // Import task routes
 const taskRoutes = require('./routes/taskRoutes');
 
+//import section route 
+const sectionRoutes = require('./routes/sectionRoutes');
+
 
 // Utilise CORS pour contrôler l'accès entre les domaines
 app.use(cors({
@@ -75,6 +78,7 @@ app.use('/api/users', passport.authenticate('jwt', { session: false }), userRout
 app.use('/api/projects', passport.authenticate('jwt', { session: false }), projectsRoutes);
 app.use('/api/projects/tabs', passport.authenticate('jwt', { session: false }), tabRoutes);
 app.use('/api/projects/tabs/tasks', passport.authenticate('jwt', { session: false }), taskRoutes);
+app.use('/api/projects', passport.authenticate('jwt', { session: false }), sectionRoutes);
 
 
 
