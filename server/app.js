@@ -18,18 +18,21 @@ const authRoutes = require('./routes/auth');
 //import project route 
 const projectsRoutes = require('./routes/projectsRoutes');
 
-//import tabroutes 
+//import tab route
 const tabRoutes = require('./routes/tabRoutes');
+
+// Import task routes
+const taskRoutes = require('./routes/taskRoutes');
 
 
 // Utilise CORS pour contrôler l'accès entre les domaines
 app.use(cors({
-     
-  origin: 'http://localhost:3000',
-  credentials: true
+
+    origin: 'http://localhost:3000',
+    credentials: true
 }));
 
-app.use((req, res, next)=>{
+app.use((req, res, next) => {
     res.header('Access-Control-Allow-Credentials', true);
     next();
 })
@@ -68,9 +71,11 @@ app.use('/api/auth', authRoutes);
 // setups routes
 
 const passport = require('passport');
-app.use('/api/users',passport.authenticate('jwt',{session:false}), userRoutes);
+app.use('/api/users', passport.authenticate('jwt', { session: false }), userRoutes);
 app.use('/api/projects', passport.authenticate('jwt', { session: false }), projectsRoutes);
-app.use('/api/projects/tabs',passport.authenticate('jwt', { session: false }), tabRoutes);
+app.use('/api/projects/tabs', passport.authenticate('jwt', { session: false }), tabRoutes);
+app.use('/api/projects/tabs/tasks', passport.authenticate('jwt', { session: false }), taskRoutes);
+
 
 
 // Définissez le port d'écoute du serveur
@@ -79,3 +84,10 @@ const PORT = process.env.SERVER_PORT || 5000;
 app.listen(5000, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+
+// Gestionnaire d'erreurs 404
+app.use((req, res, next) => {
+    res.status(404).json({ message: "Not found" });
+});
+
