@@ -35,7 +35,7 @@ export default function MenuAppBar() {
   };
 
   return (
-      <Box sx={{ flexGrow: 1 }}>
+      <Box >
         <AppBar position="static">
           <Toolbar>
             <Link to=""><img src={logo} alt="Logo" /></Link>

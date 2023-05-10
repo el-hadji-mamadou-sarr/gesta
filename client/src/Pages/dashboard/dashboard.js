@@ -17,27 +17,22 @@ export const  Dashboard = () => {
 
   return (
     <React.Fragment>
+        <MenuAppBar/>
 
-            <Container>
-                <MenuAppBar/>
-            </Container>
+        {/*cette navbar masque la MenuAppBar a traiter*/}
 
-            {/*cette navbar masque la MenuAppBar a traiter*/}
+        <Box>
+            <CssBaseline/>
+            <AppBar
 
-            <Container sx={{display: 'flex'}}>
-                <CssBaseline/>
-                <AppBar
+            >
+                <Toolbar>
+                    <Typography>Permanent drawer</Typography>
+                </Toolbar>
+            </AppBar>
 
-                >
-                    <Toolbar>
-                        <Typography>Permanent drawer</Typography>
-                    </Toolbar>
-                </AppBar>
-
-                <DrawerNavBar/>
-            </Container>
-
-
+            <DrawerNavBar/>
+        </Box>
 
 
 
