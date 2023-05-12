@@ -6,38 +6,28 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-
+import Box from '@mui/material/Box';
 
 export default function Dashboard() {
 
   return (
     <React.Fragment>
-
-      <Container>
+      <Box sx={{ flexGrow: 1 }}>
         <MenuAppBar />
-      </Container>
+      </Box>
+      <CssBaseline />
 
-      {/*cette navbar masque la MenuAppBar a traiter*/}
+      <Box sx={{ display: 'flex', flexDirection: 'column'}}>
 
-      <Container sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar
-
-        >
-          <Toolbar>
-            <Typography>Permanent drawer</Typography>
-          </Toolbar>
-        </AppBar>
-
+          <AppBar position="relative">
+            <Toolbar>
+              <Typography variant="h7">Permanent drawer</Typography>
+            </Toolbar>
+          </AppBar>
         <DrawerNavBar />
-      </Container>
-
-
-
-
-
-
+      </Box>
     </React.Fragment>
   );
 }
+
 
