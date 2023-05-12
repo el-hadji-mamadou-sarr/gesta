@@ -10,7 +10,11 @@ const UserSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
 
     // champ "password" de type chaîne de caractères, requis et unique
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+
+    profile_picture:{type: String, required: false},
+
+    banner_color:{type: String, required: true}
 
     //ajout d'autres champs si besoin
 })

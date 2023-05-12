@@ -1,11 +1,11 @@
 import { Grid } from "@mui/material";
-import ResponsiveAppBar from "../layout/ResponsiveAppBar";
 import homeHero from "./../../Assets/images/home-hero.svg";
+import MenuAppBar from "../../Component/navbar/dashboard/MenuAppBar";
 
 
 export default function Home() {
   return (<>
-    <ResponsiveAppBar />
+    <MenuAppBar />
     <Grid container spacing={6} sx={{ display: 'flex' }}>
       <Grid item xs={6}>
         <div className="p-24">

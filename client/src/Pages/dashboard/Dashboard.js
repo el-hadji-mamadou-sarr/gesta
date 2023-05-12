@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from "react";
 import MenuAppBar from "../../Component/navbar/dashboard/MenuAppBar";
 import { DrawerNavBar } from "../../Component/navbar/drawer/DrawerNavBar";
 import { CssBaseline, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
