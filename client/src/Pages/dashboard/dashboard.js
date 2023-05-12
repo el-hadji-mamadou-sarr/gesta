@@ -38,6 +38,6 @@ export default function Dashboard() {
 
 
     </React.Fragment>
-
-  )
+  );
 }
+
