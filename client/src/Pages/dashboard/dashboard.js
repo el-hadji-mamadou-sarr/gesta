@@ -20,19 +20,23 @@ export const  Dashboard = () => {
         <MenuAppBar/>
 
         {/*cette navbar masque la MenuAppBar a traiter*/}
+        <section className="space-y-5">
+            <Box>
+                <CssBaseline/>
+                <AppBar
 
-        <Box>
-            <CssBaseline/>
-            <AppBar
+                >
+                    <Toolbar>
+                        <Typography>Permanent drawer</Typography>
+                    </Toolbar>
+                </AppBar>
 
-            >
-                <Toolbar>
-                    <Typography>Permanent drawer</Typography>
-                </Toolbar>
-            </AppBar>
+                <DrawerNavBar/>
+            </Box>
+        </section>
 
-            <DrawerNavBar/>
-        </Box>
+
+
 
 
 
