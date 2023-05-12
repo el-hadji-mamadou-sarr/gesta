@@ -4,11 +4,13 @@ const mongoose = require('mongoose');
 
 exports.createTab = async function (data, user_id) {
 
-    try{
-         const project = await Project.findById(data.project_id);
+    try {
+        console.log("Searching for project with ID:", data.project_id);
+        const project = await Project.findById(data.project_id);
         if (!project) {
             throw new Error("Project not found");
         }
+        console.log("Project found");
 
         const tab = new TabModel({
             name: data.name,
@@ -19,11 +21,13 @@ exports.createTab = async function (data, user_id) {
         project.tabs.push(tab);
         project.update_at = Date.now();
         project.save();
+        console.log("Tab saved");
         return tab;
 
-    }catch(error){
+    } catch (error) {
+        console.log("Error:", error);
         throw new Error("le serveur a rencontré un projet");
     }
-   
+
 
 }
