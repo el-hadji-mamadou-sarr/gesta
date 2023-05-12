@@ -8,6 +8,25 @@ dotenv.config({ path: `.env.local`, override: true });
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 const app = express();
+const http = require('http');
+const httpServer = http.createServer(app);
+const {Server} = require('socket.io');
+
+const io = new Server(httpServer,{
+    cors:{
+        origin:"http://localhost:3000",
+    }
+});
+
+//initialize socket.io
+const messaging = require('./realtime/messaging');
+
+const onConnection = (socket)=>{
+    messaging(io, socket);
+}
+
+io.on('connection', onConnection);
+
 
 //import le userProfile
 const userRoutes = require('./routes/userRoutes');
@@ -71,8 +90,7 @@ app.use(express.urlencoded({ extended: true }));
 require('./middlewares/auth');
 app.use('/api/auth', authRoutes);
 
-// setups routes
-
+// secures routes
 const passport = require('passport');
 app.use('/api/users', passport.authenticate('jwt', { session: false }), userRoutes);
 app.use('/api/projects', passport.authenticate('jwt', { session: false }), projectsRoutes);
@@ -85,7 +103,7 @@ app.use('/api/projects', passport.authenticate('jwt', { session: false }), secti
 // Définissez le port d'écoute du serveur
 const PORT = process.env.SERVER_PORT || 5000;
 // Démarrez le serveur et écoutez les requêtes sur le port spécifié
-app.listen(5000, () => {
+httpServer.listen(5000, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
