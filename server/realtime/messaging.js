@@ -1,7 +1,11 @@
-function messaging(io, socket){
-        socket.on('message', (message)=>{
-                io.emit('message', message);
-        })
-}
+function message(io, Socket){
+        Socket.on('join', (room)=>{
+                Socket.join(room);
+        })      
 
-module.exports = messaging;
+        Socket.on('message', (data)=>{  
+                io.to(data.room).emit('message', data);
+        })
+
+}
+module.exports = message;

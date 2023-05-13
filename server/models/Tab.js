@@ -11,5 +11,5 @@ const TabSchema = new mongoose.Schema({
     created_at: {type: Date,  default:()=> new Date(Date.now()) },
 });
 
-const Tab = mongoose.model("Tab", TabSchema);
+const Tab = mongoose.model("tabs", TabSchema);
 module.exports = {TabSchema, Tab};

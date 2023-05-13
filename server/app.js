@@ -10,22 +10,21 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const http = require('http');
 const httpServer = http.createServer(app);
-const {Server} = require('socket.io');
 
-const io = new Server(httpServer,{
-    cors:{
-        origin:"http://localhost:3000",
-    }
+const {Server} = require('socket.io');
+const io = new Server(httpServer, {
+        cors:{
+                origin:'http://localhost:3000',
+                methods: ["GET"],
+        }
 });
 
-//initialize socket.io
 const messaging = require('./realtime/messaging');
 
-const onConnection = (socket)=>{
-    messaging(io, socket);
-}
+io.on('connection', (Socket) =>{
+        messaging(io, Socket);
+})      
 
-io.on('connection', onConnection);
 
 
 //import le userProfile
@@ -99,17 +98,12 @@ app.use('/api/projects/tabs/tasks', passport.authenticate('jwt', { session: fals
 app.use('/api/projects', passport.authenticate('jwt', { session: false }), sectionRoutes);
 
 
-
-// Définissez le port d'écoute du serveur
 const PORT = process.env.SERVER_PORT || 5000;
-// Démarrez le serveur et écoutez les requêtes sur le port spécifié
-httpServer.listen(5000, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
 
-
-// Gestionnaire d'erreurs 404
 app.use((req, res, next) => {
     res.status(404).json({ message: "Not found" });
 });
 
+httpServer.listen(5000, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
