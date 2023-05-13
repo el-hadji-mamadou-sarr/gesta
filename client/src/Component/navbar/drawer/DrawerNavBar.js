@@ -29,7 +29,7 @@ export const DrawerNavBar = () => {
                 '& .MuiDrawer-paper': {
                     width: drawerWidth,
                     boxSizing: 'border-box',
-                },
+                    position: 'relative',                },
             }}
             variant="permanent"
             anchor="left"
