@@ -27,23 +27,6 @@ io.on('connection', (Socket) =>{
 
 
 
-//import le userProfile
-const userRoutes = require('./routes/userRoutes');
-
-//import login route
-const authRoutes = require('./routes/auth');
-
-//import project route 
-const projectsRoutes = require('./routes/projectsRoutes');
-
-//import tab route
-const tabRoutes = require('./routes/tabRoutes');
-
-// Import task routes
-const taskRoutes = require('./routes/taskRoutes');
-
-//import section route 
-const sectionRoutes = require('./routes/sectionRoutes');
 
 
 // Utilise CORS pour contrôler l'accès entre les domaines
@@ -85,6 +68,14 @@ app.use(express.json());
 // Utilisez le middleware pour analyser les données de formulaire
 app.use(express.urlencoded({ extended: true }));
 
+//routes initialisation
+const userRoutes = require('./routes/userRoutes');
+const authRoutes = require('./routes/auth');
+const projectsRoutes = require('./routes/projectsRoutes');
+const tabRoutes = require('./routes/tabRoutes');
+const taskRoutes = require('./routes/taskRoutes');
+const sectionRoutes = require('./routes/sectionRoutes');
+
 //auth routes
 require('./middlewares/auth');
 app.use('/api/auth', authRoutes);
@@ -93,9 +84,10 @@ app.use('/api/auth', authRoutes);
 const passport = require('passport');
 app.use('/api/users', passport.authenticate('jwt', { session: false }), userRoutes);
 app.use('/api/projects', passport.authenticate('jwt', { session: false }), projectsRoutes);
-app.use('/api/projects/tabs', passport.authenticate('jwt', { session: false }), tabRoutes);
-app.use('/api/projects/tabs/tasks', passport.authenticate('jwt', { session: false }), taskRoutes);
-app.use('/api/projects', passport.authenticate('jwt', { session: false }), sectionRoutes);
+app.use('/api/sections', passport.authenticate('jwt', { session: false }), sectionRoutes);
+app.use('/api/tabs', passport.authenticate('jwt', { session: false }), tabRoutes);
+app.use('/api/tasks', passport.authenticate('jwt', { session: false }), taskRoutes);
+
 
 
 const PORT = process.env.SERVER_PORT || 5000;

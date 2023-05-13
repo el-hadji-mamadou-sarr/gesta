@@ -33,7 +33,7 @@ function  message (io, Socket){
                 const user = await User.findById(data.user_id);
                 
                 if(project && user){
-                        console.log(data.project_id);
+                        
                         io.to(data.project_id).emit('message', data);
                         const message = new Message({
                                 user_id: new mongoose.Types.ObjectId(data.user_id),

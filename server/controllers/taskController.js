@@ -2,7 +2,7 @@ const Project = require("../models/Project");
 const Task = require('../models/Task').Task;
 const Tab = require('../models/Tab').Tab;
 
-exports.createTask = async function (data, userId) {
+exports.addTask = async function (data, userId) {
     try {
         //recherche d'abord le projet dont l'id du tab y figure
         const project = await Project.findOne({ "tabs._id": data.tab_id });
@@ -14,8 +14,6 @@ exports.createTask = async function (data, userId) {
         if (!tab) {
             throw new Error('Tab not found');
         }
-
-        console.log("Tab found");
 
         const task = new Task({
             name: data.name,
