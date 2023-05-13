@@ -2,17 +2,27 @@ const Project = require("../models/Project");
 const Task = require('../models/Task').Task;
 const Tab = require('../models/Tab').Tab;
 
-exports.addTask = async function (data, userId) {
+exports.addTask = async function (data, params, userId) {
+    const {project_id, tab_id, section_id} = params;
     try {
-        //recherche d'abord le projet dont l'id du tab y figure
-        const project = await Project.findOne({ "tabs._id": data.tab_id });
-        if (!project) {
-            throw new Error('Project not found');
-        }
-        
-        const tab = project.tabs.id(data.tab_id);
-        if (!tab) {
-            throw new Error('Tab not found');
+  
+    
+        const project = await Project.findOne({
+            _id: project_id,
+            tabs: {
+                $elemMatch: {
+                    _id: tab_id,
+                    sections: {
+                        $elemMatch: {
+                            _id: section_id
+                        }
+                    }
+                }
+            }
+        });
+
+        if ( !project) {
+            throw new Error('nous avons pas trouvé le projet');
         }
 
         const task = new Task({
@@ -23,11 +33,27 @@ exports.addTask = async function (data, userId) {
             assigned_to: data.assigned_to
         });
 
-        tab.tasks.push(task);
-        await project.save();
-        await task.save();
+        const filter = {
+            _id: project_id,
+            'tabs._id': tab_id,
+            'tabs.sections._id': section_id
+        };
 
-        return task;
+        const update = {
+            $push: {
+                'tabs.$[tab].sections.$[section].tasks': task
+            }
+        };
+
+        const options = {
+            arrayFilters: [
+                { 'tab._id': tab_id },
+                { 'section._id': section_id }
+            ]
+        };
+
+        await Project.updateOne(filter, update, options);
+
     } catch (error) {
         console.log("Error:", error);
         throw error;

@@ -35,15 +35,4 @@ router.post('/:project_id/:tab_id/add', async (req, res) => {
 });
 
 
-
-router.post('/tab/:tab_id/section/:section_id/task/add', async (req, res) => {
-    const userId = getId(req);
-    try {
-        const task = await sectionController.addTaskToSection(req.params.tab_id, req.params.section_id, req.body, userId);
-        res.status(201).json({ message: 'Task added to section successfully', task });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
 module.exports = router;
