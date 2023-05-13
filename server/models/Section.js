@@ -3,7 +3,7 @@ const TaskSchema = require('./Task').TaskSchema;
 
 const SectionSchema = new mongoose.Schema({
     name: { type: String, required: true},
-    task: [TaskSchema],
+    tasks: [TaskSchema],
     created_at: { type: Date, default: Date.now }
 });
 
