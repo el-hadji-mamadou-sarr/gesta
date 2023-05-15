@@ -6,25 +6,24 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Box from '@mui/material/Box';
+import {useState} from "react";
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import IconButton from "@mui/material/IconButton";
 
 export default function Dashboard() {
 
+
   return (
     <React.Fragment>
-      <Box sx={{ flexGrow: 1 }}>
-        <MenuAppBar />
-      </Box>
-      <CssBaseline />
+        <Box sx={{ display: 'flex' }}>
+            <CssBaseline />
+            <MenuAppBar/>
+            <DrawerNavBar/>
 
-      <Box sx={{ display: 'flex', flexDirection: 'column'}}>
+        </Box>
 
-          <AppBar position="relative">
-            <Toolbar>
-              <Typography variant="h7">Permanent drawer</Typography>
-            </Toolbar>
-          </AppBar>
-        <DrawerNavBar />
-      </Box>
+
+
     </React.Fragment>
   );
 }

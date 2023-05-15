@@ -15,6 +15,8 @@ import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from "@mui/icons-material/Menu";
 import {AccountCircle} from "@mui/icons-material";
 import {Link} from "react-router-dom";
+import {useTheme} from "@mui/material/styles";
+import AddIcon from '@mui/icons-material/Add';
 
 
 
@@ -34,16 +36,34 @@ export default function MenuAppBar() {
     setAnchorEl(null);
   };
 
+
+  const [open, setOpen] = React.useState(false);
+
+
   return (
       <Box >
-        <AppBar position="static">
+        <AppBar  position="fixed" open={open}>
           <Toolbar>
             <Link to=""><img src={logo} alt="Logo" /></Link>
             <Typography variant="h6" component="div">
               Gesta
             </Typography>
-            <Box  sx={{ flexGrow: 1, ml:2 }} >
-              <Button variant="contained">Créer un tableau</Button>
+            <Box  sx={{ ml:2 }}>
+              <Button variant="contained">
+                <IconButton>
+                  <AddIcon/>
+                </IconButton>
+                Créer un tableau
+              </Button>
+            </Box>
+
+            <Box sx={{ flexGrow: 1, ml:2 }}>
+              <Button variant="contained" ml={2}>
+                <IconButton>
+                  <AddIcon/>
+                </IconButton>
+                Créer une liste
+              </Button>
             </Box>
 
 
