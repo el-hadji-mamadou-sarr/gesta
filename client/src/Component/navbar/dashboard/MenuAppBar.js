@@ -48,7 +48,7 @@ export default function MenuAppBar() {
             <Typography variant="h6" component="div">
               Gesta
             </Typography>
-            <Box  sx={{ ml:2 }}>
+            <Box  sx={{ flexGrow: 1, ml:2 }}>
               <Button variant="contained">
                 <IconButton>
                   <AddIcon/>
@@ -56,16 +56,6 @@ export default function MenuAppBar() {
                 Créer un tableau
               </Button>
             </Box>
-
-            <Box sx={{ flexGrow: 1, ml:2 }}>
-              <Button variant="contained" ml={2}>
-                <IconButton>
-                  <AddIcon/>
-                </IconButton>
-                Créer une liste
-              </Button>
-            </Box>
-
 
 
             {auth && (
