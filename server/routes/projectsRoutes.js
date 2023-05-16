@@ -28,15 +28,15 @@ const getIdFromToken = require('../utils/getIdFromToken');
  *     }
  */
 router.post("/create", async (req, res) => {
-
+  const user_id = getIdFromToken(req);
   const data = {
     name: req.body.name,
     description: req.body.description,
-    owner: new mongoose.Types.ObjectId(getIdFromToken(req))
+    owner: new mongoose.Types.ObjectId(user_id)
   }
 
   try {
-    const newProject = await projectController.createProject(data);
+    const newProject = await projectController.createProject(data, user_id);
     res.status(201).json({ message: "le projet a été crée" });
   } catch (error) {
     res.status(500).json({ message: "erreur au moment de la création" });
