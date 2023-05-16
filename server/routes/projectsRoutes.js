@@ -43,7 +43,37 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.post
+
+/**
+ * @api {GET} /api/projects/:project_id
+ * @apiName getProject
+ * @apiGroup Project
+ *
+ * 
+ * @apiParam {String} id_project
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 user found
+ *     {Project}
+ *     
+ *
+ * @apiError InternalServer.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 500 Internal server error
+ *     {
+ *       "message": "le project n'a pas été trouvé"
+ *     }
+ */
+router.get("/:id_project", async(req, res)=>{
+
+  try {
+    
+    const project = await projectController.getProject(req.params.id_project);
+    res.status(200).json(project);
+  }catch(error){
+    res.status(500).json({message:"erreur lors de la recherche du projet"})
+  }
+})
 
 
 
