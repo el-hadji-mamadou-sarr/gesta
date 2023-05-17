@@ -12,7 +12,7 @@ import {
 import { fontTheme, theme } from "../../Assets/theme/theme";
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import validation from "../../Services/Constant/Login/Constant";
 import NavigationNavBar from "../../Component/navbar/NavigationNavBar";
 import Logo from "../../Assets/images/logo.png";

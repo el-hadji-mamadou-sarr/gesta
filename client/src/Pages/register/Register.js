@@ -19,7 +19,7 @@ import NavigationNavBar from "../../Component/navbar/NavigationNavBar";
 import validation from "../../Services/Constant/Register/Constant";
 
 
-export const Register = () => {
+export function Register() {
     // variable déclaration
     const [values, setValues] = useState({})
     const [error, setErrors] = useState({})
