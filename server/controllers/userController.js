@@ -34,11 +34,11 @@ exports.updateUserProfile = async (userId, data, secure) => {
         // Mettre à jour un utilisateur par son ID en utilisant les données de la requêt
         const updateFields = {
             fullname: data.fullname,
-            profile_picture: data.profile_picture
+            profile_picture: data.profile_picture,
+            email: data.email
         };
 
         if (secure) {
-            updateFields.email = data.email;
             updateFields.password = await bcrypt.hash(data.password, 10);
         }
 
