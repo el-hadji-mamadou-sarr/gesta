@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import NavigationNavBar from "../navbar/NavigationNavBar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -13,6 +14,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import {theme} from "../../Assets/theme/theme";
 import {useState} from "react";
 import {Tab} from "../card/Tab";
+import { getProfile } from '../../api/user';
+import { getProject } from '../../api/projects';
 
 
 
@@ -31,29 +34,14 @@ export const Projects = () => {
 
     const [value, setValue] = useState('');
     const [tablist, settablist] = useState([]);
-    const [projectList, setProjectList] = useState([
-        {
-            project_name: "project 1",
-            tabList:["tab 1", "tab 2"],
-            creator:false
-        },
-        {
-            project_name: "project 2",
-            tabList:["tab 3", "tab 4"],
-            creator:true
-        },
-        {
-            project_name: "project 3",
-            tabList:["tab 5", "tab 6"],
-            creator:false
-        }
-    ]);
+    const [projectList, setProjectList] = useState([]);
 
-
+    
     const [open, setOpen] = useState(false);
     const handleOpenList = (index) => setOpen(true);
     const handleCloseList = () => setOpen(false);
-
+    const [userId, setUserId]=useState();
+    
     const handleSubmitList = (event) =>{
         event.preventDefault();
         settablist([...tablist, value]);
@@ -65,7 +53,28 @@ export const Projects = () => {
         setValue(event.target.value);
     };
 
+    useEffect(() => {
+        getProfile().then((data) => {
+            setUserId(data._id);
 
+            const projectPromises = data.projects.map((id) => {
+            return getProject(id)
+                .then((project_data) => ({
+                    id: project_data._id,
+                    name: project_data.name,
+                    owner: project_data.owner,
+                    tabs: project_data.tabs,
+                    updated_at: project_data.updated_at,
+                }));
+            });
+
+            Promise.all(projectPromises).then((projects) => {
+                setProjectList([]);
+                setProjectList([...projects]);
+            });
+        });
+
+    }, []);
 
     return (
         <>
@@ -74,7 +83,7 @@ export const Projects = () => {
                 {/*espace de travail side*/}
 
                 <Box sx={{ display: 'flex', justifyContent: 'space-between'}}>
-                    <Typography>Vos espaces de travail Gesta</Typography>
+                    <h1>Vos Projets Gesta</h1>
 
                 </Box>
                 <Box>
@@ -83,7 +92,7 @@ export const Projects = () => {
                         projectList.map((data, index)=>{
                             return (
                                 <div key={index}>
-                                    <Typography>{data.project_name}</Typography>
+                                    <Typography>{data.name}</Typography>
                                     <Box
                                         sx={{
                                             display: 'flex',
@@ -97,7 +106,7 @@ export const Projects = () => {
                                     >
 
                                         {
-                                            data.tabList.map((data, index)=>{
+                                            data.tabs.map((data, index)=>{
                                                 return (
                                                     <div key={index}>
                                                         <Tab name={data}/>
@@ -111,7 +120,7 @@ export const Projects = () => {
                                         {/*Modal side*/}
 
                                         {
-                                            data.creator &&
+                                            userId === data.owner &&
                                             <Button
                                                 variant="contained"
                                                 ml={2}

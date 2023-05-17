@@ -37,10 +37,12 @@ router.get('/profile', async(req, res)=>{
     try{
         const user = await userController.getUserProfile(id);
         res.status(200).json({
+            _id:user._id,
             fullname:user.fullname,
             email:user.email,
             banner_color:user.banner_color,
-            profile_picture:user.profile_picture
+            profile_picture:user.profile_picture,
+            projects:user.projects
         });
 
     }catch(error){
