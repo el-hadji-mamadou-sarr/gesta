@@ -8,8 +8,12 @@ import Dashboard from "./Pages/dashboard/Dashboard";
 import Profile from "./Pages/profile/Profile";
 
 
-
 function App() {
+
+  function checkLoginStatus() {
+    
+  }
+
   return (
     <BrowserRouter>
       <Routes>
