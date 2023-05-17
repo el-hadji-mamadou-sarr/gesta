@@ -76,7 +76,7 @@ router.put('/profile/update', async (req, res) => {
     const secure = false;
     try {
         await userController.updateUserProfile(id, req.body, secure);
-        res.status(204).json({message:"user is updated"});
+        res.status(200).json({message:"user is updated"});
     } catch (error) {
         res.status(500).json({ message: "le serveur a rencontré un probléme" });
     }

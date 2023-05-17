@@ -31,16 +31,19 @@ exports.getUserByEmail = async(email) => {
 // Mettre à jour un profil utilisateur spécifique
 exports.updateUserProfile = async (userId, data, secure) => {
     try {
-        // Mettre à jour un utilisateur par son ID en utilisant les données de la requête
-        const updatedUserProfile = await User.findByIdAndUpdate(
-            userId,
-            {
-                fullname: data.fullname,
-                profile_picture: data.profile_picture,
-                email: secure && data.email,
-                password: secure && await bcrypt.hash(data.password, 10) 
-            }
-        );
+        // Mettre à jour un utilisateur par son ID en utilisant les données de la requêt
+        const updateFields = {
+            fullname: data.fullname,
+            profile_picture: data.profile_picture
+        };
+
+        if (secure) {
+            updateFields.email = data.email;
+            updateFields.password = await bcrypt.hash(data.password, 10);
+        }
+
+        const updatedUserProfile = await User.findByIdAndUpdate(userId, updateFields);
+        
         // Si aucun utilisateur n'est trouvé, renvoyer une erreur pour être capturée par l'appelant
         if (!updatedUserProfile) {
             throw new Error('User profile not found');
