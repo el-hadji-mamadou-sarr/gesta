@@ -5,39 +5,27 @@ import { CssBaseline, Divider, Drawer, List, ListItem, ListItemButton, ListItemI
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-
+import Box from '@mui/material/Box';
+import {useState} from "react";
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import IconButton from "@mui/material/IconButton";
 
 export default function Dashboard() {
 
+
   return (
     <React.Fragment>
+        <Box sx={{ display: 'flex' }}>
+            <CssBaseline />
+            <MenuAppBar/>
+            <DrawerNavBar/>
 
-      <Container>
-        <MenuAppBar />
-      </Container>
-
-      {/*cette navbar masque la MenuAppBar a traiter*/}
-
-      <Container sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar
-
-        >
-          <Toolbar>
-            <Typography>Permanent drawer</Typography>
-          </Toolbar>
-        </AppBar>
-
-        <DrawerNavBar />
-      </Container>
-
-
-
+        </Box>
 
 
 
     </React.Fragment>
-
-  )
+  );
 }
+
+

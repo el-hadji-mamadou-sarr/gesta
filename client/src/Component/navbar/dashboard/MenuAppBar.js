@@ -8,14 +8,10 @@ import Menu from '@mui/material/Menu';
 import { useState } from 'react';
 import logo from "../../../Assets/images/gesta.png";
 import * as React from "react";
-import { Button, FormControlLabel, FormGroup, Switch } from "@mui/material";
+import { Button } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MailIcon from '@mui/icons-material/Mail';
-import MenuIcon from "@mui/icons-material/Menu";
-import { AccountCircle } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-
+import AddIcon from '@mui/icons-material/Add';
 
 
 export default function MenuAppBar() {
@@ -34,18 +30,26 @@ export default function MenuAppBar() {
     setAnchorEl(null);
   };
 
+
+  const [open, setOpen] = React.useState(false);
+
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+    <Box >
+      <AppBar position="fixed" open={open}>
         <Toolbar>
           <Link to=""><img src={logo} alt="Logo" /></Link>
           <Typography variant="h6" component="div">
             Gesta
           </Typography>
-          <Box sx={{ flexGrow: 1, ml: 2 }} >
-            <Button variant="contained">Créer un tableau</Button>
+          <Box sx={{ flexGrow: 1, ml: 2 }}>
+            <Button variant="contained">
+              <IconButton>
+                <AddIcon />
+              </IconButton>
+              Créer un tableau
+            </Button>
           </Box>
-
 
 
           {auth && (

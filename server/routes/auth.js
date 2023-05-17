@@ -31,6 +31,16 @@ router.post('/register', async(req, res, next)=>{
         authentification(req, res, next);
 })
 
+router.get('/islogged', (req, res, next)=>{
+        passport.authenticate('jwt', async(err, user, info)=>{
+                if(err || !user){
+                        return res.status(401).json({isLogged: false});
+                }
+                res.status(200).json({isLogged: true});
+        })(req, res, next)
+});
+
+
 const authentification = (req, res, next)=>{
         //authenticate the user using the local strategy
         passport.authenticate('local', async(err, user, info)=>{

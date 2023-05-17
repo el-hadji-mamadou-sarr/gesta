@@ -8,24 +8,25 @@ dotenv.config({ path: `.env.local`, override: true });
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 const app = express();
+const http = require('http');
+const httpServer = http.createServer(app);
 
-//import le userProfile
-const userRoutes = require('./routes/userRoutes');
+const {Server} = require('socket.io');
+const io = new Server(httpServer, {
+        cors:{
+                origin:'http://localhost:3000',
+                methods: ["GET"],
+        }
+});
 
-//import login route
-const authRoutes = require('./routes/auth');
+const messaging = require('./realtime/messaging');
 
-//import project route 
-const projectsRoutes = require('./routes/projectsRoutes');
+io.on('connection', (Socket) =>{
+        messaging(io, Socket);
+})      
 
-//import tab route
-const tabRoutes = require('./routes/tabRoutes');
 
-// Import task routes
-const taskRoutes = require('./routes/taskRoutes');
 
-//import section route 
-const sectionRoutes = require('./routes/sectionRoutes');
 
 
 // Utilise CORS pour contrôler l'accès entre les domaines
@@ -67,31 +68,34 @@ app.use(express.json());
 // Utilisez le middleware pour analyser les données de formulaire
 app.use(express.urlencoded({ extended: true }));
 
+//routes initialisation
+const userRoutes = require('./routes/userRoutes');
+const authRoutes = require('./routes/auth');
+const projectsRoutes = require('./routes/projectsRoutes');
+const tabRoutes = require('./routes/tabRoutes');
+const taskRoutes = require('./routes/taskRoutes');
+const sectionRoutes = require('./routes/sectionRoutes');
+
 //auth routes
 require('./middlewares/auth');
 app.use('/api/auth', authRoutes);
 
-// setups routes
-
+// secures routes
 const passport = require('passport');
 app.use('/api/users', passport.authenticate('jwt', { session: false }), userRoutes);
 app.use('/api/projects', passport.authenticate('jwt', { session: false }), projectsRoutes);
-app.use('/api/projects/tabs', passport.authenticate('jwt', { session: false }), tabRoutes);
-app.use('/api/projects/tabs/tasks', passport.authenticate('jwt', { session: false }), taskRoutes);
-app.use('/api/projects', passport.authenticate('jwt', { session: false }), sectionRoutes);
+app.use('/api/sections', passport.authenticate('jwt', { session: false }), sectionRoutes);
+app.use('/api/tabs', passport.authenticate('jwt', { session: false }), tabRoutes);
+app.use('/api/tasks', passport.authenticate('jwt', { session: false }), taskRoutes);
 
 
 
-// Définissez le port d'écoute du serveur
 const PORT = process.env.SERVER_PORT || 5000;
-// Démarrez le serveur et écoutez les requêtes sur le port spécifié
-app.listen(5000, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
 
-
-// Gestionnaire d'erreurs 404
 app.use((req, res, next) => {
     res.status(404).json({ message: "Not found" });
 });
 
+httpServer.listen(5000, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
