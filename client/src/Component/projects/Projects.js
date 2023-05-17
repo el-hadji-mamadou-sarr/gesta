@@ -17,6 +17,8 @@ import {Tab} from "../card/Tab";
 import { getProfile } from '../../api/user';
 import { getProject } from '../../api/projects';
 import { addTab } from '../../api/tab';
+import { NewTabModal } from '../modals/NewTab';
+import { NewProjectModal } from '../modals/NewProject';
 
 
 
@@ -33,11 +35,11 @@ const style = {
 
 export const Projects = () => {
 
-    const [value, setValue] = useState('');
-    const [tablist, settablist] = useState([]);
     const [projectList, setProjectList] = useState([]);
     const [idProject, setIdProject]=useState();
-    
+
+    /* add new Tab */
+    const [value, setValue] = useState('');
     const [open, setOpen] = useState(false);
     const handleOpenList = (id) => {
         setIdProject(id);
@@ -45,13 +47,21 @@ export const Projects = () => {
     }
     const handleCloseList = () => setOpen(false);
     const [userId, setUserId]=useState();
-    
-
-
     const handleChange = (event) => {
         const { name, value } = event.target;
         setValue(event.target.value);
     };
+
+    /* create new project */
+    const [newProjectModal, setNewProjectModal]= useState(false);
+    const handleCloseModal = () => setNewProjectModal(false);
+    const [projectValues, setProjectValues]=useState({
+        name:"",
+        description:""
+    });
+    const handleNewProject = (event) => {
+        setProjectValues({...projectValues, [event.target.name]:event.target.value});
+    }
 
     useEffect(() => {
         getProfile().then((data) => {
@@ -70,7 +80,8 @@ export const Projects = () => {
 
             Promise.all(projectPromises).then((projects) => {
                 setProjectList([]);
-                setProjectList([...projects]);
+                setProjectList([...projects])
+                
             });
         });
 
@@ -82,9 +93,14 @@ export const Projects = () => {
             <Box>
                 {/*espace de travail side*/}
 
-                <Box sx={{ display: 'flex', justifyContent: 'space-between'}}>
+                <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap:5, marginY:2}}>
                     <h1>Vos Projets Gesta</h1>
-
+                    <Button
+                        variant="contained"
+                        ml={2}
+                        onClick={()=>setNewProjectModal(true)}>
+                        Créer un nouveau projet
+                     </Button>
                 </Box>
                 <Box>
 
@@ -118,7 +134,7 @@ export const Projects = () => {
                                         }
 
 
-                                        {/*Modal side*/}
+                                      
 
                                         {
                                             userId === data.owner &&
@@ -130,58 +146,26 @@ export const Projects = () => {
                                             </Button>
                                         }
 
-                                        <Modal
+                                        {/* Modal création tab */}
+
+                                       <NewTabModal
+                                            handleCloseList={handleCloseList}
+                                            value={value}
                                             open={open}
-                                            onClose={handleCloseList}
-                                            aria-labelledby="modal-modal-title"
-                                            aria-describedby="modal-modal-description"
-                                        >
-                                            <Box sx={style} component="form" onSubmit={
-                                                async(event)=>{
-                                                    event.preventDefault();
-                                                    await addTab(idProject, value);
-                                                    handleCloseList(); 
-                                                
-                                                }
-                                                
+                                            style={style}
+                                            idProject={idProject}
+                                            handleChange={handleChange}
+                                            theme={theme}
 
-                                            }>
-                                                <Box sx={{flexGrow: 1}}>
-                                                    <IconButton>
-                                                        <CloseIcon/>
-                                                    </IconButton>
-                                                </Box>
-
-                                                <TextField
-                                                    margin="normal"
-                                                    size="small"
-                                                    fullWidth
-                                                    id="task"
-                                                    label="saisissez le nom du tableau"
-                                                    name="tab"
-                                                    value={value}
-                                                    type="text"
-                                                    onChange={handleChange}
-                                                    autoFocus
-                                                />
-
-                                                <ThemeProvider theme={theme}>
-                                                    <Button
-                                                        type="submit"
-                                                        color="registeBtnTheme"
-                                                        variant="contained"
-                                                        sx={{ mt: 3, mb: 2 }}
-                                                    >
-                                                        <Box
-                                                            color="white">
-                                                            Créer un tableau
-                                                        </Box>
-                                                    </Button>
-                                                </ThemeProvider>
-
-                                            </Box>
-
-                                        </Modal>
+                                       />
+                                       <NewProjectModal
+                                            handleCloseList={handleCloseModal}
+                                            open={newProjectModal}
+                                            value={projectValues}
+                                            style={style}
+                                            handleChange={handleNewProject}
+                                            theme={theme}
+                                       />
                                     </Box>
                                 </div>
 
@@ -189,9 +173,6 @@ export const Projects = () => {
                         })
                     }
                 </Box>
-
-
-
 
             </Box>
         </>

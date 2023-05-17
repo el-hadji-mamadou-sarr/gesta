@@ -9,5 +9,20 @@ export const getProject = (id)=>{
                 }
         }
         return fetch(url+id,requestOptions).then(response=>response.json());
+}
 
+export const createProject = (name, description)=>{
+        const requestOptions = {
+                method: 'POST',
+                credentials: "include",
+                headers: {
+                        'Content-Type': 'application/json',
+                },
+
+                body: JSON.stringify({
+                        name: name,
+                        description: description
+                })
+        }
+        return fetch(url+"create",requestOptions).then(response=>response.json());
 }
