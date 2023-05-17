@@ -16,6 +16,7 @@ import {useState} from "react";
 import {Tab} from "../card/Tab";
 import { getProfile } from '../../api/user';
 import { getProject } from '../../api/projects';
+import { addTab } from '../../api/tab';
 
 
 
@@ -35,18 +36,17 @@ export const Projects = () => {
     const [value, setValue] = useState('');
     const [tablist, settablist] = useState([]);
     const [projectList, setProjectList] = useState([]);
-
+    const [idProject, setIdProject]=useState();
     
     const [open, setOpen] = useState(false);
-    const handleOpenList = (index) => setOpen(true);
+    const handleOpenList = (id) => {
+        setIdProject(id);
+        setOpen(true);
+    }
     const handleCloseList = () => setOpen(false);
     const [userId, setUserId]=useState();
     
-    const handleSubmitList = (event) =>{
-        event.preventDefault();
-        settablist([...tablist, value]);
-        handleCloseList();
-    }
+
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -107,9 +107,10 @@ export const Projects = () => {
 
                                         {
                                             data.tabs.map((data, index)=>{
+                                                
                                                 return (
                                                     <div key={index}>
-                                                        <Tab name={data}/>
+                                                        <Tab name={data.name}/>
                                                     </div>
 
                                                 );
@@ -124,11 +125,10 @@ export const Projects = () => {
                                             <Button
                                                 variant="contained"
                                                 ml={2}
-                                                onClick={handleOpenList}>
+                                                onClick={()=>handleOpenList(data.id)}>
                                                 Créer un Tableau
                                             </Button>
                                         }
-
 
                                         <Modal
                                             open={open}
@@ -136,7 +136,16 @@ export const Projects = () => {
                                             aria-labelledby="modal-modal-title"
                                             aria-describedby="modal-modal-description"
                                         >
-                                            <Box sx={style} component="form" onSubmit={handleSubmitList}>
+                                            <Box sx={style} component="form" onSubmit={
+                                                async(event)=>{
+                                                    event.preventDefault();
+                                                    await addTab(idProject, value);
+                                                    handleCloseList(); 
+                                                
+                                                }
+                                                
+
+                                            }>
                                                 <Box sx={{flexGrow: 1}}>
                                                     <IconButton>
                                                         <CloseIcon/>
