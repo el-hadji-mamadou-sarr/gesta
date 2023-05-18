@@ -37,14 +37,14 @@ export default function Profile() {
   function handleSubmitProfile(event) {
     event.preventDefault();
     validate(event.target);
-    console.log({ ...userInfos, profile_picture: photoPreview });
+    console.log({ fullname: event.target.elements.fullname.value, email: event.target.elements.email.value, profile_picture: photoPreview });
 
     fetch("http://localhost:5000/api/users/profile/update", {
       method: "PUT",
       headers: {},
       credentials: "include",
-      body: JSON.stringify({ ...userInfos, profile_picture: photoPreview })
-    }).then(response => console.log(response))
+      body: JSON.stringify({ fullname: event.target.elements.fullname.value, email: event.target.elements.email.value })
+    }).then(response => console.log(response.status))
   }
 
   function handleProfileFieldChange(event) {
