@@ -3,6 +3,7 @@ import MenuAppBar from "../../Component/navbar/dashboard/MenuAppBar";
 import { InputText } from 'primereact/inputtext';
 import { Dialog } from 'primereact/dialog';
 import { Link } from "react-router-dom";
+import NavigationNavBar from "../../Component/navbar/NavigationNavBar";
 
 
 export default function Profile() {
@@ -12,11 +13,10 @@ export default function Profile() {
   const photoRef = useRef(null);
   const [photoName, setPhotoName] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
-
+  const [message, setMessage]=useState('');
   useEffect(() => {
     fetch("http://localhost:5000/api/users/profile", { method: "GET", headers: {}, credentials: "include" })
       .then(response => { return response.json() }).then(data => {
-        console.log(data);
         setUserInfos(data);
       })
   }, []);
@@ -37,15 +37,20 @@ export default function Profile() {
 
   function handleSubmitProfile(event) {
     event.preventDefault();
-    validate(event.target);
-    console.log({ fullname: event.target.elements.fullname.value, email: event.target.elements.email.value, profile_picture: photoPreview });
-
+ /*    validate(event.target); */
+    
     fetch("http://localhost:5000/api/users/profile/update", {
       method: "PUT",
-      headers: {},
+     headers: {
+      'Content-Type': 'application/json',
+      },
       credentials: "include",
-      body: JSON.stringify({ fullname: event.target.elements.fullname.value, email: event.target.elements.email.value })
-    }).then(response => console.log(response))
+      body: JSON.stringify({ fullname: userInfos.fullname, email: userInfos.email })
+    }).then(response =>{
+      if (response.status === 200) {
+        setMessage("l'utilisateur a été enregistré");
+      }
+    })
   }
 
   function handleProfileFieldChange(event) {
@@ -53,14 +58,14 @@ export default function Profile() {
 
     setUserInfos((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: value
     }));
   }
   // <input className="absolute w-12 h-12 text-gray-400 -left-1" type="file" src="" alt="" /> 
   // <svg className="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
 
   return <>
-    <MenuAppBar />
+    <NavigationNavBar />
     <div className="w-1/2 mx-auto">
       <div>
         <div className="mt-24">
@@ -108,10 +113,20 @@ export default function Profile() {
 
             <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full px-3">
+                {
+                  message && <p>{message}</p>  
+                 }
                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
                   Full name
                 </label>
-                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" name="fullname" value={userInfos.fullname} onChange={handleProfileFieldChange} placeholder="john@doe.com" />
+                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                      id="grid-first-name"   
+                      type="text" 
+                      name="fullname" 
+                      value={userInfos.fullname} 
+                      onChange={handleProfileFieldChange} 
+                      placeholder="john@doe.com" />
+
                 <p className="text-red-500 text-xs italic">Please fill out this field.</p>
               </div>
             </div>
@@ -120,7 +135,14 @@ export default function Profile() {
                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-email">
                   Email
                 </label>
-                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-email" type="email" name="email" value={userInfos.email} onChange={handleProfileFieldChange} placeholder="john@doe.com" />
+                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+                      id="grid-email" 
+                      type="email" 
+                      name="email" 
+                      value={userInfos.email} 
+                      onChange={handleProfileFieldChange} 
+                      placeholder="john@doe.com" />
+
                 <p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
               </div>
             </div>
