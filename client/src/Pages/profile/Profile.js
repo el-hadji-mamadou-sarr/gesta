@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MenuAppBar from "../../Component/navbar/dashboard/MenuAppBar";
-import { Box, Button, ThemeProvider } from "@mui/material";
-import { theme } from "../../Assets/theme/theme";
-
+import { InputText } from 'primereact/inputtext';
+import { Dialog } from 'primereact/dialog';
 
 
 export default function Profile() {
 
   const [userInfos, setUserInfos] = useState({});
   const [formProfileErrors, setFormProfileErrors] = useState([]);
+  const photoRef = useRef(null);
+  const [photoName, setPhotoName] = useState(null);
+  const [photoPreview, setPhotoPreview] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:5000/api/users/profile", { method: "GET", headers: {}, credentials: "include" })
@@ -18,6 +20,16 @@ export default function Profile() {
       })
   }, []);
 
+  const handlePhotoChange = (event) => {
+    const file = event.target.files[0];
+    setPhotoName(file.name);
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setPhotoPreview(e.target.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
   function validate(data) {
 
   }
@@ -25,13 +37,13 @@ export default function Profile() {
   function handleSubmitProfile(event) {
     event.preventDefault();
     validate(event.target);
-    console.log(event, event.target.email.value);
+    console.log({ ...userInfos, profile_picture: photoPreview });
 
     fetch("http://localhost:5000/api/users/profile/update", {
       method: "PUT",
       headers: {},
       credentials: "include",
-      body: JSON.stringify(userInfos)
+      body: JSON.stringify({ ...userInfos, profile_picture: photoPreview })
     }).then(response => console.log(response))
   }
 
@@ -43,18 +55,56 @@ export default function Profile() {
       [name]: value,
     }));
   }
+  // <input className="absolute w-12 h-12 text-gray-400 -left-1" type="file" src="" alt="" /> 
+  // <svg className="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
 
   return <>
     <MenuAppBar />
     <div className="w-1/2 mx-auto">
       <div>
-        <div className="mt-8">
+        <div className="mt-24">
           <form className="w-full max-w-lg mx-auto" onSubmit={handleSubmitProfile}>
-            <div className="flex justify-center mt-16 border-3 p-4" style={{ background: userInfos.banner_color }}>
-              <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                <svg className="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+            {/* upload image */}
+            <div className="col-span-6 ml-2 sm:col-span-4 md:mr-3">
+              <input
+                type="file"
+                className="hidden"
+                ref={photoRef}
+                onChange={handlePhotoChange}
+              />
+
+              <div className="text-center">
+                <div className={`mt-2 ${!photoPreview ? 'block' : 'hidden'}`}>
+                  <img
+                    src="https://images.unsplash.com/photo-1531316282956-d38457be0993?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80"
+                    className="w-40 h-40 m-auto rounded-full shadow"
+                    alt="Current Profile"
+                  />
+                </div>
+
+                <div className={`mt-2 ${photoPreview ? 'block' : 'hidden'}`}>
+                  <span
+                    className="block w-40 h-40 rounded-full m-auto shadow"
+                    style={{
+                      backgroundSize: 'cover',
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'center center',
+                      backgroundImage: `url('${photoPreview}')`,
+                    }}
+                  ></span>
+                </div>
+
+                <button
+                  type="button"
+                  className="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-400 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150 mt-2 ml-3"
+                  onClick={() => photoRef.current.click()}
+                >
+                  Select New Photo
+                </button>
               </div>
             </div>
+            {/* upload image */}
+
             <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full px-3">
                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
@@ -73,7 +123,7 @@ export default function Profile() {
                 <p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
               </div>
             </div>
-            <div className="flex flex-wrap -mx-3 mb-2">
+            {/* <div className="flex flex-wrap -mx-3 mb-2">
               <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-country">
                   Pays
@@ -92,7 +142,7 @@ export default function Profile() {
                 </label>
                 <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" onChange={handleProfileFieldChange} placeholder="90210" />
               </div>
-            </div>
+            </div> */}
             <div className="md:flex md:items-center mt-8">
               <div className="md:w-3/4 ">
                 <span className="font-bold py-2 px-4 rounded">

@@ -7,7 +7,7 @@ import {
     Typography,
     Box,
     ThemeProvider,
-    Divider, Grid, Link, CssBaseline, Container, Checkbox, Alert, FormHelperText
+    Divider, Grid, CssBaseline, Container, Checkbox, FormHelperText
 } from "@mui/material";
 
 import { theme } from "../../Assets/theme/theme";
@@ -21,7 +21,7 @@ import { useDispatch } from "react-redux";
 import { loginUser } from "../../reducers/userReducer";
 
 
-export function Register() {
+export const Register = () => {
     // variable déclaration
     const [values, setValues] = useState({})
     const [error, setErrors] = useState({})
@@ -61,24 +61,20 @@ export function Register() {
     };
 
     const handleSubmit = (event) => {
-
         event.preventDefault()
         setIsSubmit(true)
         if (Object.keys(error).length === 0 && Object.keys(values).length === 4) {
-
             const requestBody = {
                 method: "POST",
                 credentials: "include",
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
-
                 },
                 body: JSON.stringify({
                     fullname: values.fullname,
                     email: values.email,
                     password: values.password
-
                 })
             }
 
@@ -95,13 +91,10 @@ export function Register() {
                     } else {
                         setMessage('Vous avez commis des erreurs de saisi')
                     }
-
                 })
         } else {
             console.log("Ce formulaire contient des erreurs")
         }
-
-
     };
 
 
