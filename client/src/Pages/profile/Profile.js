@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import MenuAppBar from "../../Component/navbar/dashboard/MenuAppBar";
 import { InputText } from 'primereact/inputtext';
 import { Dialog } from 'primereact/dialog';
+import { Link } from "react-router-dom";
 
 
 export default function Profile() {
@@ -44,7 +45,7 @@ export default function Profile() {
       headers: {},
       credentials: "include",
       body: JSON.stringify({ fullname: event.target.elements.fullname.value, email: event.target.elements.email.value })
-    }).then(response => console.log(response.status))
+    }).then(response => console.log(response))
   }
 
   function handleProfileFieldChange(event) {
@@ -146,7 +147,7 @@ export default function Profile() {
             <div className="md:flex md:items-center mt-8">
               <div className="md:w-3/4 ">
                 <span className="font-bold py-2 px-4 rounded">
-                  <a href="#mdp" className="underline hover:text-blue-800">Reinitialiser mon mot de passe</a>
+                  <Link className="underline hover:text-blue-800" to="/forgot-password">Reinitialiser mon mot de passe</Link>
                 </span>
               </div>
               <div className="md:w-1/4 ">

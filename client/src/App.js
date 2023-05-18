@@ -11,6 +11,7 @@ import { IsUserLogged } from "./reducers/userReducer";
 import { useEffect } from "react";
 import { Tab } from "./Pages/tab/Tab";
 import ExampleComponent from "./Pages/test/TestComp";
+import ForgotPassword from "./Pages/profile/ForgotPassword";
 
 function App() {
     const dispatch = useDispatch();
@@ -24,10 +25,11 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/test" element={<ExampleComponent />} />
-                <Route path="/:project_id/:tab_id" element={<Tab/>}/>
+                <Route path="/:project_id/:tab_id" element={<Tab />} />
             </Routes>
         </BrowserRouter>
     );
