@@ -38,4 +38,16 @@ router.post("/:project_id/add", async (req, res) => {
     }
 });
 
+router.get("/:project_id/:tab_id", async(req, res)=>{
+    const tab_id = req.params.tab_id;
+    const project_id = req.params.project_id;
+
+    try {
+        const tab = await tabController.getTab(project_id, tab_id);
+        res.status(200).json(tab);
+    } catch (error) {
+        res.status(500).json({message:"le serveur a rencontré un probléme"});
+    }
+})
+
 module.exports = router;

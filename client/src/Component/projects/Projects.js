@@ -130,11 +130,11 @@ export const Projects = () => {
                                     >
 
                                         {
-                                            data.tabs.map((data, index)=>{
+                                            data.tabs.map((tab_data, index)=>{
                                                 
                                                 return (
                                                     <div key={index}>
-                                                        <Tab name={data.name}/>
+                                                        <Tab  project_id={data.id} data={tab_data}/>
                                                     </div>
 
                                                 );

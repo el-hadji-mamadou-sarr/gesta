@@ -9,6 +9,7 @@ import Profile from "./Pages/profile/Profile";
 import { useDispatch } from "react-redux";
 import { IsUserLogged } from "./reducers/userReducer";
 import { useEffect } from "react";
+import { Tab } from "./Pages/tab/Tab";
 
 function App() {
    const dispatch = useDispatch();
@@ -23,6 +24,8 @@ function App() {
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/profile" element={<Profile/>}/>
                 <Route path="/dashboard" element={<Dashboard/>}/>
+                <Route path="/:project_id/:tab_id" element={<Tab/>}/>
+              
             </Routes>
         </BrowserRouter>
     );
