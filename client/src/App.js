@@ -4,7 +4,6 @@ import { Login } from "./Pages/login/Login";
 import { Register } from "./Pages/register/Register";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from "./Pages/home/Home";
-import Dashboard from "./Pages/dashboard/Dashboard";
 import Profile from "./Pages/profile/Profile";
 import { useDispatch } from "react-redux";
 import { IsUserLogged } from "./reducers/userReducer";
@@ -27,7 +26,6 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/test" element={<ExampleComponent />} />
                 <Route path="/:project_id/:tab_id" element={<Tab />} />
             </Routes>

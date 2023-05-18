@@ -17,6 +17,7 @@ function hash(token){
  */
 async function saveResetToken (id, resetToken, type){
         try{
+                
                 await SecurityResetToken.create({
                         user_id: id,
                         token: hash(resetToken),

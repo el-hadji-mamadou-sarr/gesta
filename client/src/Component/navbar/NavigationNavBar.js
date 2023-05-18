@@ -17,14 +17,6 @@ import { useSelector } from 'react-redux';
 
 const pages = [
   {
-    label: 'Products',
-    url: '#products'
-  },
-  {
-    label: 'Developpeurs',
-    url: '#developpers' 
-  },
-  {
     label: 'A propos',
     url: '#about'
   },
@@ -120,7 +112,8 @@ function NavigationNavBar() {
               ))}
             </Menu>
           </Box>
-          <img src={logo} alt="Logo" />
+          <Link to="/"><img src={logo} alt="Logo" /></Link>
+          
           <Typography
             variant="h5"
             noWrap

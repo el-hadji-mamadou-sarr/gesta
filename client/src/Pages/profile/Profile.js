@@ -15,7 +15,7 @@ export default function Profile() {
   const [photoPreview, setPhotoPreview] = useState(null);
   const [message, setMessage]=useState('');
   useEffect(() => {
-    fetch("http://localhost:5000/api/users/profile", { method: "GET", headers: {}, credentials: "include" })
+    fetch("http://localhost:5000/api/users/profile", { method: "GET", headers: { 'Content-Type': 'application/json',}, credentials: "include" })
       .then(response => { return response.json() }).then(data => {
         setUserInfos(data);
       })

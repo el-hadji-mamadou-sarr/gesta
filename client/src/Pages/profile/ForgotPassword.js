@@ -1,24 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import MenuAppBar from '../../Component/navbar/dashboard/MenuAppBar';
+import NavigationNavBar from '../../Component/navbar/NavigationNavBar';
 
 function ForgotPassword(props) {
 
   const handleSubmitForgotPassword = (event) => {
     event.preventDefault();
-    console.log({ email: event.target.email.value });
 
     fetch("http://localhost:5000/api/users/profile/update/resetPassword", {
       method: "POST",
-      headers: {},
+      headers: { 'Content-Type': 'application/json',},
       credentials: "include",
       body: JSON.stringify({ email: event.target.email.value })
-    }).then((response) => { return response.json() }).then((data) => alert(data.message));
+    }).then((response)=>{
+      if(response.status===200){
+        alert("l'email vous a été envoyé à "+event.target.email.value);
+      }
+    })
   }
 
   return (
     <>
-      <MenuAppBar />
+      <NavigationNavBar />
       <div className="w-1/2 mx-auto">
         <div>
           <div className="mt-24">
