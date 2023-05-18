@@ -13,7 +13,7 @@ const getId = require('../utils/getIdFromToken');
  * @apiParam {String} name 
  * 
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 201 
+ *     HTTP/1.1 200 
  *     {
  *       message:"section added" ,
  *     }

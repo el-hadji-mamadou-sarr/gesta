@@ -63,6 +63,10 @@ export const Projects = () => {
         setProjectValues({...projectValues, [event.target.name]:event.target.value});
     }
 
+    const [doUpdate, setDoUpdate]=useState(false);
+        const update = ()=>{
+                setDoUpdate(!doUpdate);
+    }
     useEffect(() => {
         getProfile().then((data) => {
             setUserId(data._id);
@@ -85,7 +89,7 @@ export const Projects = () => {
             });
         });
 
-    }, []);
+    }, [doUpdate]);
 
     return (
         <>
@@ -108,6 +112,7 @@ export const Projects = () => {
                             style={style}
                             handleChange={handleNewProject}
                             theme={theme}
+                            update={update}
                         />
                 </Box>
                 <Box>
@@ -130,11 +135,11 @@ export const Projects = () => {
                                     >
 
                                         {
-                                            data.tabs.map((data, index)=>{
+                                            data.tabs.map((tab_data, index)=>{
                                                 
                                                 return (
                                                     <div key={index}>
-                                                        <Tab name={data.name}/>
+                                                        <Tab  project_id={data.id} data={tab_data}/>
                                                     </div>
 
                                                 );
@@ -164,6 +169,7 @@ export const Projects = () => {
                                             idProject={idProject}
                                             handleChange={handleChange}
                                             theme={theme}
+                                            update={update}
 
                                        />
                                       

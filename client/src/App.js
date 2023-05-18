@@ -9,6 +9,7 @@ import Profile from "./Pages/profile/Profile";
 import { useDispatch } from "react-redux";
 import { IsUserLogged } from "./reducers/userReducer";
 import { useEffect } from "react";
+import { Tab } from "./Pages/tab/Tab";
 import ExampleComponent from "./Pages/test/TestComp";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/test" element={<ExampleComponent />} />
+                <Route path="/:project_id/:tab_id" element={<Tab/>}/>
             </Routes>
         </BrowserRouter>
     );

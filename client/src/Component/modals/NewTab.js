@@ -9,7 +9,8 @@ export const NewTabModal = (props)=>{
                 style,
                 idProject,
                 handleChange,
-                theme
+                theme,
+                update
         }=props;
         return (
                 <>
@@ -24,7 +25,7 @@ export const NewTabModal = (props)=>{
                                 event.preventDefault();
                                 if(value){
                                         await addTab(idProject, value);
-                                        window.location.reload();
+                                        update();
                                         handleCloseList();
                                        
                                 }

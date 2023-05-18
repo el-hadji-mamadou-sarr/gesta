@@ -10,7 +10,8 @@ export const NewProjectModal = (props)=>{
                 open,
                 style,
                 handleChange,
-                theme
+                theme,
+                update
         }=props;
         return (
                 <>
@@ -25,7 +26,7 @@ export const NewProjectModal = (props)=>{
                                 event.preventDefault();
                                 if(value.name && value.description){
                                         await createProject(value.name, value.description);
-                                        window.location.reload();
+                                        update();
                                         handleCloseList();
               
                                 }
