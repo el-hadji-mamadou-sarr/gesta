@@ -17,6 +17,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import NavigationNavBar from "../../Component/navbar/NavigationNavBar";
 import validation from "../../Services/Constant/Register/Constant";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../reducers/userReducer";
 
 
 export function Register() {
@@ -27,7 +29,7 @@ export function Register() {
     const navigate = useNavigate()
     const [message, setMessage] = useState('')
     const [isSubmit, setIsSubmit] = useState(false)
-
+    const dispatch = useDispatch();
     // useEffect(()=>{
     //     setErrors(validation(values, agreeTerms))
     // }, [])
@@ -85,6 +87,7 @@ export function Register() {
                     console.log(res)
                     if (res.status === 200) {
                         res.json().then((res) => {
+                            dispatch(loginUser());
                             navigate('/');
                         })
                     } else if (res.status === 409) {

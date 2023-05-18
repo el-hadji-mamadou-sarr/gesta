@@ -101,6 +101,14 @@ export const Projects = () => {
                         onClick={()=>setNewProjectModal(true)}>
                         Créer un nouveau projet
                      </Button>
+                      <NewProjectModal
+                            handleCloseList={handleCloseModal}
+                            open={newProjectModal}
+                            value={projectValues}
+                            style={style}
+                            handleChange={handleNewProject}
+                            theme={theme}
+                        />
                 </Box>
                 <Box>
 
@@ -158,14 +166,7 @@ export const Projects = () => {
                                             theme={theme}
 
                                        />
-                                       <NewProjectModal
-                                            handleCloseList={handleCloseModal}
-                                            open={newProjectModal}
-                                            value={projectValues}
-                                            style={style}
-                                            handleChange={handleNewProject}
-                                            theme={theme}
-                                       />
+                                      
                                     </Box>
                                 </div>
 
