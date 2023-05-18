@@ -6,6 +6,6 @@ const TokenSchema = new mongoose.Schema({
         type:{type: String, required:true},
         token_expiry:{type:Date, default:()=> new Date(Date.now() + 10*60*1000) }
 });
-
+TokenSchema.index({ token_expiry: 1 }, { expireAfterSeconds: 0 });
 const SecurityResetToken = mongoose.model("security_reset_tokens", TokenSchema);
 module.exports = SecurityResetToken;
