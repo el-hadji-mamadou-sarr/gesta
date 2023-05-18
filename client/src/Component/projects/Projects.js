@@ -63,6 +63,10 @@ export const Projects = () => {
         setProjectValues({...projectValues, [event.target.name]:event.target.value});
     }
 
+    const [doUpdate, setDoUpdate]=useState(false);
+        const update = ()=>{
+                setDoUpdate(!doUpdate);
+    }
     useEffect(() => {
         getProfile().then((data) => {
             setUserId(data._id);
@@ -85,7 +89,7 @@ export const Projects = () => {
             });
         });
 
-    }, []);
+    }, [doUpdate]);
 
     return (
         <>
@@ -108,6 +112,7 @@ export const Projects = () => {
                             style={style}
                             handleChange={handleNewProject}
                             theme={theme}
+                            update={update}
                         />
                 </Box>
                 <Box>
@@ -164,6 +169,7 @@ export const Projects = () => {
                                             idProject={idProject}
                                             handleChange={handleChange}
                                             theme={theme}
+                                            update={update}
 
                                        />
                                       

@@ -22,7 +22,7 @@ const getId = require('../utils/getIdFromToken');
  * @RequestBody {OjectId[]} assigned_to[]  
  * 
  * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 201 
+ *     HTTP/1.1 200 
  *     {
  *       message:"task created" ,
  *     }
@@ -39,7 +39,7 @@ router.post('/:project_id/:tab_id/:section_id/add', async (req, res) => {
 
     try {
        await taskController.addTask(req.body, req.params,  userId);
-        res.status(201).json({ message: 'Task added successfully'});
+        res.status(200).json({ message: 'Task added successfully'});
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

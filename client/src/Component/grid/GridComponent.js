@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
@@ -16,6 +15,7 @@ import Box from "@mui/material/Box";
 import {theme} from "../../Assets/theme/theme";
 import CloseIcon from '@mui/icons-material/Close';
 import axios from "axios";
+import { NewSectionModal } from '../modals/NewSection';
 
 
 
@@ -33,49 +33,34 @@ const style = {
 
 export const  GridComponent =()=> {
 
-     const [value, setValues] = useState({
-         name: '',
-    })
-    // const [tabName, setTabName] = useState([]);
-    //
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const response = await axios.get('');
-    //             setTabName(response.tabName);
-    //         }catch (error) {
-    //             console.error('Error fetching data', error)
-    //         }
-    //     }
-    // })
-
+    const [value, setValue] = useState('')
+    const [tabName, setTabName] = useState([]);
     const [open, setOpen] = useState(false);
     const handleOpenList = () => setOpen(true);
     const handleCloseList = () => setOpen(false);
-
     const handleSubmitList = (event) =>{
         event.preventDefault();
     }
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-
-        setValues((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
-    };
-
-
-
     return (
-        <div>
-            {/*{tabName.map(field => (*/}
-            {/*    <Typography variant="h4" gutterBottom key={field.id}>*/}
-            {/*        {field.name}*/}
-            {/*    </Typography>*/}
-            {/*))}*/}
-
+        <>
+            <Button
+                variant="contained"
+                sx={{ margin:2}}
+                onClick={handleOpenList}>
+                <IconButton>
+                    <AddIcon/>
+                </IconButton>
+                ajouter une section
+            </Button>
+           <NewSectionModal
+                handleCloseList={handleCloseList}
+                value={value}
+                open={open}
+                style={style} 
+                setValue={setValue}
+                theme={theme}
+            />
             <Box sx={{ display: 'flex' }}>
                 <Grid container spacing={2}>
 
@@ -88,73 +73,16 @@ export const  GridComponent =()=> {
                             <AddCardForm  />
                         </Paper>
                     </Grid>
-                    <Grid item>
-                        <Paper >
-                            <Typography variant="h6" gutterBottom>
-                                Bonjour
-                            </Typography>
 
-                            <AddCardForm  />
-                        </Paper>
-                    </Grid>
+                    
                 </Grid>
 
 
-                <Button
-                    variant="contained"
-                    ml={2}
-                    onClick={handleOpenList}>
-                    <IconButton>
-                        <AddIcon/>
-                    </IconButton>
-                    Créer une liste
-                </Button>
-                <Modal
-                    open={open}
-                    onClose={handleCloseList}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                    >
-                    <Box sx={style} component="form" onSubmit={handleSubmitList}>
-                        <Box sx={{flexGrow: 1}}>
-                            <IconButton>
-                                <CloseIcon/>
-                            </IconButton>
-                        </Box>
 
-                        <TextField
-                            margin="normal"
-                            size="small"
-                            fullWidth
-                            id="task"
-                            label="saisissez le titre de la task"
-                            name="task"
-                            autoComplete="email"
-                            type="text"
-                            onChange={handleChange}
-                            autoFocus
-                            />
-
-                        <ThemeProvider theme={theme}>
-                            <Button
-                                type="submit"
-                                color="registeBtnTheme"
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                            >
-                                <Box
-                                    color="white">
-                                    Create task
-                                </Box>
-                            </Button>
-                        </ThemeProvider>
-
-                    </Box>
-
-                </Modal>
+                
             </Box>
 
-        </div>
+        </>
     );
 };
 
