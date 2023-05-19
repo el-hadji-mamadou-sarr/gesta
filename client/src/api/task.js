@@ -25,3 +25,17 @@ export const deletetask = (project_id, tab_id, section_id, task_id)=>{
         }
         return fetch(url+project_id+"/"+tab_id+"/"+section_id+"/"+task_id+"/delete",requestOptions);
 }
+
+export const assignTask = (project_id, tab_id, section_id, task_id, user_id)=>{
+                const requestOptions = {
+                method: 'POST',
+                credentials: "include",
+                headers: {
+                        'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                        user_id: user_id,
+                }) 
+        }
+        return fetch(url+project_id+"/"+tab_id+"/"+section_id+"/"+task_id+"/assign",requestOptions);
+}

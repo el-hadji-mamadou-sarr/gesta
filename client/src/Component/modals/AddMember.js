@@ -4,7 +4,7 @@ import { getUser } from "../../api/user";
 
 const style = {
     position: 'absolute',
-    width: 300,
+    width: 400,
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
@@ -18,7 +18,8 @@ export const AddMemberModal = (props)=>{
                 handleCloseModal,
                 open,
                 task,
-                members
+                members,
+                handleAddMember
         }=props;
 
         const [users, setUsers]=useState([]);
@@ -27,12 +28,14 @@ export const AddMemberModal = (props)=>{
 
                Promise.all(members.map((member) => getUser(member)))
                         .then((users) => {
-                        setUsers(users);
+                                setUsers(users);
                         })
                         .catch((error) => {
-                        console.error("Error:", error);
-                });
-        },[]) 
+                                console.error("Error:", error);
+                        });
+        },[members])
+        
+        
         return (
                 <>
                 <Modal
@@ -42,20 +45,25 @@ export const AddMemberModal = (props)=>{
                         aria-describedby="modal-modal-description"
                 >
                         <Box sx={style}>
-                                <h1>Liste des membres du projet</h1>
-                                <div className="flex flex-col">
+                                <h1 className="text-xl font-medium mb-2">Liste des membres du projet</h1>
+                                <div className="flex flex-col gap-2">
                                         {
                                                 users.map((user, index)=>{
                                                         
                                                         return (
                                                                 <div key={index}>
-                                                                        <span>{user.fullname}</span>
-
+                                                                        <button className="text-lg font-medium p-2 rounded bg-blue-600 text-white" 
+                                                                        onClick={()=>handleAddMember(user._id)}
+                                                                        >{user.fullname}</button>
+                                                                        
                                                                 </div>       
                                                         );
                                                 })
+
+                                                
                                                 
                                         }
+                                       
                                        
                                 </div>
                                 
