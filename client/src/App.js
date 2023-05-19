@@ -12,6 +12,7 @@ import { Tab } from "./Pages/tab/Tab";
 import ExampleComponent from "./Pages/test/TestComp";
 import ForgotPassword from "./Pages/profile/ForgotPassword";
 import NewPassword from "./Pages/profile/NewPassword";
+import { Logout } from "./Pages/logout/Logout";
 
 function App() {
     const dispatch = useDispatch();
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/logout" element={<Logout />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/new-password" element={<NewPassword />} />
                 <Route path="/profile" element={<Profile />} />

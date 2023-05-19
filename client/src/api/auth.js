@@ -11,3 +11,15 @@ export const getIsLogged = ()=>{
         const result = fetch(url+"isLogged",requestOptions).then(response=>response.json());
         return result;
 }
+
+export const logout = ()=>{
+         const requestOptions = {
+                method: 'POST',
+                credentials: "include",
+                headers: {
+                        'Content-Type': 'application/json',
+                }
+        }
+        return  fetch(url+"logout",requestOptions).then(response=>response.json());
+       
+}

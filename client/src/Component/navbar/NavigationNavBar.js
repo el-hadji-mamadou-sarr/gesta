@@ -56,7 +56,13 @@ function NavigationNavBar() {
       {
         label: 'profil',
         url: '/profile'
-      }]
+      },
+      {
+        label: 'deconnexion',
+        url: '/logout'
+      }
+    
+    ]
 
   }
 
