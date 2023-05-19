@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { Tab } from "./Pages/tab/Tab";
 import ExampleComponent from "./Pages/test/TestComp";
 import ForgotPassword from "./Pages/profile/ForgotPassword";
+import NewPassword from "./Pages/profile/NewPassword";
 
 function App() {
     const dispatch = useDispatch();
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/new-password" element={<NewPassword />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/test" element={<ExampleComponent />} />
                 <Route path="/:project_id/:tab_id" element={<Tab />} />
