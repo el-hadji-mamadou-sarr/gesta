@@ -14,3 +14,14 @@ export const addTask = (project_id, tab_id, section_id, name)=>{
 
         return fetch(url+project_id+"/"+tab_id+"/"+section_id+"/add",requestOptions);
 }
+
+export const deletetask = (project_id, tab_id, section_id, task_id)=>{
+                const requestOptions = {
+                method: 'DELETE',
+                credentials: "include",
+                headers: {
+                        'Content-Type': 'application/json',
+                } 
+        }
+        return fetch(url+project_id+"/"+tab_id+"/"+section_id+"/"+task_id+"/delete",requestOptions);
+}

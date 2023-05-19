@@ -45,4 +45,12 @@ router.post('/:project_id/:tab_id/:section_id/add', async (req, res) => {
     }
 });
 
+router.delete('/:project_id/:tab_id/:section_id/:task_id/delete', async(req, res)=>{
+     try {
+        await taskController.deleteTask(req.params.project_id, req.params.tab_id, req.params.section_id, req.params.task_id);
+         res.status(200).json({ message: 'Task deleted successfully'});
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+})
 module.exports = router;
