@@ -26,3 +26,20 @@ exports.addSection = async function (data, params) {
     }
 };
 
+exports.deleteSection = async function (project_id, tab_id, section_id){
+    try{
+        
+        const result = await Project.updateOne(
+            { _id: project_id, 'tabs._id': tab_id },
+            { $pull: { 'tabs.$.sections': { _id: section_id } } }
+        );
+
+        if (result.modifiedCount === 0) {
+            throw new Error('Section not found');
+        }
+                           
+    }catch(error){
+        throw error;
+    }
+}
+

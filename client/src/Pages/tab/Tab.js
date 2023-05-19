@@ -65,8 +65,10 @@ export const Tab = ()=>{
                                         tab_id={tab_id}
                                         update={update}
                                 />
+                                {/* section */}
                                 <Box sx={{ display: 'flex' }}>
                                         <Grid container spacing={2}>
+                                                
                                                 {tab &&
                                                         tab.sections.map((data)=>{
                                                                 return (
