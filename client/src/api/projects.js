@@ -26,3 +26,19 @@ export const createProject = (name, description)=>{
         }
         return fetch(url+"create",requestOptions).then(response=>response.json());
 }
+
+
+export const addMember = (project_id, email)=>{
+        const requestOptions = {
+                method: 'POST',
+                credentials: "include",
+                headers: {
+                        'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                        email: email,
+                })
+        }
+
+        return fetch(url+project_id+"/members/add",requestOptions);
+}

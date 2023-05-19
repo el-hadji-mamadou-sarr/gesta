@@ -75,6 +75,16 @@ router.get("/:id_project", async(req, res)=>{
   }
 })
 
+router.post("/:project_id/members/add", async(req, res)=>{
+  try{
+    await  projectController.addMember(req.params.project_id, req.body.email);
+    res.status(200).json({message:"user added"});
+  }catch(error){
+ 
+    res.status(500).json({message:error})
+  }
+})
+
 
 
 module.exports = router;

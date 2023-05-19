@@ -19,6 +19,8 @@ import { getProject } from '../../api/projects';
 import { addTab } from '../../api/tab';
 import { NewTabModal } from '../modals/NewTab';
 import { NewProjectModal } from '../modals/NewProject';
+import { NewMemberModal } from '../modals/NewMember';
+import { Flash } from '../flash/Fash';
 
 
 
@@ -37,6 +39,8 @@ export const Projects = () => {
 
     const [projectList, setProjectList] = useState([]);
     const [idProject, setIdProject]=useState();
+    const [message, setMessage] = useState("");
+    const [flash, setFlash] = useState(false);
 
     /* add new Tab */
     const [value, setValue] = useState('');
@@ -62,6 +66,25 @@ export const Projects = () => {
     const handleNewProject = (event) => {
         setProjectValues({...projectValues, [event.target.name]:event.target.value});
     }
+
+    /* ajouter un membre au projet modal */
+    const [newMemberModal, setNewMemberModal]=useState(false);
+    const [email, setEmail]=useState("")
+    const closeMemberModal = () => {
+        setNewMemberModal(false);
+        setMessage("");
+        setEmail("");
+    }
+    const handleEmailChange = (event) => {
+        const { name, value } = event.target;
+        setEmail(event.target.value);
+    };
+    const handleOpenNewMember = (id) => {
+        setIdProject(id);
+        setNewMemberModal(true);
+    }   
+
+
 
     const [doUpdate, setDoUpdate]=useState(false);
         const update = ()=>{
@@ -98,7 +121,7 @@ export const Projects = () => {
                 {/*espace de travail side*/}
 
                 <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap:5, marginY:2}}>
-                    <h1>Vos Projets Gesta</h1>
+                    <h1 className="text-5xl ">Vos Projets Gesta</h1>
                     <Button
                         variant="contained"
                         ml={2}
@@ -115,13 +138,42 @@ export const Projects = () => {
                             update={update}
                         />
                 </Box>
+                {
+                    flash && <Flash/>
+                }
+                {/* list de project */}
                 <Box>
 
                     {
                         projectList.map((data, index)=>{
                             return (
                                 <div key={index}>
-                                    <Typography>{data.name}</Typography>
+                                    <h1 className="text-3xl font-semibold">{data.name}</h1>
+
+                                    {/* ajout de membre */}
+                                    {
+                                        userId === data.owner && 
+                                        <Button
+                                            sx={{margin:3}}
+                                            variant="contained"
+                                            ml={2}
+                                            onClick={()=>handleOpenNewMember(data.id)}>
+                                            ajouter un membre     
+                                        </Button>
+                                    }
+                                    <NewMemberModal
+                                            handleCloseList={closeMemberModal}
+                                            value={email}
+                                            open={newMemberModal}
+                                            style={style}
+                                            idProject={idProject}
+                                            handleChange={handleEmailChange}
+                                            theme={theme}
+                                            update={update}
+                                            setMessage={setMessage}
+                                            message={message}
+                                            setFlash={setFlash}
+                                    />
                                     <Box
                                         sx={{
                                             display: 'flex',
@@ -133,7 +185,7 @@ export const Projects = () => {
                                             },
                                         }}
                                     >
-
+                                            {/* liste de tableaux */}
                                         {
                                             data.tabs.map((tab_data, index)=>{
                                                 
@@ -145,9 +197,6 @@ export const Projects = () => {
                                                 );
                                             })
                                         }
-
-
-                                      
 
                                         {
                                             userId === data.owner &&

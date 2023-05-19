@@ -33,3 +33,28 @@ exports.getProject = async (id) =>{
         throw error;
     }
 };
+
+exports.addMember =  async (project_id, email)=>{
+    
+    try{
+        const user = await User.findOne({email: email});
+        if(!user){
+            throw new Error("User not found");
+        }
+        const project = await Project.findById(project_id);
+        if(!project){
+            throw new Error("Project not found");
+        }
+        if(project.members.includes(user._id)){
+            throw new Error("User is already a member of the project");
+        }
+
+        project.members.push(user._id);
+        user.projects.push(project_id);
+        await user.save();
+        await project.save();
+
+    }catch(error){
+        throw error;
+    }
+}

@@ -11,9 +11,9 @@ export const Tab = (props)=>{
             <Box>
                 <Link to={"/"+project_id+"/"+data._id}>
                     <Paper sx={{width: 200, height: 200}} >
-                        <Typography variant="body1">
+                        <h1>
                             {data.name}
-                        </Typography>
+                        </h1>
                     </Paper>
                 </Link>
             </Box>
