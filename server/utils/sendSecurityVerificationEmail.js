@@ -9,8 +9,8 @@ function sendVerification(email, fullname, subject, resetToken){
                 host: "sandbox.smtp.mailtrap.io",
                 port: 2525,
                 auth: {
-                user: "16cf114b74c58f",
-                pass: "774cd13a1710fc"
+                user: "e3d628b224facd",
+                pass: "65e879c66d87f5"
                 }
         });
 
