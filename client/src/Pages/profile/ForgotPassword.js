@@ -1,21 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import MenuAppBar from '../../Component/navbar/dashboard/MenuAppBar';
 import NavigationNavBar from '../../Component/navbar/NavigationNavBar';
 
-function ForgotPassword(props) {
+function ForgotPassword() {
 
   const handleSubmitForgotPassword = (event) => {
     event.preventDefault();
 
     fetch("http://localhost:5000/api/users/profile/update/resetPassword", {
       method: "POST",
-      headers: { 'Content-Type': 'application/json',},
+      headers: { 'Content-Type': 'application/json', },
       credentials: "include",
       body: JSON.stringify({ email: event.target.email.value })
-    }).then((response)=>{
-      if(response.status===200){
-        alert("l'email vous a été envoyé à "+event.target.email.value);
+    }).then((response) => {
+      if (response.status === 200) {
+        alert("l'email vous a été envoyé à " + event.target.email.value);
       }
     })
   }

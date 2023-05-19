@@ -6,7 +6,7 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Box from '@mui/material/Box';
-import {useState} from "react";
+import { useState } from "react";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import IconButton from "@mui/material/IconButton";
 
@@ -15,12 +15,11 @@ export default function Dashboard() {
 
   return (
     <React.Fragment>
-        <Box sx={{ display: 'flex' }}>
-            <CssBaseline />
-            <MenuAppBar/>
-            <DrawerNavBar/>
-
-        </Box>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <MenuAppBar />
+        <DrawerNavBar />
+      </Box>
 
 
 
