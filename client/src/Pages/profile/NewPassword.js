@@ -14,7 +14,6 @@ function NewPassword() {
   const token = queryParameters.get("token");
 
 
-
   const handleSubmitNewPassword = (event) => {
     event.preventDefault();
     console.log(event.target.elements["new-password"].value.match("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}") === true);

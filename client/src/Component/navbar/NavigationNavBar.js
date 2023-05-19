@@ -32,28 +32,32 @@ function NavigationNavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  let settings ;
-  const {isLogged}= useSelector(state=>state.user);
+  let settings;
+  const { isLogged } = useSelector(state => state.user);
 
-  if(!isLogged){
+  if (!isLogged) {
 
     settings = [
-    {
-      label: 'Se connecter',
-      url: '/login'
-    },
-    {
-      label: 'S\'inscrire',
-      url: '/register'
-    }
+      {
+        label: 'Se connecter',
+        url: '/login'
+      },
+      {
+        label: 'S\'inscrire',
+        url: '/register'
+      }
     ];
-  }else{
+  } else {
     settings = [
-    {
-      label: 'profile',
-      url: '/profile'
-    }]
-   
+      {
+        label: 'dashboard',
+        url: '/'
+      },
+      {
+        label: 'profil',
+        url: '/profile'
+      }]
+
   }
 
   const handleOpenNavMenu = (event) => {
@@ -113,7 +117,7 @@ function NavigationNavBar() {
             </Menu>
           </Box>
           <Link to="/"><img src={logo} alt="Logo" /></Link>
-          
+
           <Typography
             variant="h5"
             noWrap
