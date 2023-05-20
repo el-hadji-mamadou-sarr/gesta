@@ -1,7 +1,5 @@
 const nodemailer = require('nodemailer');
 
-
-
 function sendVerification(email, fullname, subject, resetToken){
         const link = `http://localhost:3000/reset-${subject}?token=${resetToken}`;
 
@@ -9,8 +7,8 @@ function sendVerification(email, fullname, subject, resetToken){
                 host: "sandbox.smtp.mailtrap.io",
                 port: 2525,
                 auth: {
-                user: "e3d628b224facd",
-                pass: "65e879c66d87f5"
+                user: process.env.MAILTRAP_USER,
+                pass: process.env.MAILTRAP_PASS
                 }
         });
 
