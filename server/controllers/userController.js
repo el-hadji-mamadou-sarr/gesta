@@ -59,3 +59,18 @@ exports.updateUserProfile = async (userId, data, secure) => {
     }
 };
 
+exports.getUserProjects = async function (user_id){
+    try{
+        
+        const user = await User.findOne({_id:user_id});
+        if(!user){
+            throw new Error('User not found');
+        }
+
+        return user.projects;
+
+    }catch (error){
+        throw error;
+    }
+}
+

@@ -24,6 +24,9 @@ export const userSlice = createSlice({
 
         loginUser : (state, action)=>{
             state.isLogged = true;
+        },
+        logoutUser : (state,action)=>{
+            state.isLogged = false;
         }
     },
      extraReducers:(builder)=>{
@@ -43,5 +46,5 @@ export const userSlice = createSlice({
 
 });
 
-export const {loginUser, logout} = userSlice.actions;
+export const {loginUser, logoutUser} = userSlice.actions;
 export default userSlice.reducer;

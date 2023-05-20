@@ -8,6 +8,8 @@ import { NewSectionModal } from "../../Component/modals/NewSection";
 import AddIcon from '@mui/icons-material/Add';
 import { theme } from "../../Assets/theme/theme";
 import { Section } from "../../Component/card/Section";
+import { getProject } from "../../api/projects";
+import { getProfile } from "../../api/user";
 
 
 const style = {
@@ -23,12 +25,15 @@ const style = {
 };
 export const Tab = ()=>{
         const {tab_id, project_id} = useParams();
-        
+        const [projectOwner, setProjectOwner] = useState();
+        const [userId, setUserId] = useState();
+
         const [tab, setTab]=useState(null);
         const [value, setValue] = useState('')
         const [open, setOpen] = useState(false);
         const handleOpenList = () => setOpen(true);
         const handleCloseList = () => setOpen(false);
+        
 
         const [doUpdate, setDoUpdate]=useState(false);
         const update = ()=>{
@@ -38,22 +43,31 @@ export const Tab = ()=>{
                 getTab(project_id, tab_id).then((data) => {
                         setTab(data);
                 });
+                getProject(project_id).then((data)=>{
+                        setProjectOwner(data.owner);
+                });
+                getProfile().then((data) => {
+                        setUserId(data._id);
+                });
         }, [tab_id, project_id, doUpdate]);
 
         return (
                 <>
                         <NavigationNavBar />
                         <Box>
-
-                                <Button
-                                        variant="contained"
-                                        sx={{ margin:2}}
-                                        onClick={handleOpenList}>
-                                        <IconButton>
-                                        <AddIcon/>
-                                        </IconButton>
-                                        ajouter une section
-                                </Button>
+                                {
+                                        projectOwner === userId && 
+                                        <Button
+                                                variant="contained"
+                                                sx={{ margin:2}}
+                                                onClick={handleOpenList}>
+                                                <IconButton>
+                                                <AddIcon/>
+                                                </IconButton>
+                                                ajouter une section
+                                        </Button>
+                                }   
+                                
                                 <NewSectionModal
                                         handleCloseList={handleCloseList}
                                         value={value}
@@ -66,7 +80,7 @@ export const Tab = ()=>{
                                         update={update}
                                 />
                                 {/* section */}
-                                <Box sx={{ display: 'flex' }}>
+                                <Box sx={{ display: 'flex' , margin:2}}>
                                         <Grid container spacing={2}>
                                                 
                                                 {tab &&
@@ -74,13 +88,13 @@ export const Tab = ()=>{
                                                                 return (
                                                                         <Section data={data}
                                                                               update={update}
+                                                                              projectOwner={projectOwner}
+                                                                              userId={userId}
                                                                         />
                                                                 );
                                                         })
                                                 }
                                                 
-
-                                
                                         </Grid>
                                 </Box>
                        </Box>

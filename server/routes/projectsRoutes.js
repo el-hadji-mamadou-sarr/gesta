@@ -64,6 +64,7 @@ router.post("/create", async (req, res) => {
  *       "message": "le project n'a pas été trouvé"
  *     }
  */
+
 router.get("/:id_project", async(req, res)=>{
 
   try {
@@ -84,6 +85,31 @@ router.post("/:project_id/members/add", async(req, res)=>{
     res.status(500).json({message:error})
   }
 })
+
+
+
+//ajout de nouvelle route pour le project update
+
+/**
+ * @api {PUT} /api/projects/:project_id/update
+ * @apiName   updateProjectAndNotify
+ * @apiGroup Project
+ *
+ * @apiParam {String} project_id ID of the project
+ * @apiParam {Object} updateData Data to update in the project
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *    HTTP/1.1 200 OK
+ *    {Project}
+ *
+ * @apiError InternalServer.
+ * @apiErrorExample {json} Error-Response:
+ *    HTTP/1.1 500 Internal server error
+ *    {
+ *        "message": "Erreur lors de la mise à jour du projet et de l'envoi de notifications"
+ *    }
+ */
+router.put("/:project_id/update", projectController.updateProjectAndNotify)
 
 
 

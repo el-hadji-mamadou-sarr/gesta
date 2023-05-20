@@ -40,6 +40,17 @@ router.get('/islogged', (req, res, next)=>{
         })(req, res, next)
 });
 
+router.post('/logout', async(req, res)=>{
+        res.cookie('jwtToken', '', {
+                httpOnly: true,
+                sameSite: 'strict',
+                secure: false, 
+                maxAge: 0,
+
+        })
+        .status(200).json({isLogged:false});
+})
+
 
 const authentification = (req, res, next)=>{
         //authenticate the user using the local strategy
