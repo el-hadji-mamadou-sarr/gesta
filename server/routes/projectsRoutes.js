@@ -65,24 +65,23 @@ router.post("/create", async (req, res) => {
  *     }
  */
 
-router.get("/:id_project", async(req, res)=>{
+router.get("/:id_project", async (req, res) => {
 
   try {
-    
     const project = await projectController.getProject(req.params.id_project);
     res.status(200).json(project);
-  }catch(error){
-    res.status(500).json({message:"erreur lors de la recherche du projet"})
+  } catch (error) {
+    res.status(500).json({ message: "erreur lors de la recherche du projet" })
   }
 })
 
-router.post("/:project_id/members/add", async(req, res)=>{
-  try{
-    await  projectController.addMember(req.params.project_id, req.body.email);
-    res.status(200).json({message:"user added"});
-  }catch(error){
- 
-    res.status(500).json({message:error})
+router.post("/:project_id/members/add", async (req, res) => {
+  try {
+    await projectController.addMember(req.params.project_id, req.body.email);
+    res.status(200).json({ message: "user added" });
+  } catch (error) {
+
+    res.status(500).json({ message: error })
   }
 })
 

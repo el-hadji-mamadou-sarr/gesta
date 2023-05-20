@@ -94,15 +94,17 @@ export const Projects = () => {
         getProfile().then((data) => {
             setUserId(data._id);
 
-            const projectPromises = data.projects.map((id) => {
-                return getProject(id)
-                    .then((project_data) => ({
-                        id: project_data._id,
-                        name: project_data.name,
-                        owner: project_data.owner,
-                        tabs: project_data.tabs,
-                        updated_at: project_data.updated_at,
-                    }));
+            console.log(data);
+
+            const projectPromises = data.projects.map(async (id) => {
+                const project_data = await getProject(id);
+                return ({
+                    id: project_data._id,
+                    name: project_data.name,
+                    owner: project_data.owner,
+                    tabs: project_data.tabs,
+                    updated_at: project_data.updated_at,
+                });
             });
 
             Promise.all(projectPromises).then((projects) => {
