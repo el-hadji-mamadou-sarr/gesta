@@ -6,14 +6,14 @@ import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import {Button, Modal, TextField, ThemeProvider} from "@mui/material";
+import { Button, Modal, TextField, ThemeProvider } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
-import {theme} from "../../Assets/theme/theme";
-import {useState} from "react";
-import {Tab} from "../card/Tab";
+import { theme } from "../../Assets/theme/theme";
+import { useState } from "react";
+import { Tab } from "../card/Tab";
 import { getProfile } from '../../api/user';
 import { getProject } from '../../api/projects';
 import { addTab } from '../../api/tab';
@@ -38,7 +38,7 @@ const style = {
 export const Projects = () => {
 
     const [projectList, setProjectList] = useState([]);
-    const [idProject, setIdProject]=useState();
+    const [idProject, setIdProject] = useState();
     const [message, setMessage] = useState("");
     const [flash, setFlash] = useState(false);
 
@@ -50,26 +50,26 @@ export const Projects = () => {
         setOpen(true);
     }
     const handleCloseList = () => setOpen(false);
-    const [userId, setUserId]=useState();
+    const [userId, setUserId] = useState();
     const handleChange = (event) => {
         const { name, value } = event.target;
         setValue(event.target.value);
     };
 
     /* create new project */
-    const [newProjectModal, setNewProjectModal]= useState(false);
+    const [newProjectModal, setNewProjectModal] = useState(false);
     const handleCloseModal = () => setNewProjectModal(false);
-    const [projectValues, setProjectValues]=useState({
-        name:"",
-        description:""
+    const [projectValues, setProjectValues] = useState({
+        name: "",
+        description: ""
     });
     const handleNewProject = (event) => {
-        setProjectValues({...projectValues, [event.target.name]:event.target.value});
+        setProjectValues({ ...projectValues, [event.target.name]: event.target.value });
     }
 
     /* ajouter un membre au projet modal */
-    const [newMemberModal, setNewMemberModal]=useState(false);
-    const [email, setEmail]=useState("")
+    const [newMemberModal, setNewMemberModal] = useState(false);
+    const [email, setEmail] = useState("")
     const closeMemberModal = () => {
         setNewMemberModal(false);
         setMessage("");
@@ -82,33 +82,33 @@ export const Projects = () => {
     const handleOpenNewMember = (id) => {
         setIdProject(id);
         setNewMemberModal(true);
-    }   
+    }
 
 
 
-    const [doUpdate, setDoUpdate]=useState(false);
-        const update = ()=>{
-                setDoUpdate(!doUpdate);
+    const [doUpdate, setDoUpdate] = useState(false);
+    const update = () => {
+        setDoUpdate(!doUpdate);
     }
     useEffect(() => {
         getProfile().then((data) => {
             setUserId(data._id);
 
             const projectPromises = data.projects.map((id) => {
-            return getProject(id)
-                .then((project_data) => ({
-                    id: project_data._id,
-                    name: project_data.name,
-                    owner: project_data.owner,
-                    tabs: project_data.tabs,
-                    updated_at: project_data.updated_at,
-                }));
+                return getProject(id)
+                    .then((project_data) => ({
+                        id: project_data._id,
+                        name: project_data.name,
+                        owner: project_data.owner,
+                        tabs: project_data.tabs,
+                        updated_at: project_data.updated_at,
+                    }));
             });
 
             Promise.all(projectPromises).then((projects) => {
                 setProjectList([]);
                 setProjectList([...projects])
-                
+
             });
         });
 
@@ -116,63 +116,63 @@ export const Projects = () => {
 
     return (
         <>
-           
+
             <Box>
                 {/*espace de travail side*/}
 
-                <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap:5, marginY:2}}>
+                <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap: 5, marginY: 2 }}>
                     <h1 className="text-5xl ">Vos Projets Gesta</h1>
                     <Button
                         variant="contained"
                         ml={2}
-                        onClick={()=>setNewProjectModal(true)}>
+                        onClick={() => setNewProjectModal(true)}>
                         Créer un nouveau projet
-                     </Button>
-                      <NewProjectModal
-                            handleCloseList={handleCloseModal}
-                            open={newProjectModal}
-                            value={projectValues}
-                            style={style}
-                            handleChange={handleNewProject}
-                            theme={theme}
-                            update={update}
-                        />
+                    </Button>
+                    <NewProjectModal
+                        handleCloseList={handleCloseModal}
+                        open={newProjectModal}
+                        value={projectValues}
+                        style={style}
+                        handleChange={handleNewProject}
+                        theme={theme}
+                        update={update}
+                    />
                 </Box>
                 {
-                    flash && <Flash/>
+                    flash && <Flash />
                 }
                 {/* list de project */}
                 <Box>
 
                     {
-                        projectList.map((data, index)=>{
+                        projectList.map((data, index) => {
                             return (
                                 <div key={index}>
                                     <h1 className="text-3xl font-semibold">{data.name}</h1>
 
                                     {/* ajout de membre */}
                                     {
-                                        userId === data.owner && 
+                                        userId === data.owner &&
                                         <Button
-                                            sx={{margin:3}}
+                                            sx={{ margin: 3 }}
                                             variant="contained"
                                             ml={2}
-                                            onClick={()=>handleOpenNewMember(data.id)}>
-                                            ajouter un membre     
+                                            onClick={() => handleOpenNewMember(data.id)}>
+                                            ajouter un membre
                                         </Button>
                                     }
                                     <NewMemberModal
-                                            handleCloseList={closeMemberModal}
-                                            value={email}
-                                            open={newMemberModal}
-                                            style={style}
-                                            idProject={idProject}
-                                            handleChange={handleEmailChange}
-                                            theme={theme}
-                                            update={update}
-                                            setMessage={setMessage}
-                                            message={message}
-                                            setFlash={setFlash}
+                                        handleCloseList={closeMemberModal}
+                                        value={email}
+                                        open={newMemberModal}
+                                        style={style}
+                                        idProject={idProject}
+                                        handleChange={handleEmailChange}
+                                        theme={theme}
+                                        update={update}
+                                        setMessage={setMessage}
+                                        message={message}
+                                        setFlash={setFlash}
                                     />
                                     <Box
                                         sx={{
@@ -185,13 +185,13 @@ export const Projects = () => {
                                             },
                                         }}
                                     >
-                                            {/* liste de tableaux */}
+                                        {/* liste de tableaux */}
                                         {
-                                            data.tabs.map((tab_data, index)=>{
-                                                
+                                            data.tabs.map((tab_data, index) => {
+
                                                 return (
                                                     <div key={index}>
-                                                        <Tab  project_id={data.id} data={tab_data}/>
+                                                        <Tab project_id={data.id} data={tab_data} />
                                                     </div>
 
                                                 );
@@ -203,14 +203,14 @@ export const Projects = () => {
                                             <Button
                                                 variant="contained"
                                                 ml={2}
-                                                onClick={()=>handleOpenList(data.id)}>
+                                                onClick={() => handleOpenList(data.id)}>
                                                 Créer un Tableau
                                             </Button>
                                         }
 
                                         {/* Modal création tab */}
 
-                                       <NewTabModal
+                                        <NewTabModal
                                             handleCloseList={handleCloseList}
                                             value={value}
                                             open={open}
@@ -220,8 +220,8 @@ export const Projects = () => {
                                             theme={theme}
                                             update={update}
 
-                                       />
-                                      
+                                        />
+
                                     </Box>
                                 </div>
 
