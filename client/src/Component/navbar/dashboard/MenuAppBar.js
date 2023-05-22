@@ -10,19 +10,15 @@ import logo from "../../../Assets/images/gesta.png";
 import * as React from "react";
 import {Button, FormControlLabel, FormGroup, Switch} from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MailIcon from '@mui/icons-material/Mail';
-import MenuIcon from "@mui/icons-material/Menu";
-import {AccountCircle} from "@mui/icons-material";
 import {Link} from "react-router-dom";
-import {useTheme} from "@mui/material/styles";
 import AddIcon from '@mui/icons-material/Add';
-
 
 
 export default function MenuAppBar() {
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
+
+ 
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -37,25 +33,22 @@ export default function MenuAppBar() {
   };
 
 
-  const [open, setOpen] = React.useState(false);
-
-
   return (
       <Box >
-        <AppBar  position="fixed" open={open}>
+        <AppBar  position="fixed" >
           <Toolbar>
             <Link to=""><img src={logo} alt="Logo" /></Link>
             <Typography variant="h6" component="div">
               Gesta
             </Typography>
-            <Box  sx={{ ml:2 }}>
-              <Button variant="contained">
-                <IconButton>
-                  <AddIcon/>
-                </IconButton>
-                Créer un tableau
-              </Button>
-            </Box>
+            <Box sx={{ ml: 2 }}>
+            <Button variant="contained">
+              <IconButton>
+                <AddIcon />
+              </IconButton>
+              Créer un tableau
+            </Button>
+          </Box>
 
             <Box sx={{ flexGrow: 1, ml:2 }}>
               <Button variant="contained" ml={2}>
@@ -102,6 +95,7 @@ export default function MenuAppBar() {
             )}
           </Toolbar>
         </AppBar>
+
       </Box>
   );
 }
