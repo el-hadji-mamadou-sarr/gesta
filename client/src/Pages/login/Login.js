@@ -12,12 +12,13 @@ import {
 import { fontTheme, theme } from "../../Assets/theme/theme";
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import validation from "../../Services/Constant/Login/Constant";
 import NavigationNavBar from "../../Component/navbar/NavigationNavBar";
 import Logo from "../../Assets/images/logo.png";
 import downicone from "../../Assets/images/login-removebg-preview.png";
-
+import {useDispatch} from "react-redux";
+import {loginUser} from "../../reducers/userReducer";
 
 
 
@@ -30,6 +31,7 @@ export const Login = () => {
         password: ''
     })
     const [error, setErrors] = useState({})
+    const dispatch = useDispatch();
 
 
     // variable pour styliser le paper
@@ -68,12 +70,11 @@ export const Login = () => {
             .then((res) => {
                 if (res.status === 200) {
                     res.json().then((res) => {
+                        dispatch(loginUser());
                         navigate('/');
                     })
                 }
             })
-
-
     }
 
 

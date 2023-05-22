@@ -13,16 +13,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import logo from "../../Assets/images/gesta.png";
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const pages = [
-  {
-    label: 'Products',
-    url: '#products'
-  },
-  {
-    label: 'Developpeurs',
-    url: '#developpers' 
-  },
   {
     label: 'A propos',
     url: '#about'
@@ -32,20 +25,46 @@ const pages = [
     url: '#contact'
   }
 ];
-const settings = [
-  {
-    label: 'Se connecter',
-    url: '/login'
-  },
-  {
-    label: 'S\'inscrire',
-    url: '/register'
-  }
-];
+
+
 
 function NavigationNavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  let settings;
+  const { isLogged } = useSelector(state => state.user);
+
+  if (!isLogged) {
+
+    settings = [
+      {
+        label: 'Se connecter',
+        url: '/login'
+      },
+      {
+        label: 'S\'inscrire',
+        url: '/register'
+      }
+    ];
+  } else {
+    settings = [
+      {
+        label: 'dashboard',
+        url: '/'
+      },
+      {
+        label: 'profil',
+        url: '/profile'
+      },
+      {
+        label: 'deconnexion',
+        url: '/logout'
+      }
+
+    ]
+
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -103,7 +122,8 @@ function NavigationNavBar() {
               ))}
             </Menu>
           </Box>
-          <img src={logo} alt="Logo" />
+          <Link to="/"><img src={logo} alt="Logo" /></Link>
+
           <Typography
             variant="h5"
             noWrap

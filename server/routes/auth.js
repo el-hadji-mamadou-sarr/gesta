@@ -36,9 +36,20 @@ router.get('/islogged', (req, res, next)=>{
                 if(err || !user){
                         return res.status(401).json({isLogged: false});
                 }
-                res.json({isLogged: true});
+                res.status(200).json({isLogged: true});
         })(req, res, next)
 });
+
+router.post('/logout', async(req, res)=>{
+        res.cookie('jwtToken', '', {
+                httpOnly: true,
+                sameSite: 'strict',
+                secure: false, 
+                maxAge: 0,
+
+        })
+        .status(200).json({isLogged:false});
+})
 
 
 const authentification = (req, res, next)=>{

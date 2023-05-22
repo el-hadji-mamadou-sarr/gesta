@@ -1,7 +1,5 @@
 const nodemailer = require('nodemailer');
 
-
-
 function sendVerification(email, fullname, subject, resetToken){
         const link = `http://localhost:3000/reset-${subject}?token=${resetToken}`;
 
@@ -9,8 +7,8 @@ function sendVerification(email, fullname, subject, resetToken){
                 host: "sandbox.smtp.mailtrap.io",
                 port: 2525,
                 auth: {
-                user: "16cf114b74c58f",
-                pass: "774cd13a1710fc"
+                user: process.env.MAILTRAP_USER,
+                pass: process.env.MAILTRAP_PASS
                 }
         });
 
@@ -29,10 +27,9 @@ function sendVerification(email, fullname, subject, resetToken){
 
         transporter.sendMail(mailOptions, function(error, info){
                 if (error) {
-                console.log(error);
-                } else {
-                console.log('Email sent: ' + info.response);
+                        throw error;
                 }
+               
         });
 }
 

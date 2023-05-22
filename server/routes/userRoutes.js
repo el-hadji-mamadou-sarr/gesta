@@ -37,10 +37,12 @@ router.get('/profile', async(req, res)=>{
     try{
         const user = await userController.getUserProfile(id);
         res.status(200).json({
+            _id:user._id,
             fullname:user.fullname,
             email:user.email,
             banner_color:user.banner_color,
-            profile_picture:user.profile_picture
+            profile_picture:user.profile_picture,
+            projects:user.projects
         });
 
     }catch(error){
@@ -74,9 +76,10 @@ router.get('/profile', async(req, res)=>{
 router.put('/profile/update', async (req, res) => {
     const id = getId(req);
     const secure = false;
+
     try {
         await userController.updateUserProfile(id, req.body, secure);
-        res.status(204).json({message:"user is updated"});
+        res.status(200).json({message:"user is updated"});
     } catch (error) {
         res.status(500).json({ message: "le serveur a rencontré un probléme" });
     }
@@ -172,11 +175,19 @@ router.post('/profile/update/password', async(req, res)=>{
 router.get('/:userId', async (req, res) => {
     try {
         const user = await userController.getUserProfile(req.params.userId);
-        res.status(200).json(user);
+         res.status(200).json({
+            _id:user._id,
+            fullname:user.fullname,
+            email:user.email,
+            banner_color:user.banner_color,
+            profile_picture:user.profile_picture,
+            projects:user.projects
+        });
     } catch (error) {
-        res.status(500).json({ message: "le serveur a rencontré un probléme"});
+        res.status(500).json({ message: error});
     }
 });
+
 
 module.exports = router;
 

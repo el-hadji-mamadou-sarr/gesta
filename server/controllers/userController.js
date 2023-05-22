@@ -31,16 +31,24 @@ exports.getUserByEmail = async(email) => {
 // Mettre à jour un profil utilisateur spécifique
 exports.updateUserProfile = async (userId, data, secure) => {
     try {
-        // Mettre à jour un utilisateur par son ID en utilisant les données de la requête
-        const updatedUserProfile = await User.findByIdAndUpdate(
-            userId,
-            {
-                fullname: data.fullname,
-                profile_picture: data.profile_picture,
-                email: secure && data.email,
-                password: secure && await bcrypt.hash(data.password, 10) 
-            }
-        );
+        // Mettre à jour un utilisateur par son ID en utilisant les données de la requêt
+        const updateFields = {
+            fullname: data.fullname,
+            email: data.email
+        };
+
+        if (secure) {
+            updateFields.password = await bcrypt.hash(data.password, 10);
+        }
+
+        const user = await User.findOne({email: data.email});
+
+        if(user._id.toString() ==! userId){
+            throw new Error('another user have this email adresse');
+        }
+
+        const updatedUserProfile = await User.findByIdAndUpdate(userId, updateFields);
+        
         // Si aucun utilisateur n'est trouvé, renvoyer une erreur pour être capturée par l'appelant
         if (!updatedUserProfile) {
             throw new Error('User profile not found');
@@ -50,4 +58,19 @@ exports.updateUserProfile = async (userId, data, secure) => {
         throw error;
     }
 };
+
+exports.getUserProjects = async function (user_id){
+    try{
+        
+        const user = await User.findOne({_id:user_id});
+        if(!user){
+            throw new Error('User not found');
+        }
+
+        return user.projects;
+
+    }catch (error){
+        throw error;
+    }
+}
 

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
@@ -7,53 +6,86 @@ import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import Paper from '@mui/material/Paper';
 import {CardComponent} from "../card/CardComponent";
-import {Button} from "@mui/material";
+import {Button, Modal, TextField, ThemeProvider} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import AddIcon from '@mui/icons-material/Add';
 import IconButton from "@mui/material/IconButton";
+import Box from "@mui/material/Box";
+import {theme} from "../../Assets/theme/theme";
+import CloseIcon from '@mui/icons-material/Close';
+import axios from "axios";
+import { NewSectionModal } from '../modals/NewSection';
+
+
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
 
 export const  GridComponent =()=> {
 
-    const [lists, setLists] = useState([
-        { id: 1, title: 'To Do', cards: [] },
-        { id: 2, title: 'In Progress', cards: [] },
-        { id: 3, title: 'Done', cards: [] },
-    ]);
-
-    const handleAddCard = (listId, cardTitle) => {
-        const newLists = lists.map(list => {
-            if (list.id === listId) {
-                return {
-                    ...list,
-                    cards: [...list.cards, { id: Date.now(), title: cardTitle }],
-                };
-            }
-            return list;
-        });
-        setLists(newLists);
-    };
+    const [value, setValue] = useState('')
+    const [tabName, setTabName] = useState([]);
+    const [open, setOpen] = useState(false);
+    const handleOpenList = () => setOpen(true);
+    const handleCloseList = () => setOpen(false);
+    const handleSubmitList = (event) =>{
+        event.preventDefault();
+    }
 
     return (
-        <div>
-            <Grid container spacing={3}>
-                {lists.map(list => (
-                    <Grid key={list.id} item xs={12} sm={4}>
+        <>
+            <Button
+                variant="contained"
+                sx={{ margin:2}}
+                onClick={handleOpenList}>
+                <IconButton>
+                    <AddIcon/>
+                </IconButton>
+                ajouter une section
+            </Button>
+           <NewSectionModal
+                handleCloseList={handleCloseList}
+                value={value}
+                open={open}
+                style={style} 
+                setValue={setValue}
+                theme={theme}
+            />
+            <Box sx={{ display: 'flex' }}>
+                <Grid container spacing={2}>
+
+                    <Grid item>
                         <Paper>
                             <Typography variant="h6" gutterBottom>
-                                {list.title}
+                                Bonjour
                             </Typography>
-                            {list.cards.map(card => (
-                                <Card key={card.id} title={card.title} />
-                            ))}
-                            <AddCardForm listId={list.id} onAddCard={handleAddCard} />
+
+                            <AddCardForm  />
                         </Paper>
                     </Grid>
-                ))}
-            </Grid>
-        </div>
+
+                    
+                </Grid>
+
+
+
+                
+            </Box>
+
+        </>
     );
 };
+
 
 const Card = ({ title }) => {
     return (
@@ -63,6 +95,7 @@ const Card = ({ title }) => {
     );
 };
 
+// Adding card form
 const AddCardForm = ({ listId, onAddCard }) => {
     const [cardTitle, setCardTitle] = useState('');
 

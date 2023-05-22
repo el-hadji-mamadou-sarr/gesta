@@ -7,7 +7,7 @@ import {
     Typography,
     Box,
     ThemeProvider,
-    Divider, Grid, Link, CssBaseline, Container, Checkbox, Alert, FormHelperText
+    Divider, Grid, CssBaseline, Container, Checkbox, FormHelperText
 } from "@mui/material";
 
 import { theme } from "../../Assets/theme/theme";
@@ -17,6 +17,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import NavigationNavBar from "../../Component/navbar/NavigationNavBar";
 import validation from "../../Services/Constant/Register/Constant";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../reducers/userReducer";
 
 
 export const Register = () => {
@@ -27,7 +29,7 @@ export const Register = () => {
     const navigate = useNavigate()
     const [message, setMessage] = useState('')
     const [isSubmit, setIsSubmit] = useState(false)
-
+    const dispatch = useDispatch();
     // useEffect(()=>{
     //     setErrors(validation(values, agreeTerms))
     // }, [])
@@ -59,24 +61,20 @@ export const Register = () => {
     };
 
     const handleSubmit = (event) => {
-
         event.preventDefault()
         setIsSubmit(true)
         if (Object.keys(error).length === 0 && Object.keys(values).length === 4) {
-
             const requestBody = {
                 method: "POST",
                 credentials: "include",
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
-
                 },
                 body: JSON.stringify({
                     fullname: values.fullname,
                     email: values.email,
                     password: values.password
-
                 })
             }
 
@@ -85,6 +83,7 @@ export const Register = () => {
                     console.log(res)
                     if (res.status === 200) {
                         res.json().then((res) => {
+                            dispatch(loginUser());
                             navigate('/');
                         })
                     } else if (res.status === 409) {
@@ -92,13 +91,10 @@ export const Register = () => {
                     } else {
                         setMessage('Vous avez commis des erreurs de saisi')
                     }
-
                 })
         } else {
             console.log("Ce formulaire contient des erreurs")
         }
-
-
     };
 
 

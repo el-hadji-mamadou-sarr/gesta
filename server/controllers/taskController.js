@@ -59,3 +59,69 @@ exports.addTask = async function (data, params, userId) {
         throw error;
     }
 };
+
+
+exports.deleteTask = async function (project_id, tab_id, section_id, task_id){
+    try {
+        const result = await Project.updateOne(
+            {
+                _id: project_id,
+                'tabs._id': tab_id,
+                'tabs.sections._id': section_id
+            },
+            {
+                $pull: {
+                    'tabs.$[tab].sections.$[section].tasks': {
+                        _id: task_id
+                    }
+                }
+            },
+            {
+                arrayFilters: [
+                    { 'tab._id': tab_id },
+                    { 'section._id': section_id }
+                ]
+            }
+        );
+        
+        if (result.nModified === 0) {
+            throw new Error('Task not found');
+        }
+    }catch(error){
+        throw error;
+    }
+}
+
+
+exports.assignTask = async function (project_id, tab_id, section_id, task_id, user_id) {
+    try {
+       
+        const result = await Project.updateOne(
+            {
+                _id: project_id,
+                'tabs._id': tab_id,
+                'tabs.sections._id': section_id,
+                'tabs.sections.tasks._id': task_id
+            },
+            {
+                 $addToSet: {
+                    'tabs.$[tab].sections.$[section].tasks.$[task].assigned_to': user_id
+                }
+            },
+            {
+                arrayFilters: [
+                    { 'tab._id': tab_id },
+                    { 'section._id': section_id },
+                    { 'task._id': task_id }
+                ]
+            }
+        );
+
+        if (result.nModified === 0) {
+            throw new Error('Task not found');
+        }
+
+    } catch (error) {
+        throw error;
+    }
+}
