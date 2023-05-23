@@ -1,7 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import MenuAppBar from "../../Component/navbar/dashboard/MenuAppBar";
-import { InputText } from 'primereact/inputtext';
-import { Dialog } from 'primereact/dialog';
 import { Link } from "react-router-dom";
 import NavigationNavBar from "../../Component/navbar/NavigationNavBar";
 
@@ -13,9 +10,9 @@ export default function Profile() {
   const photoRef = useRef(null);
   const [photoName, setPhotoName] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
-  const [message, setMessage]=useState('');
+  const [message, setMessage] = useState('');
   useEffect(() => {
-    fetch("http://localhost:5000/api/users/profile", { method: "GET", headers: { 'Content-Type': 'application/json',}, credentials: "include" })
+    fetch("http://localhost:5000/api/users/profile", { method: "GET", headers: { 'Content-Type': 'application/json', }, credentials: "include" })
       .then(response => { return response.json() }).then(data => {
         setUserInfos(data);
       })
@@ -37,16 +34,16 @@ export default function Profile() {
 
   function handleSubmitProfile(event) {
     event.preventDefault();
- /*    validate(event.target); */
-    
+    /*    validate(event.target); */
+
     fetch("http://localhost:5000/api/users/profile/update", {
       method: "PUT",
-     headers: {
-      'Content-Type': 'application/json',
+      headers: {
+        'Content-Type': 'application/json',
       },
       credentials: "include",
       body: JSON.stringify({ fullname: userInfos.fullname, email: userInfos.email })
-    }).then(response =>{
+    }).then(response => {
       if (response.status === 200) {
         setMessage("l'utilisateur a été enregistré");
       }
@@ -114,18 +111,18 @@ export default function Profile() {
             <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full px-3">
                 {
-                  message && <p>{message}</p>  
-                 }
+                  message && <p>{message}</p>
+                }
                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
                   Full name
                 </label>
-                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-                      id="grid-first-name"   
-                      type="text" 
-                      name="fullname" 
-                      value={userInfos.fullname} 
-                      onChange={handleProfileFieldChange} 
-                      placeholder="john@doe.com" />
+                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  id="grid-first-name"
+                  type="text"
+                  name="fullname"
+                  value={userInfos.fullname}
+                  onChange={handleProfileFieldChange}
+                  placeholder="john@doe.com" />
 
                 <p className="text-red-500 text-xs italic">Please fill out this field.</p>
               </div>
@@ -135,13 +132,13 @@ export default function Profile() {
                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-email">
                   Email
                 </label>
-                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-                      id="grid-email" 
-                      type="email" 
-                      name="email" 
-                      value={userInfos.email} 
-                      onChange={handleProfileFieldChange} 
-                      placeholder="john@doe.com" />
+                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="grid-email"
+                  type="email"
+                  name="email"
+                  value={userInfos.email}
+                  onChange={handleProfileFieldChange}
+                  placeholder="john@doe.com" />
 
                 <p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
               </div>
