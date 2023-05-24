@@ -5,34 +5,34 @@ function validation(values, agreeTerms){
 
     // fullname verification
     if(!values.fullname){
-        error.fullname = "Fullname should not be empty"
+        error.fullname ="Le nom ne doit pas être vide"
     }else{
         delete error.fullname
     }
 
     // email verification
     if(!regex_email.test(values.email) || !values.email){
-        error.email="Email has some error"
+        error.email="L'e-mail n'est pas valide"
     }else {
        delete error.email
     }
 
     //password verification
     if(!regex_password.test(values.password) || !values.password){
-        error.password = "This password has some error"
+        error.password = "Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial"
     }else{
         delete error.password
     }
 
     // password confirm verification
     if(values.password !== values.confirmPassword || !values.confirmPassword){
-        error.confirmPassword = "This confirm password didn't match the password"
+        error.confirmPassword = "Le mot de passe ne correspond pas"
     }else{
         delete error.confirmPassword
     }
 
     if(!agreeTerms){
-        error.agreeTerms = "You need to check the checkbox"
+        error.agreeTerms = "Vous devez accepter les conditions d'utilisation"
     }else{
         delete error.agreeTerms
     }
