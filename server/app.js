@@ -11,19 +11,19 @@ const app = express();
 const http = require('http');
 const httpServer = http.createServer(app);
 
-const {Server} = require('socket.io');
+const { Server } = require('socket.io');
 const io = new Server(httpServer, {
-        cors:{
-                origin:'http://localhost:3000',
-                methods: ["GET"],
-        }
+    cors: {
+        origin: 'http://localhost:3000',
+        methods: ["GET"],
+    }
 });
 
 const messaging = require('./realtime/messaging');
 
-io.on('connection', (Socket) =>{
-        messaging(io, Socket);
-})      
+io.on('connection', (Socket) => {
+    messaging(io, Socket);
+})
 
 
 

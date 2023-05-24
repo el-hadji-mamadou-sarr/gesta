@@ -32,8 +32,8 @@ function App() {
                 <Route path="/new-password" element={<NewPassword />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/chat" element={<Chat />} />
-                <Route path="/test" element={<ExampleComponent />} />
                 <Route path="/:project_id/:tab_id" element={<Tab />} />
+                <Route path="/test/comp" element={<ExampleComponent />} />
             </Routes>
         </BrowserRouter>
     );

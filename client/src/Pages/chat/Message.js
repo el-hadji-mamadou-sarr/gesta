@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Message(props) {
+function Message() {
   return (
     <>
       <div class="chat-message">

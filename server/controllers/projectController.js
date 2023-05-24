@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const Project = require("../models/Project");
 const User = require('../models/User');
 const sendVerification = require("../utils/sendSecurityVerificationEmail");
@@ -38,8 +39,20 @@ exports.getProject = async (id) => {
 
 exports.getProjectByOwner = async (ownerId) => {
     try {
-        const project = await Project.find({ owner: ObjectId(ownerId) });
-        return project;
+        const projects = await Project.find({ owner: ObjectId(ownerId) });
+        return projects;
+    }
+    catch (error) {
+        throw error;
+    }
+};
+
+exports.getProjectByMember = async (memberId) => {
+    try {
+        console.log("lolo");
+        const projects = await Project.find({ members: memberId });
+        console.log("lalal");
+        return projects;
     }
     catch (error) {
         throw error;
