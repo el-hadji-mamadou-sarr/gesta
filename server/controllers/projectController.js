@@ -49,9 +49,7 @@ exports.getProjectByOwner = async (ownerId) => {
 
 exports.getProjectByMember = async (memberId) => {
     try {
-        console.log("lolo");
         const projects = await Project.find({ members: memberId });
-        console.log("lalal");
         return projects;
     }
     catch (error) {

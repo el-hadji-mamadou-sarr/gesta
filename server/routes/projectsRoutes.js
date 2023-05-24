@@ -8,9 +8,7 @@ const getIdFromToken = require('../utils/getIdFromToken');
 router.get("/member", async (req, res) => {
   try {
     const member_id = getIdFromToken(req);
-    console.log(member_id);
     const project = await projectController.getProjectByMember(member_id);
-    console.log(project);
     res.status(200).json(project);
   } catch (error) {
     res.status(500).json({ message: error })
@@ -41,7 +39,6 @@ router.get("/member", async (req, res) => {
  */
 router.post("/create", async (req, res) => {
   const user_id = getIdFromToken(req);
-  console.log(user_id);
   const data = {
     name: req.body.name,
     description: req.body.description,
