@@ -40,7 +40,7 @@ export default function MenuAppBar() {
 
   return (
       <Box >
-        <AppBar  position="fixed" open={open}>
+        <AppBar  position="fixed" >
           <Toolbar>
             <Link to=""><img src={logo} alt="Logo" /></Link>
             <Typography variant="h6" component="div">
