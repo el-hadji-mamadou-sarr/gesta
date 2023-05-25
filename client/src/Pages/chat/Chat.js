@@ -22,9 +22,6 @@ function Chat() {
   }
 
   const handleReceivedMessage = (newMessage) => {
-    console.log(newMessage);
-    console.log(messages);
-    console.log("deubfr");
     setMessages((prevMessages) => [...prevMessages, newMessage]);
   }
 
