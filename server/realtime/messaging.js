@@ -21,19 +21,18 @@ const User = require("../models/User");
  * 
  *
  */
-function  message (io, Socket){
-        Socket.on('join', (project_id)=>{
+function message(io, Socket) {
+        Socket.on('join', (project_id) => {
                 Socket.join(project_id);
-                
-        })      
+        })
 
-        Socket.on('message', async (data)=>{  
-                
+        Socket.on('message', async (data) => {
+
                 const project = await Project.findById(data.project_id);
                 const user = await User.findById(data.user_id);
-                
-                if(project && user){
-                        
+
+                if (project && user) {
+
                         io.to(data.project_id).emit('message', data);
                         const message = new Message({
                                 user_id: new mongoose.Types.ObjectId(data.user_id),
@@ -41,7 +40,7 @@ function  message (io, Socket){
                         })
                         project.messages.push(message);
                         project.save();
-                        
+
                 }
         })
 }

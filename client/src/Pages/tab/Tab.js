@@ -13,37 +13,37 @@ import { getProfile } from "../../api/user";
 
 
 const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
 };
-export const Tab = ()=>{
-        const {tab_id, project_id} = useParams();
+export const Tab = () => {
+        const { tab_id, project_id } = useParams();
         const [projectOwner, setProjectOwner] = useState();
         const [userId, setUserId] = useState();
 
-        const [tab, setTab]=useState(null);
+        const [tab, setTab] = useState(null);
         const [value, setValue] = useState('')
         const [open, setOpen] = useState(false);
         const handleOpenList = () => setOpen(true);
         const handleCloseList = () => setOpen(false);
-        
 
-        const [doUpdate, setDoUpdate]=useState(false);
-        const update = ()=>{
+
+        const [doUpdate, setDoUpdate] = useState(false);
+        const update = () => {
                 setDoUpdate(!doUpdate);
         }
         useEffect(() => {
                 getTab(project_id, tab_id).then((data) => {
                         setTab(data);
                 });
-                getProject(project_id).then((data)=>{
+                getProject(project_id).then((data) => {
                         setProjectOwner(data.owner);
                 });
                 getProfile().then((data) => {
@@ -56,23 +56,23 @@ export const Tab = ()=>{
                         <NavigationNavBar />
                         <Box>
                                 {
-                                        projectOwner === userId && 
+                                        projectOwner === userId &&
                                         <Button
                                                 variant="contained"
-                                                sx={{ margin:2}}
+                                                sx={{ margin: 2 }}
                                                 onClick={handleOpenList}>
                                                 <IconButton>
-                                                <AddIcon/>
+                                                        <AddIcon />
                                                 </IconButton>
                                                 ajouter une section
                                         </Button>
-                                }   
-                                
+                                }
+
                                 <NewSectionModal
                                         handleCloseList={handleCloseList}
                                         value={value}
                                         open={open}
-                                        style={style} 
+                                        style={style}
                                         setValue={setValue}
                                         theme={theme}
                                         project_id={project_id}
@@ -80,24 +80,24 @@ export const Tab = ()=>{
                                         update={update}
                                 />
                                 {/* section */}
-                                <Box sx={{ display: 'flex' , margin:2}}>
+                                <Box sx={{ display: 'flex', margin: 2 }}>
                                         <Grid container spacing={2}>
-                                                
-                                                {tab &&
-                                                        tab.sections.map((data)=>{
+
+                                                {tab && tab.sections &&
+                                                        tab.sections.map((data) => {
                                                                 return (
                                                                         <Section data={data}
-                                                                              update={update}
-                                                                              projectOwner={projectOwner}
-                                                                              userId={userId}
+                                                                                update={update}
+                                                                                projectOwner={projectOwner}
+                                                                                userId={userId}
                                                                         />
                                                                 );
                                                         })
                                                 }
-                                                
+
                                         </Grid>
                                 </Box>
-                       </Box>
+                        </Box>
                 </>
         );
 }

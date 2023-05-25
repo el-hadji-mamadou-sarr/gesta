@@ -4,6 +4,16 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const getIdFromToken = require('../utils/getIdFromToken');
 
+// Recuperer les projets auxquels participe un certains user
+router.get("/member", async (req, res) => {
+  try {
+    const member_id = getIdFromToken(req);
+    const project = await projectController.getProjectByMember(member_id);
+    res.status(200).json(project);
+  } catch (error) {
+    res.status(500).json({ message: error })
+  }
+})
 
 /**
  * @api {POST} /api/projects/create
@@ -80,7 +90,6 @@ router.post("/:project_id/members/add", async (req, res) => {
     await projectController.addMember(req.params.project_id, req.body.email);
     res.status(200).json({ message: "user added" });
   } catch (error) {
-
     res.status(500).json({ message: error })
   }
 })
