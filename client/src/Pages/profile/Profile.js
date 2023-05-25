@@ -58,9 +58,7 @@ export default function Profile() {
       [name]: value
     }));
   }
-  // <input className="absolute w-12 h-12 text-gray-400 -left-1" type="file" src="" alt="" /> 
-  // <svg className="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
-
+  
   return <>
     <NavigationNavBar />
     <div className="w-1/2 mx-auto">
@@ -122,9 +120,8 @@ export default function Profile() {
                   name="fullname"
                   value={userInfos.fullname}
                   onChange={handleProfileFieldChange}
-                  placeholder="john@doe.com" />
+                  placeholder="john Ndiaye" />
 
-                <p className="text-red-500 text-xs italic">Please fill out this field.</p>
               </div>
             </div>
             <div className="flex flex-wrap -mx-3 mb-6">
@@ -143,26 +140,6 @@ export default function Profile() {
                 <p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
               </div>
             </div>
-            {/* <div className="flex flex-wrap -mx-3 mb-2">
-              <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-country">
-                  Pays
-                </label>
-                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" type="text" onChange={handleProfileFieldChange} placeholder="Albuquerque" />
-              </div>
-              <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">
-                  City
-                </label>
-                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" type="text" onChange={handleProfileFieldChange} placeholder="Albuquerque" />
-              </div>
-              <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-zip">
-                  Zip
-                </label>
-                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" onChange={handleProfileFieldChange} placeholder="90210" />
-              </div>
-            </div> */}
             <div className="md:flex md:items-center mt-8">
               <div className="md:w-3/4 ">
                 <span className="font-bold py-2 px-4 rounded">
