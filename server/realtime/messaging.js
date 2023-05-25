@@ -26,21 +26,19 @@ function message(io, Socket) {
                 Socket.join(project_id);
         })
 
-        Socket.on('message', async (data) => {
-
+        Socket.on('send_message', async (data) => {
+                console.log(data);
                 const project = await Project.findById(data.project_id);
                 const user = await User.findById(data.user_id);
 
                 if (project && user) {
-
-                        io.to(data.project_id).emit('message', data);
+                        io.to(data.project_id).emit('receive_message', data);
                         const message = new Message({
                                 user_id: new mongoose.Types.ObjectId(data.user_id),
                                 message: data.message,
                         })
                         project.messages.push(message);
                         project.save();
-
                 }
         })
 }
